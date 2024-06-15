@@ -12,7 +12,7 @@ export function PrintUczelnias() {
           headers: { "Content-Type": "application/json" }
         };
 
-        fetch(SERVER_URL + "/api/uczelnia", requestOptions)
+        fetch(SERVER_URL + "/api/bestkierunki", requestOptions)
           .then((response) => response.json())
           .then((newNotes) => setUczelnias(newNotes));
     }, []);
@@ -22,11 +22,11 @@ export function PrintUczelnias() {
             <h1>Uczelnias</h1>
             <br />
             <ul>
-                {uczelnias.map((uczelnia) => ( 
-                    <li key={uczelnia.id}>
-                        id: {uczelnia.id} <br />
-                        nazwa: {uczelnia.nazwa} <br />
-                        opis: {uczelnia.opis} <br />
+                {uczelnias.map((kierunek) => ( 
+                    <li key={kierunek[0]}>
+                        id: {kierunek[0]} <br />
+                        nazwa: {kierunek[1]} <br />
+                        opis: {kierunek[2]} <br />
                     </li>
                 ))}
             </ul>

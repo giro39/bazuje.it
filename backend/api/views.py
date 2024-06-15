@@ -64,9 +64,9 @@ def getBestKierunki(request):
         podlista.append(kierunkiSrednie[i][0])
         podlista.append(kierunkiSrednie[i][1])
         lista.append(podlista)
-    topPiec = sorted(kierunkiSrednie.items(), key=lambda item: item[1][0], reverse=True)[:3]
+    topPiec = sorted(kierunkiSrednie.items(), key=lambda item: item[1][0], reverse=True)[:2]
     
-    return Response(lista)
+    return Response(lista[:3])
 
 @api_view(['GET'])
 def wynikQuizu(request):

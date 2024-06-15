@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 
+import OverallTop5 from "../components/OverallTop5/OverallTop5";
+
 import styles from '../../styles/pages/Home.module.scss';
 
 import { ThemeContext } from '../contexts/ThemeContext';
@@ -53,7 +55,7 @@ const Home = () => {
             </div>
             <div className={styles.topMajors}>
                 <p className={styles.topMajorsText}>Najlepsze kierunki informatyczne:</p>
-
+                <OverallTop5 />
             </div>
         </div>
     );
