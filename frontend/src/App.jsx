@@ -11,6 +11,7 @@ import { ThemeContext, initialThemeContext } from './contexts/ThemeContext';
 
 
 import '../styles/App.scss';
+import { PrintUczelnias } from './components/PrintUczelnias/PrintUczelnias';
 
 const Logout = () => {
     localStorage.clear()
