@@ -8,6 +8,7 @@
         --text-color: #D3D3D3;
         --accent-color: #F1F1F1;
         --space-color: #202020;
+        --darker-primary-color: #996E4A;
         --font-family: Alata, sans-serif;
     }
     [theme='light'] {
@@ -17,6 +18,7 @@
         --text-color: #333333;
         --accent-color: #4CAF50;
         --space-color: #FFFFFF;
+        --darker-primary-color: #1063D1;
         --font-family: Alata, sans-serif;
     }
 }
@@ -27,6 +29,7 @@ $secondary-color: var(--secondary-color);
 $text-color: var(--text-color);
 $accent-color: var(--accent-color);
 $space-color: var(--space-color);
+$darker-primary-color: var(--darker-primary-color);
 
 $font-stack: Alata, sans-serif;
 
