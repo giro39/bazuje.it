@@ -1,0 +1,34 @@
+@use "vars";
+
+.container {
+  background-color: vars.$background-color;
+
+  width: 60vw;
+  height: 6.5rem;
+  border-radius: 9px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    margin-left: 2rem;
+
+    h3 {
+      color: vars.$accent-color;
+      font-weight: 300;
+    }
+
+    h5 {
+      color: vars.$text-color;
+      font-weight: 300;
+    }
+  }
+
+  .rating {
+    span {
+      color: vars.$secondary-color;
+    }
+  }
+}

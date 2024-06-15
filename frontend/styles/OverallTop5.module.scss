@@ -1,0 +1,10 @@
+@use "vars" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 300pt;
+  background-color: $space-color;
+}

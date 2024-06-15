@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+
+import "../styles/App.scss";
+import OverallTop5 from "./components/OverallTop5/OverallTop5";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import { ThemeContext, initialThemeContext } from './contexts/ThemeContext';
 
-
 import '../styles/App.scss';
 import { PrintUczelnias } from './components/PrintUczelnias/PrintUczelnias';
 
+
 const Logout = () => {
-    localStorage.clear()
-    return <Navigate to="/login" />
-}
-  
+  localStorage.clear();
+  return <Navigate to="/login" />;
+};
+
 const RegisterAndLogout = () => {
-    localStorage.clear()
-    return <Register />
-}
+  localStorage.clear();
+  return <Register />;
+};
 
 const App = () => {
     const [theme, setTheme] = useState(initialThemeContext);
