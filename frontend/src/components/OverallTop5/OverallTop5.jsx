@@ -6,8 +6,18 @@ const OverallTop5 = () => {
     <div className={styles.container}>
       <MajorPreview
         majorTitle={"Informatyka"}
+        universityTitle={"Uniwersytet Adama Mickiewicza"}
+        rating={81.7}
+      />
+      <MajorPreview
+        majorTitle={"Informatyka"}
         universityTitle={"Politechnika Poznańska"}
-        rating={69.8}
+        rating={76.1}
+      />
+      <MajorPreview
+        majorTitle={"Bioinformatyka"}
+        universityTitle={"Politechnika Poznańska"}
+        rating={71.1}
       />
     </div>
   );

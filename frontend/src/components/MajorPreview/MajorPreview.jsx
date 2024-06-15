@@ -6,11 +6,11 @@ const MajorPreview = ({ majorTitle, universityTitle, rating }) => {
   return (
     <div className={styles.container}>
       <MajorTitle
-        majorTitle={"Informatyka"}
-        universityTitle={"Politechnika Poznańska"}
+        majorTitle={majorTitle}
+        universityTitle={universityTitle}
       />
 
-      <MajorRating rating={69} />
+      <MajorRating rating={rating} />
     </div>
   );
 };
