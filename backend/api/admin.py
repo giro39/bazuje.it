@@ -1,10 +1,17 @@
 from django.contrib import admin
-from .models import DVD, Movie, Event
+from .models import Rodzaj, Miasto, Uczelnia, Wydzial, Kierunek, Przedmiot, OpiniaPrzedmiot, OpiniaUczelnia, OpiniaKierunek
 
 # Register your models here.
 
 
 
-admin.site.register(DVD)
-admin.site.register(Movie)
-admin.site.register(Event)
+admin.site.register(Miasto)
+admin.site.register(Rodzaj)
+admin.site.register(Uczelnia)
+admin.site.register(Wydzial)
+admin.site.register(Kierunek)
+admin.site.register(Przedmiot)
+admin.site.register(OpiniaKierunek)
+admin.site.register(OpiniaPrzedmiot)
+admin.site.register(OpiniaUczelnia)
+
