@@ -23,7 +23,7 @@ const RegisterAndLogout = () => {
 const App = () => {
     return (
         <BrowserRouter>
-            <main>
+            <main theme='dark'>
                 <Routes>
                     <Route 
                         path='/' 

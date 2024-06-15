@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
+
+:root {
+    [theme='dark'] {
+        --background-color: #3F3F3F;
+        --primary-color: #BC865A;
+        --secondary-color: #6F939F;
+        --text-color: #D3D3D3;
+        --accent-color: #F1F1F1;
+        --space-color: #202020;
+        --font-family: Alata, sans-serif;
+    }
+    [theme='light'] {
+        --background-color: #F8F8F8;
+        --primary-color: #1E88E5;
+        --secondary-color: #FFB74D;
+        --text-color: #333333;
+        --accent-color: #4CAF50;
+        --space-color: #FFFFFF;
+        --font-family: Alata, sans-serif;
+    }
+}
+
+$background-color: var(--background-color);
+$primary-color: var(--primary-color);
+$secondary-color: var(--secondary-color);
+$text-color: var(--text-color);
+$accent-color: var(--accent-color);
+$space-color: var(--space-color);
+
+$font-stack: Alata, sans-serif;
+
+$layout-breakpoint-small: 600px;
+$layout-breakpoint-mid: 845px;
+$layout-breakpoint-big: 1145px;
