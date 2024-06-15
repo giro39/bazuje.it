@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import OverallTop5 from "../components/OverallTop5/OverallTop5";
+import Quiz from './Quiz';
 
 import styles from '../../styles/pages/Home.module.scss';
 
@@ -8,9 +10,20 @@ import { ThemeContext } from '../contexts/ThemeContext';
 
 const Home = () => {
     const {theme, setTheme} = useContext(ThemeContext);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [currentFold, setCurrentFold] = useState(location.pathname.split('/').pop());
+
+    useEffect(() => {
+        navigate(`/${currentFold}`);
+    }, [currentFold]);
 
     const handleModeChange = () => {
         setTheme(prevState => (prevState === 'light' ? 'dark' : 'light'));
+    }
+
+    const handleQuizActivation = () => {
+        setCurrentFold('quiz');
     }
 
     return (
@@ -18,7 +31,7 @@ const Home = () => {
             <div className={styles.navbar}>
                 <div className={styles.logoContainer}>
                     <img 
-                        src="../../public/bazujepl_logo_orange.png" 
+                        src="/bazujepl_logo_orange.png" 
                         alt="Bazuje.it"
                         className={styles.logo}
                     />
@@ -30,7 +43,7 @@ const Home = () => {
                         // placeholder="Wyszukaj uczelnię..."
                     />
                     <img 
-                        src={theme === 'dark' ? "../../public/moon_icon.png" : "../../public/sun_icon_orange.png"}
+                        src={theme === 'dark' ? "/moon_icon.png" : "/sun_icon_orange.png"}
                         alt="Change theme" 
                         className={styles.themeIcon}
                         onClick={handleModeChange}
@@ -48,7 +61,9 @@ const Home = () => {
                     </p>
                 </div>
                 <div className={styles.buttonMain}>
-                    <button className={styles.quizButton}>
+                    <button 
+                        className={styles.quizButton}
+                        onClick={handleQuizActivation}>
                         pozwól nam poznać Twoje preferencje
                     </button>
                 </div>

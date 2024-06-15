@@ -1,0 +1,58 @@
+@use '../vars' as *;
+
+.container {
+    color: $text-color;
+    padding: 2vw 5vw;
+}
+
+.headerText {
+    font-size: 32pt;
+}
+
+.smallerText {
+    font-size: 18pt;
+}
+
+.textGradient {
+    background: linear-gradient(115deg, $primary-color 55%, $darker-primary-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0pt;
+    grid-row-gap: 60pt;
+    margin-top: 60pt;
+}
+
+.categoriesElement {
+    display: flex;
+    width: 200pt;
+    height: 50pt;
+    color: $space-color;
+    background-color: $accent-color;
+    border-radius: 5pt;
+    align-items: center;
+    justify-content: center; 
+    padding: 10pt;
+}
+
+.firstSelected {
+    background-color: yellow;
+}
+
+.secondSelected {
+    background-color: red;
+}
+
+.thirdSelected {
+    background-color: blue;
+}
+
+.categorie {
+    font-size: 18pt;
+    background-color: inherit;
+}
