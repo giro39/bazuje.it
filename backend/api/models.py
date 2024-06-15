@@ -1,29 +1,67 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Kategorie(models.IntegerChoices):
+    BAZY_DANYCH = 1, "BAZY DANYCH"
+    WEB_DEV = 2, "WEB DEV"
+    SIECI_KOMPUTEROWE = 3, "SIECI KOMPUTEROWE"
 
-# Create your models here.
-class Statuses(models.IntegerChoices):
-    RETURNED = 1, "RETURNED"
-    RENTED = 2, "RENTED"
 
-class Categories(models.IntegerChoices):
-    COMEDY = 1, "COMEDY"
-    DRAMA = 2, "DRAMA"
+class Miasto(models.Model):
+    nazwa = models.CharField(max_length=200, primary_key=True)
+    def __str__(self):
+        return self.nazwa
 
-class Movie(models.Model):
-    title = models.CharField(max_length=50)
-    description = models.TextField(blank=True)
-    publish_date = models.IntegerField()
-    category = models.IntegerField(choices=Categories.choices, null = True)
+class Rodzaj(models.Model):
+    nazwa = models.CharField(max_length=200, primary_key=True)
+    def __str__(self):
+        return self.nazwa
 
-class DVD(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    status = models.IntegerField(choices=Statuses.choices, default = 1)
-    renter = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+class Uczelnia(models.Model):
+    Miasto = models.ForeignKey(Miasto, on_delete=models.CASCADE)
+    Rodzaj = models.ForeignKey(Rodzaj, on_delete=models.CASCADE)
+    nazwa = models.CharField(max_length=200)
+    opis = models.TextField(blank=True)
+    def __str__(self):
+        return self.nazwa
 
-class Event(models.Model):
-    status = models.IntegerField(choices=Statuses.choices)
-    time = models.DateTimeField(auto_now_add=True, db_index=True)
-    DVD = models.ForeignKey(DVD, on_delete=models.SET_NULL, blank=True, null=True)
-    renter = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+class Wydzial(models.Model):
+    uczelnia = models.ForeignKey(Uczelnia, on_delete=models.CASCADE)
+    nazwa = models.CharField(max_length=200)
+    opis = models.TextField(blank=True)
+    def __str__(self):
+        return self.nazwa
+
+class Kierunek(models.Model):
+    wydzial = models.ForeignKey(Wydzial, on_delete=models.CASCADE)
+    nazwa = models.CharField(max_length=200)
+    opis = models.TextField(blank=True)
+    def __str__(self):
+        return self.nazwa
+
+class Przedmiot(models.Model):
+    kierunek = models.ForeignKey(Kierunek, on_delete=models.CASCADE)
+    nazwa = models.CharField(max_length=200)
+    opis = models.TextField(blank=True)
+    kategoria = models.IntegerField(choices=Kategorie.choices, null = True)
+    def __str__(self):
+        return self.nazwa
+
+class OpiniaUczelnia(models.Model):
+   uczelnia = models.ForeignKey(Uczelnia, on_delete=models.CASCADE)
+   user = models.ForeignKey(User, on_delete=models.CASCADE)
+   ocena = models.IntegerField(null = False)
+   opis = models.TextField(blank=True)
+
+class OpiniaKierunek(models.Model):
+   kierunek = models.ForeignKey(Kierunek, on_delete=models.CASCADE)
+   user = models.ForeignKey(User, on_delete=models.CASCADE)
+   ocena = models.IntegerField(null = False)
+   opis = models.TextField(blank=True)
+
+
+class OpiniaPrzedmiot(models.Model):
+   przedmiot = models.ForeignKey(Przedmiot, on_delete=models.CASCADE)
+   user = models.ForeignKey(User, on_delete=models.CASCADE)
+   ocena = models.IntegerField(null = False)
+   opis = models.TextField(blank=True)

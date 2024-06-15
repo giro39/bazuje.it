@@ -9,6 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 
 
 import '../styles/App.scss';
+import { PrintUczelnias } from './components/PrintUczelnias/PrintUczelnias';
 
 const Logout = () => {
     localStorage.clear()
@@ -33,7 +34,7 @@ const App = () => {
                         path='/home'
                         element={
                             // <ProtectedRoute>
-                                <Home />
+                                <PrintUczelnias />
                             // </ProtectedRoute>
                         } 
                     />
