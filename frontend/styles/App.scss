@@ -1,5 +1,11 @@
-@use 'vars' as *;
+@use "vars" as *;
 
 * {
-    background-color: $background-color;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $background-color;
 }
