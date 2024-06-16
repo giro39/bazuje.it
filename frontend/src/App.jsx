@@ -40,7 +40,7 @@ const App = () => {
                             path='/home'
                             element={
                                 <Home />
-                            } 
+                            }
                         />
                         <Route 
                             path='/quiz'

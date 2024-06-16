@@ -1,16 +1,20 @@
 @use '../vars' as *;
 
 .container {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
     color: $text-color;
-    padding: 2vw 5vw;
+    padding: 2.8vw 5vw;
 }
 
 .headerText {
-    font-size: 32pt;
+    font-size: 40pt;
 }
 
 .smallerText {
-    font-size: 18pt;
+    font-size: 22pt;
 }
 
 .textGradient {
@@ -23,9 +27,9 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0pt;
-    grid-row-gap: 60pt;
-    margin-top: 60pt;
+    grid-column-gap: 30pt;
+    grid-row-gap: 50pt;
+    margin: 60pt 0 60pt;
 }
 
 .categoriesElement {
@@ -41,18 +45,30 @@
 }
 
 .firstSelected {
-    background-color: yellow;
+    background-color: $primary-color;
 }
 
 .secondSelected {
-    background-color: red;
+    background-color: $darker-primary-color;
 }
 
 .thirdSelected {
-    background-color: blue;
+    background-color: $darkest-primary-color;
 }
 
-.categorie {
+.category {
     font-size: 18pt;
     background-color: inherit;
+}
+
+.confirmButton {
+    background-image: linear-gradient(90deg, $darker-primary-color, $primary-color);
+    width: 250pt;
+    height: 85pt;
+    color: $text-color;
+    font-size: 28pt;
+    padding: 20pt;
+    border: none;
+    border-radius: 6pt;
+    cursor: pointer;
 }

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import styles from '../../styles/pages/Quiz.module.scss';
 
+const SERVER_URL = "http://127.0.0.1:8000";
+
 const categories = [
     {
         title: "Bazy danych",
@@ -42,11 +44,12 @@ const Quiz = () => {
 
     const handleCategoryClick = (name) => {
         if (selectedCategories.includes(name)) {
-            setSelectedCategories(selectedCategories.filter(categorie => categorie !== name));
+            setSelectedCategories(selectedCategories.filter(category => category !== name));
         } else if (selectedCategories.length < 3) {
             setSelectedCategories([...selectedCategories, name]);
-        } else if (selectedCategories.length >= 3) {
-            console.log("Tutaj będzie oddisable'owanie buttona do zatwierdzenia");
+            // if (selectedCategories.length === 3) {
+            //     activateButton()
+            // }
         }
     };
 
@@ -64,6 +67,30 @@ const Quiz = () => {
         };
     };
 
+    // const activateButton = () => {
+
+    // }
+
+    const handleConfirmation = () => {
+        fetch(SERVER_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ categories: selectedCategories })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Kategorie zostały pomyślnie wysłane');
+            } else {
+                alert('Wystąpił błąd podczas wysyłania kategorii');
+            }
+        })
+        .catch(error => {
+            alert('Wystąpił błąd sieci: ' + error.message);
+        });
+    };
+    
     return (
         <div className={styles.container}>
             <p className={styles.headerText}>Zaznacz 3 kategorie, które najbardziej <span className={styles.textGradient}>Cię</span> interesują.</p>
@@ -73,12 +100,17 @@ const Quiz = () => {
                     <div 
                         className={`${styles.categoriesElement} ${getCategoryStyle(cat.name)}`}
                         onClick={() => handleCategoryClick(cat.name)}>
-                        <p className={styles.categorie}>{cat.title}</p>
+                        <p className={styles.category}>{cat.title}</p>
                     </div>
                 ))}
             </div>
+            <button 
+                className={styles.confirmButton}
+                onClick={handleConfirmation}>
+                Zatwierdź
+            </button>
         </div>
-    )
+    );
 };
 
 export default Quiz;

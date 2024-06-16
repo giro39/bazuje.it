@@ -18,21 +18,6 @@ const OverallTop5 = () => {
         .then((newNotes) => setUczelnias(newNotes));
   }, []);
 
-    // <div style={{padding:"20px"}}>
-    //     <h1>Uczelnias</h1>
-    //     <br />
-    //     <ul>
-    //         {uczelnias.map((kierunek) => ( 
-    //             <li key={kierunek[0]}>
-    //                 id: {kierunek[0]} <br />
-    //                 nazwa: {kierunek[1]} <br />
-    //                 opis: {kierunek[2]} <br />
-    //             </li>
-    //         ))}
-    //     </ul>
-    // </div>
-
-
   return (
     <div className={styles.container}>
         {uczelnias.map((kierunek) => (
