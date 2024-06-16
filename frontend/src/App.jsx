@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Results from "./pages/Results";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -46,6 +47,12 @@ const App = () => {
                             path='/quiz'
                             element={
                                 <Quiz />
+                            } 
+                        />
+                        <Route 
+                            path='/results'
+                            element={
+                                <Results />
                             } 
                         />
                         <Route path="/login" element={<Login />} />

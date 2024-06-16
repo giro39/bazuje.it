@@ -88,3 +88,13 @@
 .topMajorsText {
     font-size: 28pt;
 }
+
+.mainResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textResults {
+    text-align: center;
+}

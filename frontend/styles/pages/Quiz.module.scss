@@ -56,6 +56,10 @@
     background-color: $darkest-primary-color;
 }
 
+.firstSelected, .secondSelected, .thirdSelected {
+    transition: 0.1s;
+}
+
 .category {
     font-size: 18pt;
     background-color: inherit;

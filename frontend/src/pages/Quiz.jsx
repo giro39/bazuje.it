@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from '../../styles/pages/Quiz.module.scss';
 
-const SERVER_URL = "http://127.0.0.1:8000";
+// const SERVER_URL = "http://127.0.0.1:8000";
 
 const categories = [
     {
@@ -41,15 +42,19 @@ const categories = [
 
 const Quiz = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [currentFold, setCurrentFold] = useState(location.pathname.split('/').pop());
+
+    useEffect(() => {
+        navigate(`/${currentFold}`);
+    }, [currentFold]);
 
     const handleCategoryClick = (name) => {
         if (selectedCategories.includes(name)) {
             setSelectedCategories(selectedCategories.filter(category => category !== name));
         } else if (selectedCategories.length < 3) {
             setSelectedCategories([...selectedCategories, name]);
-            // if (selectedCategories.length === 3) {
-            //     activateButton()
-            // }
         }
     };
 
@@ -67,28 +72,25 @@ const Quiz = () => {
         };
     };
 
-    // const activateButton = () => {
-
-    // }
-
     const handleConfirmation = () => {
-        fetch(SERVER_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ categories: selectedCategories })
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Kategorie zostały pomyślnie wysłane');
-            } else {
-                alert('Wystąpił błąd podczas wysyłania kategorii');
-            }
-        })
-        .catch(error => {
-            alert('Wystąpił błąd sieci: ' + error.message);
-        });
+        setCurrentFold('results');
+        // fetch(SERVER_URL, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ categories: selectedCategories })
+        // })
+        // .then(response => {
+        //     if (response.ok) {
+        //         console.log('Kategorie zostały pomyślnie wysłane');
+        //     } else {
+        //         console.log('Wystąpił błąd podczas wysyłania kategorii');
+        //     }
+        // })
+        // .catch(error => {
+        //     console.log('Wystąpił błąd sieci: ' + error.message);
+        // });
     };
     
     return (
