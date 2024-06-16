@@ -9,8 +9,7 @@ const MajorPreview = ({ majorTitle, universityTitle, rating }) => {
         majorTitle={majorTitle}
         universityTitle={universityTitle}
       />
-
-      <MajorRating rating={rating} />
+      {rating === -1 ? <div></div> : <MajorRating rating={rating} />}
     </div>
   );
 };

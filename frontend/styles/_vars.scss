@@ -9,6 +9,7 @@
         --accent-color: #F1F1F1;
         --space-color: #202020;
         --darker-primary-color: #996E4A;
+        --darkest-primary-color: #885A3D;
         --font-family: Alata, sans-serif;
     }
     [theme='light'] {
@@ -16,9 +17,10 @@
         --primary-color: #1E88E5;
         --secondary-color: #FFB74D;
         --text-color: #333333;
-        --accent-color: #4CAF50;
+        --accent-color: #202020;
         --space-color: #FFFFFF;
         --darker-primary-color: #1063D1;
+        --darkest-primary-color: #0241C0;
         --font-family: Alata, sans-serif;
     }
 }
@@ -30,6 +32,7 @@ $text-color: var(--text-color);
 $accent-color: var(--accent-color);
 $space-color: var(--space-color);
 $darker-primary-color: var(--darker-primary-color);
+$darkest-primary-color: var(--darkest-primary-color);
 
 $font-stack: "";
 

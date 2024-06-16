@@ -78,6 +78,7 @@
     padding: 20pt;
     border: none;
     border-radius: 6pt;
+    cursor: pointer;
 }
 
 .topMajors {
@@ -86,4 +87,14 @@
 
 .topMajorsText {
     font-size: 28pt;
+}
+
+.mainResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textResults {
+    text-align: center;
 }
