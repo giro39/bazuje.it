@@ -3,9 +3,14 @@ from django.contrib.auth.models import User
 
 
 class Kategorie(models.IntegerChoices):
-    BAZY_DANYCH = 1, "BAZY DANYCH"
-    WEB_DEV = 2, "WEB DEV"
-    SIECI_KOMPUTEROWE = 3, "SIECI KOMPUTEROWE"
+    BAZY_DANYCH = 1, "Bazy danych"
+    SIECI_KOMPUTEROWE = 2, "Sieci komputerowe"
+    ALGORYTMIKA = 3, "Algorytmika"
+    SZTUCZNA_INTELIGENCJA = 4, "Sztuczna Inteligencja"
+    GAMEDEV = 5, "Gamedev"
+    WEBDEV = 6, "Webdev"
+    PROGRAMOWANIE_MOBILNE = 7, "Programowanie mobilne"
+    CYBERBEZPIECZENSTWO = 8, "Cyberbezpieczeństwo"
 
 
 class Miasto(models.Model):

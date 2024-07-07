@@ -1,8 +1,11 @@
+from rest_framework import status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from .serializers import (
     BestKierunkiSerializer,
     WynikQuizuSerializer,
+    CategorySerializer,
 )
 from .models import (
     Rodzaj,
@@ -36,19 +39,25 @@ def getBestKierunki(request):
                 "sredniaOcen": sredniaOcen,
             }
         )
-        sorted_data = sorted(data, key=lambda x: x["sredniaOcen"], reverse=True)
+    sorted_data = sorted(data, key=lambda x: x["sredniaOcen"], reverse=True)
 
     serializer = BestKierunkiSerializer(sorted_data[:3], many=True)
     return Response(serializer.data)
 
 
-kat1 = "BAZY DANYCH"
-kat2 = "WEB DEV"
-kat3 = "SIECI KOMPUTEROWE"
-
-
-@api_view(["GET"])
+@api_view(["GET", "POST"])
+@permission_classes([AllowAny])
 def wynikQuizu(request):
+    global kat1, kat2, kat3  # Dodanie deklaracji globalnych zmiennych
+
+    if request.method == "POST":
+        serializer = CategorySerializer(data=request.data, many=True)
+        if serializer.is_valid():
+            kat1 = serializer.data[0]["title"]
+            kat2 = serializer.data[1]["title"]
+            kat3 = serializer.data[2]["title"]
+            print(kat1, kat2, kat3)
+
     kierunki = Kierunek.objects.all()
     data = []
     for kierunek in kierunki:
@@ -56,7 +65,6 @@ def wynikQuizu(request):
         suma1, suma2, suma3 = 0, 0, 0
         count1, count2, count3 = 0, 0, 0
         for przedmiot in przedmioty:
-
             if Kategorie(przedmiot.kategoria).label == kat1:
                 opinie = OpiniaPrzedmiot.objects.filter(przedmiot=przedmiot.id)
                 suma1 += sum(opinia.ocena for opinia in opinie)
@@ -87,7 +95,17 @@ def wynikQuizu(request):
                 "wynikQuizu": wynikQuizu,
             }
         )
-        sorted_data = sorted(data, key=lambda x: x["wynikQuizu"], reverse=True)
+    sorted_data = sorted(data, key=lambda x: x["wynikQuizu"], reverse=True)
 
     serializer = WynikQuizuSerializer(sorted_data[:3], many=True)
     return Response(serializer.data)
+
+
+# @api_view(["POST"])
+# @permission_classes([AllowAny])
+# def submit_categories(request):
+#     serializer = CategorySerializer(data=request.data, many=True)
+#     print(serializer)
+#     if serializer.is_valid():
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

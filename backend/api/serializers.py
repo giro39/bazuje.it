@@ -11,3 +11,8 @@ class WynikQuizuSerializer(serializers.Serializer):
     kierunek = serializers.CharField()
     uczelnia = serializers.CharField()
     wynikQuizu = serializers.FloatField()
+
+
+class CategorySerializer(serializers.Serializer):
+    title = serializers.CharField()
+    name = serializers.CharField()
