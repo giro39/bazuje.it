@@ -3,7 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path("bestkierunki/", views.getBestKierunki, name="bestKierunki"),
-    path("wynikquizu/", views.wynikQuizu, name="wynikQuizu"),
+    path("best_kierunki/", views.getBestKierunki, name="bestKierunki"),
     path("submit_categories/", views.wynikQuizu),
 ]
