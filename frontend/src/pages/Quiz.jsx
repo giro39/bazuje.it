@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import styles from '../../styles/pages/Quiz.module.scss';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import styles from "../styles/pages/Quiz.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000/api/submit_categories/";
 
@@ -13,14 +13,16 @@ const categories = [
     { title: "Gamedev", name: "gamedev" },
     { title: "Webdev", name: "webdev" },
     { title: "Programowanie mobilne", name: "mobilne" },
-    { title: "Cyberbezpieczeństwo", name: "cyberbezpieczenstwo" }
+    { title: "Cyberbezpieczeństwo", name: "cyberbezpieczenstwo" },
 ];
 
 const Quiz = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
-    const [currentFold, setCurrentFold] = useState(location.pathname.split('/').pop());
+    const [currentFold, setCurrentFold] = useState(
+        location.pathname.split("/").pop()
+    );
 
     useEffect(() => {
         navigate(`/${currentFold}`);
@@ -28,7 +30,9 @@ const Quiz = () => {
 
     const handleCategoryClick = (name) => {
         if (selectedCategories.includes(name)) {
-            setSelectedCategories(selectedCategories.filter(category => category !== name));
+            setSelectedCategories(
+                selectedCategories.filter((category) => category !== name)
+            );
         } else if (selectedCategories.length < 3) {
             setSelectedCategories([...selectedCategories, name]);
         }
@@ -44,41 +48,59 @@ const Quiz = () => {
             case 2:
                 return styles.thirdSelected;
             default:
-                return '';
-        };
+                return "";
+        }
     };
 
     const handleConfirmation = () => {
-        axios.post(SERVER_URL, selectedCategories.map(name => {
-            const category = categories.find(cat => cat.name === name);
-            return { title: category.title, name: category.name };
-        }))
-            .then(response => {
+        axios
+            .post(
+                SERVER_URL,
+                selectedCategories.map((name) => {
+                    const category = categories.find(
+                        (cat) => cat.name === name
+                    );
+                    return { title: category.title, name: category.name };
+                })
+            )
+            .then((response) => {
                 console.log(response.data);
-                setCurrentFold('results');
+                setCurrentFold("results");
             })
-            .catch(error => {
-                console.error('There was an error submitting the categories!', error);
+            .catch((error) => {
+                console.error(
+                    "There was an error submitting the categories!",
+                    error
+                );
             });
     };
 
     return (
         <div className={styles.container}>
-            <p className={styles.headerText}>Zaznacz 3 kategorie, które najbardziej <span className={styles.textGradient}>Cię</span> interesują.</p>
-            <p className={styles.smallerText}>Kolejność zaznaczania ma znaczenie!</p>
+            <p className={styles.headerText}>
+                Zaznacz 3 kategorie, które najbardziej{" "}
+                <span className={styles.textGradient}>Cię</span> interesują.
+            </p>
+            <p className={styles.smallerText}>
+                Kolejność zaznaczania ma znaczenie!
+            </p>
             <div className={styles.categories}>
                 {categories.map((cat) => (
                     <div
                         key={cat.name}
-                        className={`${styles.categoriesElement} ${getCategoryStyle(cat.name)}`}
-                        onClick={() => handleCategoryClick(cat.name)}>
+                        className={`${
+                            styles.categoriesElement
+                        } ${getCategoryStyle(cat.name)}`}
+                        onClick={() => handleCategoryClick(cat.name)}
+                    >
                         <p className={styles.category}>{cat.title}</p>
                     </div>
                 ))}
             </div>
             <button
                 className={styles.confirmButton}
-                onClick={handleConfirmation}>
+                onClick={handleConfirmation}
+            >
                 Zatwierdź
             </button>
         </div>
