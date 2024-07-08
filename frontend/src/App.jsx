@@ -11,8 +11,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import { ThemeContext, initialThemeContext } from "./contexts/ThemeContext";
 
-import { PrintUczelnias } from "./components/PrintUczelnias/PrintUczelnias";
-
 import "./styles/App.scss";
 
 const Logout = () => {
