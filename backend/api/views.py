@@ -45,7 +45,7 @@ def getBestKierunki(request):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(["GET", "POST"])
+@api_view(["POST"])
 @permission_classes([AllowAny])
 def wynikQuizu(request):
     kat = ["brak kategorii"] * 3
@@ -81,7 +81,7 @@ def wynikQuizu(request):
         if count[2] != 0:
             wynikQuizu += 0.4 * suma[2] / count[2]
 
-        print(wynikQuizu)
+        # print(wynikQuizu)
         data.append(
             {
                 "kierunek": kierunek,
