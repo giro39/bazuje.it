@@ -1,31 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Alata&display=swap");
-
 :root {
-    [theme='dark'] {
-        --background-color: #3F3F3F;
-        --primary-color: #BC865A;
-        --secondary-color: #6F939F;
-        --text-color: #D3D3D3;
-        --accent-color: #F1F1F1;
+    [theme="dark"] {
+        --background-color: #3f3f3f;
+        --alt-background-color: #2f2f2f;
+        --primary-color: #bc865a;
+        --secondary-color: #6f939f;
+        --text-color: #d3d3d3;
+        --accent-color: #f1f1f1;
         --space-color: #202020;
-        --darker-primary-color: #996E4A;
-        --darkest-primary-color: #885A3D;
-        --font-family: Alata, sans-serif;
+        --darker-primary-color: #996e4a;
+        --darkest-primary-color: #885a3d;
     }
-    [theme='light'] {
-        --background-color: #E0E0E0;
-        --primary-color: #1E88E5;
-        --secondary-color: #FFB74D;
+    [theme="light"] {
+        --background-color: #e0e0e0;
+        --alt-background-color: #f0f0f0;
+        --primary-color: #1e88e5;
+        --secondary-color: #ffb74d;
         --text-color: #333333;
         --accent-color: #202020;
-        --space-color: #FFFFFF;
-        --darker-primary-color: #1063D1;
-        --darkest-primary-color: #0241C0;
-        --font-family: Alata, sans-serif;
+        --space-color: #ffffff;
+        --darker-primary-color: #1063d1;
+        --darkest-primary-color: #0241c0;
     }
 }
 
 $background-color: var(--background-color);
+$alt-background-color: var(--alt-background-color);
 $primary-color: var(--primary-color);
 $secondary-color: var(--secondary-color);
 $text-color: var(--text-color);
@@ -33,9 +32,3 @@ $accent-color: var(--accent-color);
 $space-color: var(--space-color);
 $darker-primary-color: var(--darker-primary-color);
 $darkest-primary-color: var(--darkest-primary-color);
-
-$font-stack: "";
-
-$layout-breakpoint-small: 600px;
-$layout-breakpoint-mid: 845px;
-$layout-breakpoint-big: 1145px;

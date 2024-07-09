@@ -2,6 +2,13 @@
 
 * {
     margin: 0;
-    background-color: $background-color;
     font-family: "Alata", sans-serif;
+}
+
+main {
+    background: radial-gradient(
+        circle at 24.1% 68.8%,
+        $background-color 5%,
+        $alt-background-color 95%
+    );
 }
