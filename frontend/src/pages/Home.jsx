@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar/Navbar";
 import OverallTop5 from "../components/OverallTop5/OverallTop5";
-import Quiz from "./Quiz";
 
 import styles from "../styles/pages/Home.module.scss";
 
