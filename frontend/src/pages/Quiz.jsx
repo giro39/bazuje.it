@@ -1,8 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/BasicComponents/Button/Button";
 import styles from "../styles/pages/Quiz.module.scss";
+
+import { ResultContext } from "../contexts/ResultContext";
 
 const SERVER_URL = "http://127.0.0.1:8000/api/submit_categories/";
 
@@ -18,6 +20,7 @@ const categories = [
 ];
 
 const Quiz = () => {
+    const { result, setResult } = useContext(ResultContext);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
@@ -28,6 +31,8 @@ const Quiz = () => {
     useEffect(() => {
         navigate(`/${currentFold}`);
     }, [currentFold, navigate]);
+
+
 
     const handleCategoryClick = (name) => {
         if (selectedCategories.includes(name)) {
@@ -54,19 +59,15 @@ const Quiz = () => {
     };
 
     const handleConfirmation = () => {
-        axios
-            .post(
-                SERVER_URL,
-                selectedCategories.map((name) => {
-                    const category = categories.find(
-                        (cat) => cat.name === name
-                    );
-                    return { title: category.title, name: category.name };
-                })
-            )
-            .then((response) => {
-                console.log(response.data);
-                setCurrentFold("results");
+        axios.post(SERVER_URL, selectedCategories.map(name => {
+            const category = categories.find(cat => cat.name === name);
+            return { title: category.title, name: category.name };
+        }))
+            .then(response => {
+
+                setResult(response.data);
+
+                setCurrentFold('results');
             })
             .catch((error) => {
                 console.error(

@@ -1,9 +1,11 @@
 import React, { useState, useContext } from "react";
 
 import Navbar from "../components/Navbar/Navbar";
-import OverallTop5 from "../components/OverallTop5/OverallTop5";
 
 import styles from "../styles/pages/Home.module.scss";
+
+import QuizResult from '../components/OverallTop5/QuizResult';
+
 
 const Results = () => {
     const [flag, setFlag] = useState("results");
@@ -23,7 +25,7 @@ const Results = () => {
                 </div>
             </div>
             <div className={styles.topMajors}>
-                <OverallTop5 flag={flag} />
+                <QuizResult />
             </div>
         </div>
     );

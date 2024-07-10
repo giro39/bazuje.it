@@ -9,7 +9,8 @@ import Results from "./pages/Results";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { ThemeContext, initialThemeContext } from "./contexts/ThemeContext";
+import { ThemeContext, initialThemeContext } from './contexts/ThemeContext';
+import { ResultContext, initialResultContext } from './contexts/ResultContext';
 
 import "./styles/App.scss";
 
@@ -25,28 +26,46 @@ const RegisterAndLogout = () => {
 
 const App = () => {
     const [theme, setTheme] = useState(initialThemeContext);
+    const [result, setResult] = useState(initialResultContext);
 
     return (
         <BrowserRouter>
             <main theme={theme}>
                 <ThemeContext.Provider value={{ theme, setTheme }}>
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={<Navigate to={"/home"} replace={true} />}
-                        />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/quiz" element={<Quiz />} />
-                        <Route path="/results" element={<Results />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/logout" element={<Logout />} />
-                        <Route
-                            path="/register"
-                            element={<RegisterAndLogout />}
-                        />
+                    <ResultContext.Provider value={{ result, setResult }}>
+                        <Routes>
+                            <Route
+                                path='/'
+                                element={<Navigate to={'/home'} replace={true} />}
+                            />
+                            <Route
+                                path='/home'
+                                element={
+                                    <Home />
+                                }
+                            />
+                            <Route
+                                path='/quiz'
+                                element={
+                                    <Quiz />
+                                }
+                            />
+                            <Route
+                                path='/results'
+                                element={
+                                    <Results />
+                                }
+                            />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/logout" element={<Logout />} />
+                            <Route path="/register" element={<RegisterAndLogout />} />
 
-                        <Route path="*" element={<h1>404. Not found</h1>} />
-                    </Routes>
+                            <Route
+                                path='*'
+                                element={<h1>404. Not found</h1>}
+                            />
+                        </Routes>
+                    </ResultContext.Provider>
                 </ThemeContext.Provider>
             </main>
         </BrowserRouter>
