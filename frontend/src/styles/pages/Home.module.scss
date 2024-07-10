@@ -1,0 +1,43 @@
+@use "../vars" as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    color: $text-color;
+    margin: 0 5vw;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+// .textMain {
+//     width: 55%;
+// }
+
+.largeText {
+    font-size: 4em;
+}
+
+.textGradient1 {
+    background: linear-gradient(90deg, $text-color, $secondary-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.textGradient2 {
+    background: linear-gradient(90deg, $primary-color 65%, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.topMajors {
+    margin-top: 30pt;
+}
+
+.topMajorsText {
+    font-size: 28pt;
+}

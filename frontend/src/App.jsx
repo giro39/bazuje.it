@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
@@ -12,9 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { ThemeContext, initialThemeContext } from './contexts/ThemeContext';
 import { ResultContext, initialResultContext } from './contexts/ResultContext';
 
-import { PrintUczelnias } from './components/PrintUczelnias/PrintUczelnias';
-
-import '../styles/App.scss';
+import "./styles/App.scss";
 
 const Logout = () => {
     localStorage.clear();
@@ -71,6 +69,6 @@ const App = () => {
                 </ThemeContext.Provider>
             </main>
         </BrowserRouter>
-    )
+    );
 };
 export default App;

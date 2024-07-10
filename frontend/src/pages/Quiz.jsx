@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import styles from '../../styles/pages/Quiz.module.scss';
+import axios from "axios";
+import React, { useEffect, useState, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Button from "../components/BasicComponents/Button/Button";
+import styles from "../styles/pages/Quiz.module.scss";
 
 import { ResultContext } from "../contexts/ResultContext";
 
@@ -15,7 +16,7 @@ const categories = [
     { title: "Gamedev", name: "gamedev" },
     { title: "Webdev", name: "webdev" },
     { title: "Programowanie mobilne", name: "mobilne" },
-    { title: "Cyberbezpieczeństwo", name: "cyberbezpieczenstwo" }
+    { title: "Cyberbezpieczeństwo", name: "cyberbezpieczenstwo" },
 ];
 
 const Quiz = () => {
@@ -23,7 +24,9 @@ const Quiz = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
-    const [currentFold, setCurrentFold] = useState(location.pathname.split('/').pop());
+    const [currentFold, setCurrentFold] = useState(
+        location.pathname.split("/").pop()
+    );
 
     useEffect(() => {
         navigate(`/${currentFold}`);
@@ -33,7 +36,9 @@ const Quiz = () => {
 
     const handleCategoryClick = (name) => {
         if (selectedCategories.includes(name)) {
-            setSelectedCategories(selectedCategories.filter(category => category !== name));
+            setSelectedCategories(
+                selectedCategories.filter((category) => category !== name)
+            );
         } else if (selectedCategories.length < 3) {
             setSelectedCategories([...selectedCategories, name]);
         }
@@ -49,8 +54,8 @@ const Quiz = () => {
             case 2:
                 return styles.thirdSelected;
             default:
-                return '';
-        };
+                return "";
+        }
     };
 
     const handleConfirmation = () => {
@@ -64,30 +69,43 @@ const Quiz = () => {
 
                 setCurrentFold('results');
             })
-            .catch(error => {
-                console.error('There was an error submitting the categories!', error);
+            .catch((error) => {
+                console.error(
+                    "There was an error submitting the categories!",
+                    error
+                );
             });
     };
 
     return (
         <div className={styles.container}>
-            <p className={styles.headerText}>Zaznacz 3 kategorie, które najbardziej <span className={styles.textGradient}>Cię</span> interesują.</p>
-            <p className={styles.smallerText}>Kolejność zaznaczania ma znaczenie!</p>
+            <p className={styles.headerText}>
+                Zaznacz 3 kategorie, które najbardziej{" "}
+                <span className={styles.textGradient}>Cię</span> interesują.
+            </p>
+            <p className={styles.smallerText}>
+                Kolejność zaznaczania ma znaczenie!
+            </p>
             <div className={styles.categories}>
                 {categories.map((cat) => (
                     <div
                         key={cat.name}
-                        className={`${styles.categoriesElement} ${getCategoryStyle(cat.name)}`}
-                        onClick={() => handleCategoryClick(cat.name)}>
+                        className={`${
+                            styles.categoriesElement
+                        } ${getCategoryStyle(cat.name)}`}
+                        onClick={() => handleCategoryClick(cat.name)}
+                    >
                         <p className={styles.category}>{cat.title}</p>
                     </div>
                 ))}
             </div>
-            <button
-                className={styles.confirmButton}
-                onClick={handleConfirmation}>
+            <Button
+                buttonType="contained"
+                buttonSize="large"
+                onClick={handleConfirmation}
+            >
                 Zatwierdź
-            </button>
+            </Button>
         </div>
     );
 };

@@ -1,0 +1,15 @@
+@use "../vars" as *;
+
+.mainResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textResults {
+    text-align: center;
+}
+
+.topMajors {
+    margin-top: 30pt;
+}
