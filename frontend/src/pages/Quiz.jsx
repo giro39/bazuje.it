@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Button from "../components/BasicComponents/Button/Button";
 import styles from "../styles/pages/Quiz.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000/api/submit_categories/";
@@ -97,12 +98,13 @@ const Quiz = () => {
                     </div>
                 ))}
             </div>
-            <button
-                className={styles.confirmButton}
+            <Button
+                buttonType="contained"
+                buttonSize="large"
                 onClick={handleConfirmation}
             >
                 Zatwierdź
-            </button>
+            </Button>
         </div>
     );
 };

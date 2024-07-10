@@ -34,22 +34,6 @@
     -webkit-text-fill-color: transparent;
 }
 
-.quizButton {
-    background-image: linear-gradient(
-        90deg,
-        $darker-primary-color,
-        $primary-color
-    );
-    width: 350pt;
-    height: 140pt;
-    color: $text-color;
-    font-size: 28pt;
-    padding: 20pt;
-    border: none;
-    border-radius: 6pt;
-    cursor: pointer;
-}
-
 .topMajors {
     margin-top: 30pt;
 }

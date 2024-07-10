@@ -1,4 +1,4 @@
-@use '../vars' as *;
+@use "../vars" as *;
 
 .container {
     display: flex;
@@ -6,19 +6,23 @@
     // justify-content: center;
     align-items: center;
     color: $text-color;
-    padding: 2.8vw 5vw;
+    padding: 4vw 5vw;
 }
 
 .headerText {
-    font-size: 40pt;
+    font-size: 3.4rem;
 }
 
 .smallerText {
-    font-size: 22pt;
+    font-size: 1.8rem;
 }
 
 .textGradient {
-    background: linear-gradient(115deg, $primary-color 55%, $darker-primary-color);
+    background: linear-gradient(
+        115deg,
+        $primary-color 55%,
+        $darker-primary-color
+    );
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -27,21 +31,21 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 30pt;
-    grid-row-gap: 50pt;
-    margin: 60pt 0;
+    grid-column-gap: 2rem;
+    grid-row-gap: 3.333rem;
+    margin: 4rem 0;
 }
 
 .categoriesElement {
     display: flex;
-    width: 200pt;
-    height: 50pt;
+    width: 13.333rem;
+    height: 3.333rem;
     color: $space-color;
     background-color: $accent-color;
-    border-radius: 5pt;
+    border-radius: 0.833rem;
     align-items: center;
-    justify-content: center; 
-    padding: 10pt;
+    justify-content: center;
+    padding: 1.667rem;
 }
 
 .firstSelected {
@@ -56,23 +60,13 @@
     background-color: $darkest-primary-color;
 }
 
-.firstSelected, .secondSelected, .thirdSelected {
+.firstSelected,
+.secondSelected,
+.thirdSelected {
     transition: 0.1s;
 }
 
 .category {
-    font-size: 18pt;
+    font-size: 1.2rem;
     background-color: inherit;
-}
-
-.confirmButton {
-    background-image: linear-gradient(90deg, $darker-primary-color, $primary-color);
-    width: 250pt;
-    height: 85pt;
-    color: $text-color;
-    font-size: 28pt;
-    padding: 20pt;
-    border: none;
-    border-radius: 6pt;
-    cursor: pointer;
 }
