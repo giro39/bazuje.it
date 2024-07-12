@@ -27,7 +27,7 @@ def getUczelnias(request):
     notes = Uczelnia.objects.all()
     serializer = UczelniaSerializer(notes, many=True)
 
-    
+
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -41,7 +41,7 @@ def getUczelnia(request, pk):
 def getBestKierunki(request):
     n = Kierunek.objects.count()
     kierunkiSrednie = {}
-    
+
     for i in range(1, n + 1):
         note = Kierunek.objects.get(id=i)
         serializer = KierunekSerializer(note, many=False)
@@ -65,7 +65,7 @@ def getBestKierunki(request):
         podlista.append(kierunkiSrednie[i][1])
         lista.append(podlista)
 
-    
+
     return Response(lista[:3])
 
 @api_view(['GET'])
@@ -109,7 +109,7 @@ def wynikQuizu(request):
         podlista = []
         podlista.append(kierunekOceny[i][0])
         podlista.append(i)
-        
+
         podlista.append(kierunekOceny[i][1])
         lista.append(podlista)
 
@@ -117,6 +117,6 @@ def wynikQuizu(request):
 
         # for j in serializer2.data:
         #     if j['']
-        
+
 
 
