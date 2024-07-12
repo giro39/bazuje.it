@@ -42,7 +42,7 @@ def getBestKierunki(request):
     sorted_data = sorted(data, key=lambda x: x["sredniaOcen"], reverse=True)
 
     serializer = BestKierunkiSerializer(sorted_data[:3], many=True)
-    return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
@@ -92,7 +92,7 @@ def wynikQuizu(request):
     sorted_data = sorted(data, key=lambda x: x["wynikQuizu"], reverse=True)
 
     serializer = WynikQuizuSerializer(sorted_data, many=True)
-    return Response(serializer.data[:3], status=status.HTTP_201_CREATED)
+    return Response(serializer.data[:3], status=status.HTTP_200_OK)
 
 
 # @api_view(["POST"])
