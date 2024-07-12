@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
@@ -10,63 +10,65 @@ import Results from "./pages/Results";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import { ThemeContext, initialThemeContext } from './contexts/ThemeContext';
+import { ResultContext, initialResultContext } from './contexts/ResultContext';
 
-import { PrintUczelnias } from './components/PrintUczelnias/PrintUczelnias';
-
-import '../styles/App.scss';
+import "./styles/App.scss";
 
 const Logout = () => {
-  localStorage.clear();
-  return <Navigate to="/login" />;
+    localStorage.clear();
+    return <Navigate to="/login" />;
 };
 
 const RegisterAndLogout = () => {
-  localStorage.clear();
-  return <Register />;
+    localStorage.clear();
+    return <Register />;
 };
 
 const App = () => {
     const [theme, setTheme] = useState(initialThemeContext);
+    const [result, setResult] = useState(initialResultContext);
 
     return (
         <BrowserRouter>
             <main theme={theme}>
                 <ThemeContext.Provider value={{ theme, setTheme }}>
-                    <Routes>
-                        <Route 
-                            path='/' 
-                            element={<Navigate to={'/home'} replace={true} />}
-                        />
-                        <Route 
-                            path='/home'
-                            element={
-                                <Home />
-                            }
-                        />
-                        <Route 
-                            path='/quiz'
-                            element={
-                                <Quiz />
-                            } 
-                        />
-                        <Route 
-                            path='/results'
-                            element={
-                                <Results />
-                            } 
-                        />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/logout" element={<Logout />} />
-                        <Route path="/register" element={<RegisterAndLogout />} />
+                    <ResultContext.Provider value={{ result, setResult }}>
+                        <Routes>
+                            <Route
+                                path='/'
+                                element={<Navigate to={'/home'} replace={true} />}
+                            />
+                            <Route
+                                path='/home'
+                                element={
+                                    <Home />
+                                }
+                            />
+                            <Route
+                                path='/quiz'
+                                element={
+                                    <Quiz />
+                                }
+                            />
+                            <Route
+                                path='/results'
+                                element={
+                                    <Results />
+                                }
+                            />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/logout" element={<Logout />} />
+                            <Route path="/register" element={<RegisterAndLogout />} />
 
-                        <Route 
-                            path='*'
-                            element={<h1>404. Not found</h1>} 
-                        />
-                    </Routes>
+                            <Route
+                                path='*'
+                                element={<h1>404. Not found</h1>}
+                            />
+                        </Routes>
+                    </ResultContext.Provider>
                 </ThemeContext.Provider>
             </main>
         </BrowserRouter>
-    )
+    );
 };
 export default App;

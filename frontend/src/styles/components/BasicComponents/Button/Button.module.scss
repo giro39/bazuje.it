@@ -1,0 +1,78 @@
+@use "../../../vars" as *;
+
+@mixin theme($theme: $primary-color) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: $theme;
+    box-shadow: 0 0 1px rgba($theme, 0.25);
+    @if $theme == $primary-color {
+        color: $text-color;
+        background-image: linear-gradient(
+            90deg,
+            $darker-primary-color,
+            $primary-color
+        );
+    } @else {
+        color: #fff;
+    }
+    padding: 0.6rem 0.8rem;
+    border-radius: 7px;
+    cursor: pointer;
+    border: none;
+
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+@mixin onclick() {
+    scale: 0.98;
+    filter: brightness(99%);
+}
+
+.contained {
+    @include theme;
+}
+.contained:active {
+    @include onclick();
+}
+.outlined {
+    @include theme($theme: rgba(0, 0, 0, 0));
+}
+.outlined:active {
+    @include onclick();
+}
+.distinctive {
+    @include theme($theme: $secondary-color);
+}
+.distinctive:active {
+    @include onclick();
+}
+
+.small {
+    font-size: 0.75rem;
+    min-width: 4rem;
+    height: 2rem;
+}
+
+.medium {
+    font-size: 1rem;
+    min-width: 4rem;
+    height: 3rem;
+}
+
+.large {
+    font-size: 1.25rem;
+    min-width: 16rem;
+    height: 6rem;
+    padding: 1rem 1.2rem;
+}
+
+.giant {
+    font-size: 2rem;
+    min-width: 20rem;
+    max-width: 25rem;
+    height: 10rem;
+    padding: 1rem 1.2rem;
+}
