@@ -1,0 +1,21 @@
+services:
+  backend:
+    volumes:
+      - static:/app/staticfiles
+    env_file:
+      - .env
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - frontend:/app/build
+    ports:
+      - "5173:5173"
+
+volumes:
+  static:
+  frontend:
