@@ -16,3 +16,11 @@ class WynikQuizuSerializer(serializers.Serializer):
 class CategorySerializer(serializers.Serializer):
     title = serializers.CharField()
     name = serializers.CharField()
+
+
+class UserIdSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField()
+
+
+class UsernameSerializer(serializers.Serializer):
+    username = serializers.CharField()
