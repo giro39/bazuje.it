@@ -6,6 +6,8 @@ from .serializers import (
     BestKierunkiSerializer,
     WynikQuizuSerializer,
     CategorySerializer,
+    UserIdSerializer,
+    UsernameSerializer,
 )
 from .models import (
     Rodzaj,
@@ -18,6 +20,7 @@ from .models import (
     OpiniaUczelnia,
     OpiniaKierunek,
     Kategorie,
+    User,
 )
 
 
@@ -95,11 +98,23 @@ def wynikQuizu(request):
     return Response(serializer.data[:3], status=status.HTTP_200_OK)
 
 
-# @api_view(["POST"])
-# @permission_classes([AllowAny])
-# def submit_categories(request):
-#     serializer = CategorySerializer(data=request.data, many=True)
-#     print(serializer)
-#     if serializer.is_valid():
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def getUsername(request):
+    if request.method == "POST":
+        serializer = UserIdSerializer(data=request.data)
+        if serializer.is_valid():
+            user_id = serializer.validated_data["user_id"]
+            try:
+                user = User.objects.get(id=user_id)
+                user_serializer = UsernameSerializer(user)
+                return Response(user_serializer.data, status=status.HTTP_200_OK)
+            except User.DoesNotExist:
+                return Response(
+                    {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+                )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
