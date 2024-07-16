@@ -58,61 +58,71 @@ function Form({ route, method }) {
             <div className={styles.container}>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.titleContainer}>
-                        <h1 className={styles.name}>Log in to your account</h1>
+                        <p className={styles.title}>Log in to your account</p>
                     </div>
-                    <input
-                        className={styles.input}
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Username"
-                    />
-                    <input
-                        className={styles.input}
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                    />
-                    <Button
-                        buttonType="contained"
-                        buttonSize="medium"
-                        type="submit"
-                    >
-                        {name}
-                    </Button>
+                    <div className={styles.formInputs}>
+                        <input
+                            className={styles.input}
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Username"
+                        />
+                        <input
+                            className={styles.input}
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Password"
+                        />
+                        <Button
+                            buttonType="contained"
+                            buttonSize="medium"
+                            type="submit"
+                        >
+                            {name}
+                        </Button>
+                        <p className={styles.noAccount}>
+                            Don't have a bazuje.it account?{" "}
+                            <span className={styles.registerNow}>
+                                Register now
+                            </span>
+                        </p>
+                    </div>
                 </form>
             </div>
         );
     }
     return (
-        <form onSubmit={handleSubmit} className="form-container">
-            <h1>{name}</h1>
-            <input
-                className="form-input"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-            />
-            <input
-                className="form-input"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-            />
-            <input
-                className="form-input"
-                type="password"
-                value={password2}
-                onChange={(e) => setPassword2(e.target.value)}
-                placeholder="Repeat Password"
-            />
-            <button className="form-button" type="submit">
-                {name}
-            </button>
-        </form>
+        <div className={styles.container}>
+            <form onSubmit={handleSubmit} className="form-container">
+                <h1>{name}</h1>
+                <input
+                    className="form-input"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                />
+                <input
+                    className="form-input"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                />
+                <input
+                    className="form-input"
+                    type="password"
+                    value={password2}
+                    onChange={(e) => setPassword2(e.target.value)}
+                    placeholder="Repeat Password"
+                />
+                <button className="form-button" type="submit">
+                    {name}
+                </button>
+            </form>
+        </div>
     );
 }
 
