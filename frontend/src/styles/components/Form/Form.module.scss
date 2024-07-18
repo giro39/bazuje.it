@@ -43,16 +43,22 @@
     border-radius: 0.4em;
 }
 
+.error {
+    font-size: 0.9em;
+    color: $primary-color;
+    text-align: center;
+}
+
 Button {
     margin: 0.5em 0;
 }
 
-.noAccount {
+.account {
     color: $text-color;
     font-size: 1em;
 }
 
-.registerNow {
+.switchLoginRegister {
     background: linear-gradient(90deg, $text-color, $secondary-color);
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -60,7 +66,7 @@ Button {
     transition: 0.2s;
 }
 
-.registerNow:hover {
+.switchLoginRegister:hover {
     text-shadow: $secondary-color 0.2em 0.2em 1em;
     transition: 0.2s;
 }

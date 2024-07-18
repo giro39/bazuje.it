@@ -11,9 +11,17 @@ function Form({ route, method }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
+    const [errPassword, setErrPassword] = useState({
+        contain: false,
+        match: false,
+    });
     const navigate = useNavigate();
 
     const name = method === "login" ? "Login" : "Register";
+
+    const handleRegisterNowButton = () => {
+        navigate(method === "login" ? "/register" : "/login");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,22 +29,24 @@ function Form({ route, method }) {
         try {
             let valid_password = true;
             if (name === "Register") {
-                if (
+                let containError =
                     password.length < 8 ||
                     password === password.toLowerCase() ||
-                    /\d/.test(password) === false
-                ) {
-                    alert(
-                        "The password should contain a minimum of 8 characters, 1 uppercase letter, and 1 number."
-                    );
-                    valid_password = false;
-                }
+                    !/\d/.test(password);
 
-                if (password != password2) {
-                    alert("Passwords don't match");
+                let matchError = password !== password2;
+
+                setErrPassword((prevState) => ({
+                    ...prevState,
+                    contain: containError,
+                    match: matchError,
+                }));
+
+                if (containError || matchError) {
                     valid_password = false;
                 }
             }
+
             if (method === "login" || valid_password === true) {
                 const res = await api.post(route, { username, password });
                 if (method === "login") {
@@ -58,7 +68,9 @@ function Form({ route, method }) {
             <div className={styles.container}>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.titleContainer}>
-                        <p className={styles.title}>Log in to your account</p>
+                        <p className={styles.title}>
+                            Zaloguj się na swoje konto
+                        </p>
                     </div>
                     <div className={styles.formInputs}>
                         <input
@@ -66,26 +78,29 @@ function Form({ route, method }) {
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="Username"
+                            placeholder="Login"
                         />
                         <input
                             className={styles.input}
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Password"
+                            placeholder="Hasło"
                         />
                         <Button
                             buttonType="contained"
                             buttonSize="medium"
                             type="submit"
                         >
-                            {name}
+                            Zaloguj się
                         </Button>
-                        <p className={styles.noAccount}>
-                            Don't have a bazuje.it account?{" "}
-                            <span className={styles.registerNow}>
-                                Register now
+                        <p className={styles.account}>
+                            Nie masz jeszcze konta na bazuje.it?{" "}
+                            <span
+                                className={styles.switchLoginRegister}
+                                onClick={handleRegisterNowButton}
+                            >
+                                Zarejestruj się
                             </span>
                         </p>
                     </div>
@@ -95,32 +110,66 @@ function Form({ route, method }) {
     }
     return (
         <div className={styles.container}>
-            <form onSubmit={handleSubmit} className="form-container">
-                <h1>{name}</h1>
-                <input
-                    className="form-input"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Username"
-                />
-                <input
-                    className="form-input"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                />
-                <input
-                    className="form-input"
-                    type="password"
-                    value={password2}
-                    onChange={(e) => setPassword2(e.target.value)}
-                    placeholder="Repeat Password"
-                />
-                <button className="form-button" type="submit">
-                    {name}
-                </button>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <div className={styles.titleContainer}>
+                    <p className={styles.title}>Załóż nowe konto</p>
+                </div>
+                <div className={styles.formInputs}>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Login"
+                    />
+                    <input
+                        className={styles.input}
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Hasło"
+                    />
+                    <p
+                        className={styles.error}
+                        style={{
+                            display: errPassword.contain ? "block" : "none",
+                        }}
+                    >
+                        Hasło powinno zawierać minimum 8 znaków, <br />
+                        jedną cyfrę i jedną wielką literę.
+                    </p>
+                    <input
+                        className={styles.input}
+                        type="password"
+                        value={password2}
+                        onChange={(e) => setPassword2(e.target.value)}
+                        placeholder="Powtórz hasło"
+                    />
+                    <p
+                        className={styles.error}
+                        style={{
+                            display: errPassword.match ? "block" : "none",
+                        }}
+                    >
+                        Hasła nie są identyczne
+                    </p>
+                    <Button
+                        buttonType="contained"
+                        buttonSize="medium"
+                        type="submit"
+                    >
+                        Zarejestruj się
+                    </Button>
+                    <p className={styles.account}>
+                        Masz już konto na bazuje.it?{" "}
+                        <span
+                            className={styles.switchLoginRegister}
+                            onClick={handleRegisterNowButton}
+                        >
+                            Zaloguj się
+                        </span>
+                    </p>
+                </div>
             </form>
         </div>
     );

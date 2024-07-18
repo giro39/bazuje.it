@@ -32,8 +32,6 @@ const Quiz = () => {
         navigate(`/${currentFold}`);
     }, [currentFold, navigate]);
 
-
-
     const handleCategoryClick = (name) => {
         if (selectedCategories.includes(name)) {
             setSelectedCategories(
@@ -59,15 +57,20 @@ const Quiz = () => {
     };
 
     const handleConfirmation = () => {
-        axios.post(SERVER_URL, selectedCategories.map(name => {
-            const category = categories.find(cat => cat.name === name);
-            return { title: category.title, name: category.name };
-        }))
-            .then(response => {
-
+        axios
+            .post(
+                SERVER_URL,
+                selectedCategories.map((name) => {
+                    const category = categories.find(
+                        (cat) => cat.name === name
+                    );
+                    return { title: category.title, name: category.name };
+                })
+            )
+            .then((response) => {
                 setResult(response.data);
 
-                setCurrentFold('results');
+                setCurrentFold("results");
             })
             .catch((error) => {
                 console.error(
