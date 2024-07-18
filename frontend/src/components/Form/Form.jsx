@@ -59,7 +59,6 @@ function Form({ route, method }) {
             }
         } catch (error) {
             alert(error);
-        } finally {
         }
     };
 
