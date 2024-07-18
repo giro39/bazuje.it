@@ -1,0 +1,72 @@
+@use "../../vars" as *;
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15%;
+}
+
+.titleContainer {
+    background-image: linear-gradient(
+        90deg,
+        $darker-primary-color,
+        $primary-color
+    );
+    padding: 1.6em 5em;
+    border-radius: 0.6em;
+}
+
+.title {
+    font-size: 2.4em;
+    color: $text-color;
+}
+
+.form {
+    background-color: $space-color;
+    border-radius: 0.6em;
+}
+
+.formInputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+}
+
+.input {
+    width: 75%;
+    height: 2.6em;
+    margin: 0.5em 0;
+    padding: 0 0.8em;
+    background-color: $accent-color;
+    border-radius: 0.4em;
+}
+
+.error {
+    font-size: 0.9em;
+    color: $primary-color;
+    text-align: center;
+}
+
+Button {
+    margin: 0.5em 0;
+}
+
+.account {
+    color: $text-color;
+    font-size: 1em;
+}
+
+.switchLoginRegister {
+    background: linear-gradient(90deg, $text-color, $secondary-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.switchLoginRegister:hover {
+    text-shadow: $secondary-color 0.2em 0.2em 1em;
+    transition: 0.2s;
+}
