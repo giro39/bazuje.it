@@ -4,7 +4,7 @@ import MajorPreview from "../MajorPreview/MajorPreview";
 
 import { ResultContext } from "../../contexts/ResultContext";
 
-const SERVER_URL = "http://127.0.0.1:8000";
+const SERVER_URL = "http://127.0.0.1";
 
 const QuizResult = () => {
     const { result, setResult } = useContext(ResultContext);

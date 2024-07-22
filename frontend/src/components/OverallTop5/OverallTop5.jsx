@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../../styles/components/OverallTop5/OverallTop5.module.scss";
 import MajorPreview from "../MajorPreview/MajorPreview";
 
-const SERVER_URL = "http://127.0.0.1:8000";
+const SERVER_URL = "http://127.0.0.1";
 
 const OverallTop5 = ({ flag }) => {
   const [uczelnias, setUczelnias] = useState([]);

@@ -6,7 +6,7 @@ import styles from "../styles/pages/Quiz.module.scss";
 
 import { ResultContext } from "../contexts/ResultContext";
 
-const SERVER_URL = "http://127.0.0.1:8000/api/submit_categories/";
+const SERVER_URL = "http://127.0.0.1/api/submit_categories/";
 
 const categories = [
     { title: "Bazy danych", name: "bazy" },

@@ -1,7 +1,5 @@
 services:
   backend:
-    volumes:
-      - static:/app/staticfiles
     build:
       context: ./backend
     ports:
@@ -10,10 +8,16 @@ services:
     build:
       context: ./frontend
     volumes:
-      - frontend:/app/build
+      - react_build:/react/dist
+  nginx:
+    image: nginx:latest
     ports:
-      - "5173:5173"
-
+      - 80:8080
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - react_build:/var/www/react
+    depends_on:
+      - backend
+      - frontend
 volumes:
-  static:
-  frontend:
+  react_build:

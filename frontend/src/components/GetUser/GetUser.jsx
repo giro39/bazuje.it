@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from 'jwt-decode'; // poprawka importu
 import axios from 'axios';
 
-const SERVER_URL = "http://127.0.0.1:8000";
+const SERVER_URL = "http://127.0.0.1";
 
 const GetUser = () => {
     const [userId, setUserId] = useState(null);

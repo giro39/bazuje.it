@@ -2,15 +2,7 @@
 FROM node:20-alpine
 
 # Set the working directory in the container
-WORKDIR /app
-
-COPY package*.json .
-
-RUN npm i
-
+WORKDIR /react
 COPY . .
-
+RUN npm i
 RUN npm run build
-
-EXPOSE 5173
-CMD ["npm","start"]
