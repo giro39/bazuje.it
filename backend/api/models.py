@@ -84,3 +84,9 @@ class OpiniaPrzedmiot(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ocena = models.IntegerField(null=False)
     opis = models.TextField(blank=True)
+
+
+class OcenaOpiniiKierunku(models.Model):
+    opinia = models.ForeignKey(OpiniaKierunek, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ocena = models.IntegerField(null=False)
