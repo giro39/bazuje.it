@@ -9,6 +9,7 @@ from .serializers import (
     UserIdSerializer,
     UsernameSerializer,
     BestOpiniaSerializer,
+    KierunekIdSerializer,
 )
 from .models import (
     Rodzaj,
@@ -122,24 +123,39 @@ def getUsername(request):
     )
 
 
-@api_view(["GET"])
-# @permission_classes([AllowAny])
+@api_view(["POST"])
+@permission_classes([AllowAny])
 def getBestOpinia(request):
-    kierunek_id = 150  # hardcoded atm
-    opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
-    if not opinie:
-        return Response(
-            {"error": "No opinions found for this kierunek"},
-            status=status.HTTP_404_NOT_FOUND,
-        )
-    best_opinia = opinie[0]
-    highest_rating = 0
-    for opinia in opinie:
-        oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
-        rating = sum(ocena.ocena for ocena in oceny)
-        if rating > highest_rating:
-            highest_rating = rating
-            best_opinia = opinia
-    data = {"opinia": best_opinia, "rating": rating}
-    serializer = BestOpiniaSerializer(data)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if request.method == "POST":
+        serializer = KierunekIdSerializer(data=request.data)
+        if serializer.is_valid():
+            kierunek_id = serializer.validated_data["kierunek_id"]
+            opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
+            if not opinie:
+                return Response(
+                    {"error": "No opinions found for this kierunek"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+            best_opinia = opinie[0]
+            highest_rating = 0
+            for opinia in opinie:
+                oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
+                rating = sum(ocena.ocena for ocena in oceny)
+                if rating > highest_rating:
+                    highest_rating = rating
+                    best_opinia = opinia
+            user = User.objects.get(id=best_opinia.user_id)
+            text = best_opinia.opis
+            data = {
+                "opinia": best_opinia,
+                "rating": rating,
+                "user": user.username,
+                "text": text,
+            }
+            serializer = BestOpiniaSerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )

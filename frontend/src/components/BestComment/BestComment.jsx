@@ -1,10 +1,35 @@
 import React from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../../components/BasicComponents/Button/Button";
 
 import styles from "../../styles/components/BestComment/BestComment.module.scss";
 
+import axios from 'axios';
+
+const SERVER_URL = "http://127.0.0.1:8000";
+
+
+
+
 const BestComment = () => {
+
+    const [bestComment, setBestComment] = useState([]);
+
+    useEffect(() => {
+        const kierunek_id = 150 //hardcoded narazie
+
+        axios.post(`${SERVER_URL}/api/best_opinia/`, { kierunek_id: kierunek_id })
+            .then(response => {
+                console.log(response.data);
+                //setBestComment(response.data.bestComment); //nwm co to jest kopilot to pisal :D
+            })
+            .catch((error) => {
+                console.error("There was an error fetching the username!", error);
+            });
+
+    }, []);
+
     return (
         <div className={styles.container}>
             <div className={styles.userSegment}>

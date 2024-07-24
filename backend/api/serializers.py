@@ -26,6 +26,12 @@ class UsernameSerializer(serializers.Serializer):
     username = serializers.CharField()
 
 
+class KierunekIdSerializer(serializers.Serializer):
+    kierunek_id = serializers.IntegerField()
+
+
 class BestOpiniaSerializer(serializers.Serializer):
     opinia = serializers.CharField()
     rating = serializers.IntegerField()
+    user = serializers.CharField()
+    text = serializers.CharField()
