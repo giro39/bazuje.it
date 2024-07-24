@@ -8,6 +8,7 @@ from .serializers import (
     CategorySerializer,
     UserIdSerializer,
     UsernameSerializer,
+    BestOpiniaSerializer,
 )
 from .models import (
     Rodzaj,
@@ -21,6 +22,7 @@ from .models import (
     OpiniaKierunek,
     Kategorie,
     User,
+    OcenaOpiniiKierunku,
 )
 
 
@@ -118,3 +120,26 @@ def getUsername(request):
     return Response(
         {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )
+
+
+@api_view(["GET"])
+# @permission_classes([AllowAny])
+def getBestOpinia(request):
+    kierunek_id = 150  # hardcoded atm
+    opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
+    if not opinie:
+        return Response(
+            {"error": "No opinions found for this kierunek"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+    best_opinia = opinie[0]
+    highest_rating = 0
+    for opinia in opinie:
+        oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
+        rating = sum(ocena.ocena for ocena in oceny)
+        if rating > highest_rating:
+            highest_rating = rating
+            best_opinia = opinia
+    data = {"opinia": best_opinia, "rating": rating}
+    serializer = BestOpiniaSerializer(data)
+    return Response(serializer.data, status=status.HTTP_200_OK)

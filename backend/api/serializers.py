@@ -24,3 +24,8 @@ class UserIdSerializer(serializers.Serializer):
 
 class UsernameSerializer(serializers.Serializer):
     username = serializers.CharField()
+
+
+class BestOpiniaSerializer(serializers.Serializer):
+    opinia = serializers.CharField()
+    rating = serializers.IntegerField()
