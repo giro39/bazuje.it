@@ -6,11 +6,12 @@ import Quiz from "./pages/Quiz";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Results from "./pages/Results";
+import Major from "./pages/Major";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { ThemeContext, initialThemeContext } from './contexts/ThemeContext';
-import { ResultContext, initialResultContext } from './contexts/ResultContext';
+import { ThemeContext, initialThemeContext } from "./contexts/ThemeContext";
+import { ResultContext, initialResultContext } from "./contexts/ResultContext";
 
 import "./styles/App.scss";
 
@@ -35,35 +36,23 @@ const App = () => {
                     <ResultContext.Provider value={{ result, setResult }}>
                         <Routes>
                             <Route
-                                path='/'
-                                element={<Navigate to={'/home'} replace={true} />}
-                            />
-                            <Route
-                                path='/home'
+                                path="/"
                                 element={
-                                    <Home />
+                                    <Navigate to={"/home"} replace={true} />
                                 }
                             />
-                            <Route
-                                path='/quiz'
-                                element={
-                                    <Quiz />
-                                }
-                            />
-                            <Route
-                                path='/results'
-                                element={
-                                    <Results />
-                                }
-                            />
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/quiz" element={<Quiz />} />
+                            <Route path="/results" element={<Results />} />
+                            <Route path="/majors" element={<Major />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/logout" element={<Logout />} />
-                            <Route path="/register" element={<RegisterAndLogout />} />
-
                             <Route
-                                path='*'
-                                element={<h1>404. Not found</h1>}
+                                path="/register"
+                                element={<RegisterAndLogout />}
                             />
+
+                            <Route path="*" element={<h1>404. Not found</h1>} />
                         </Routes>
                     </ResultContext.Provider>
                 </ThemeContext.Provider>

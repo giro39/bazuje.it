@@ -4,7 +4,7 @@ import MajorPreview from "../MajorPreview/MajorPreview";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const OverallTop5 = ({ flag }) => {
+const OverallTop5 = () => {
     const [uczelnias, setUczelnias] = useState([]);
 
     useEffect(() => {

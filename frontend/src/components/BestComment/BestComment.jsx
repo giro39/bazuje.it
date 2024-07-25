@@ -10,10 +10,10 @@ import axios from "axios";
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const BestComment = () => {
-    const [bestComment, setBestComment] = useState([]);
+    const [bestComment, setBestComment] = useState({});
 
     useEffect(() => {
-        const kierunek_id = 150; //hardcoded narazie
+        const kierunek_id = 68; //hardcoded narazie
 
         axios
             .post(`${SERVER_URL}/api/best_opinia/`, {
@@ -21,7 +21,7 @@ const BestComment = () => {
             })
             .then((response) => {
                 console.log(response.data);
-                //setBestComment(response.data.bestComment); //nwm co to jest kopilot to pisal :D
+                setBestComment(response.data);
             })
             .catch((error) => {
                 console.error(
@@ -30,21 +30,17 @@ const BestComment = () => {
                 );
             });
     }, []);
-
     return (
         <div className={styles.container}>
             <div className={styles.userSegment}>
                 <div className={styles.userImage}>
-                    <p className={styles.userFirstLetter}>M</p>
+                    <p className={styles.userFirstLetter}>
+                        {bestComment.user && bestComment.user[0].toUpperCase()}
+                    </p>
                 </div>
-                <p className={styles.username}>Marco:</p>
+                <p className={styles.username}>{bestComment.user}:</p>
             </div>
-            <div className={styles.commentSegment}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas
-                praesentium enim hic deleniti, itaque ea vero a magni ex fuga
-                est neque qui amet voluptates atque, maxime delectus dolores
-                aliquid?
-            </div>
+            <div className={styles.commentSegment}>{bestComment.text}</div>
             <div className={styles.moreSegment}>
                 <Button buttonType="contained" buttonSize="medium">
                     więcej

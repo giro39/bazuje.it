@@ -133,8 +133,8 @@ def getBestOpinia(request):
             opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
             if not opinie:
                 return Response(
-                    {"error": "No opinions found for this kierunek"},
-                    status=status.HTTP_404_NOT_FOUND,
+                    {"response": "No opinions found for this kierunek"},
+                    status=status.HTTP_200_OK,
                 )
             best_opinia = opinie[0]
             highest_rating = 0

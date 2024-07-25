@@ -4,12 +4,9 @@ import Navbar from "../components/Navbar/Navbar";
 
 import styles from "../styles/pages/Home.module.scss";
 
-import QuizResult from '../components/OverallTop5/QuizResult';
-
+import QuizResult from "../components/OverallTop5/QuizResult";
 
 const Results = () => {
-    const [flag, setFlag] = useState("results");
-
     return (
         <div className={styles.container}>
             <Navbar />
