@@ -40,6 +40,7 @@ def getBestKierunki(request):
 
         data.append(
             {
+                "kierunek_id": kierunek.id,
                 "kierunek": kierunek,
                 "uczelnia": kierunek.wydzial.uczelnia,
                 "sredniaOcen": sredniaOcen,
@@ -90,6 +91,7 @@ def wynikQuizu(request):
         # print(wynikQuizu)
         data.append(
             {
+                "kierunek_id": kierunek.id,
                 "kierunek": kierunek,
                 "uczelnia": kierunek.wydzial.uczelnia,
                 "wynikQuizu": wynikQuizu,

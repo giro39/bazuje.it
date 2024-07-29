@@ -2,12 +2,14 @@ from rest_framework import serializers
 
 
 class BestKierunkiSerializer(serializers.Serializer):
+    kierunek_id = serializers.IntegerField()
     kierunek = serializers.CharField()
     uczelnia = serializers.CharField()
     sredniaOcen = serializers.FloatField()
 
 
 class WynikQuizuSerializer(serializers.Serializer):
+    kierunek_id = serializers.IntegerField()
     kierunek = serializers.CharField()
     uczelnia = serializers.CharField()
     wynikQuizu = serializers.FloatField()
