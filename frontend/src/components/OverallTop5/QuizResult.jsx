@@ -19,7 +19,7 @@ const QuizResult = () => {
                         universityTitle={kierunek.uczelnia}
                         rating={Math.round(kierunek.wynikQuizu)}
                     />
-                    <Link to={`/kierunki/${kierunek.id}`}>
+                    <Link to={`/kierunki/${kierunek.kierunek_id}`}>
                         <button className={styles.buttonCheck}>Sprawdź</button>
                     </Link>
                 </div>

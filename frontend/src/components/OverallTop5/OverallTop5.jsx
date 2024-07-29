@@ -18,7 +18,6 @@ const OverallTop5 = () => {
             .then((response) => response.json())
             .then((data) => setUczelnias(data));
     }, []);
-
     return (
         <div className={styles.container}>
             {uczelnias.map((kierunek, index) => (
@@ -28,7 +27,7 @@ const OverallTop5 = () => {
                         universityTitle={kierunek.uczelnia}
                         rating={Math.round(kierunek.sredniaOcen)}
                     />
-                    <Link to={`/kierunki/${kierunek.id}`}>
+                    <Link to={`/kierunki/${kierunek.kierunek_id}`}>
                         <button className={styles.buttonCheck}>Sprawdź</button>
                     </Link>
                 </div>

@@ -93,9 +93,7 @@ const Quiz = () => {
                 {categories.map((cat) => (
                     <div
                         key={cat.name}
-                        className={`${
-                            styles.categoriesElement
-                        } ${getCategoryStyle(cat.name)}`}
+                        className={`${styles.categoriesElement} ${getCategoryStyle(cat.name)}`}
                         onClick={() => handleCategoryClick(cat.name)}
                     >
                         <p className={styles.category}>{cat.title}</p>
