@@ -9,11 +9,11 @@ import axios from "axios";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const BestComment = () => {
+const BestComment = ({ majorId }) => {
     const [bestComment, setBestComment] = useState({});
 
     useEffect(() => {
-        const kierunek_id = 68; //hardcoded narazie
+        const kierunek_id = majorId;
 
         axios
             .post(`${SERVER_URL}/api/best_opinia/`, {

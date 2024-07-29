@@ -69,7 +69,7 @@ const Quiz = () => {
             )
             .then((response) => {
                 setResult(response.data);
-
+                console.log(response.data);
                 setCurrentFold("results");
             })
             .catch((error) => {

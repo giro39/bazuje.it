@@ -1,4 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import styles from "../../styles/components/OverallTop5/OverallTop5.module.scss";
 import MajorPreview from "../MajorPreview/MajorPreview";
 
@@ -18,7 +19,9 @@ const QuizResult = () => {
                         universityTitle={kierunek.uczelnia}
                         rating={Math.round(kierunek.wynikQuizu)}
                     />
-                    <button className={styles.buttonCheck}>Sprawdź</button>
+                    <Link to={`/kierunki/${kierunek.id}`}>
+                        <button className={styles.buttonCheck}>Sprawdź</button>
+                    </Link>
                 </div>
             ))}
         </div>

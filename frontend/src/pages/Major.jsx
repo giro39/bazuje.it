@@ -12,6 +12,7 @@ const Major = () => {
         <>
             <Navbar />
             {majorId}
+            <BestComment majorId={majorId} />
         </>
     );
 };
