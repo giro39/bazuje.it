@@ -188,6 +188,9 @@ def getChosenKierunek(request):
                     {"nazwa": przedmiot.nazwa, "sredniaOcen": sredniaOcen}
                 )
 
+            sorted_data = sorted(
+                przedmiotyList, key=lambda x: x["sredniaOcen"], reverse=True
+            )
             data = {
                 "kierunekId": kierunek.id,
                 "kierunek": kierunek,
