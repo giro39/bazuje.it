@@ -1,13 +1,16 @@
 @use "../../vars" as *;
 
 .container {
-    display: flex;
     padding: 1em;
-    align-items: center;
-    justify-content: space-between;
     background-color: $space-color;
     color: $text-color;
     border-radius: 1em;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .userSegment {
@@ -35,4 +38,8 @@
 
 .commentSegment {
     padding: 0 1em;
+}
+
+.noComment {
+    font-size: 1.4em;
 }

@@ -24,28 +24,39 @@ const BestComment = ({ majorId }) => {
                 setBestComment(response.data);
             })
             .catch((error) => {
-                console.error(
-                    error
-                );
+                console.error(error);
             });
     }, []);
-    
+
     return (
         <div className={styles.container}>
-            <div className={styles.userSegment}>
-                <div className={styles.userImage}>
-                    <p className={styles.userFirstLetter}>
-                        {bestComment.user && bestComment.user[0].toUpperCase()}
+            {bestComment.exists ? (
+                <div className={styles.comment}>
+                    <div className={styles.userSegment}>
+                        <div className={styles.userImage}>
+                            <p className={styles.userFirstLetter}>
+                                {bestComment.user &&
+                                    bestComment.user[0].toUpperCase()}
+                            </p>
+                        </div>
+                        <p className={styles.username}>{bestComment.user}:</p>
+                    </div>
+                    <div className={styles.commentSegment}>
+                        {bestComment.text}
+                    </div>
+                    <div className={styles.moreSegment}>
+                        <Button buttonType="contained" buttonSize="medium">
+                            więcej
+                        </Button>
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.comment}>
+                    <p className={styles.noComment}>
+                        Kierunek nie ma jeszcze żadnej opinii
                     </p>
                 </div>
-                <p className={styles.username}>{bestComment.user}:</p>
-            </div>
-            <div className={styles.commentSegment}>{bestComment.text}</div>
-            <div className={styles.moreSegment}>
-                <Button buttonType="contained" buttonSize="medium">
-                    więcej
-                </Button>
-            </div>
+            )}
         </div>
     );
 };
