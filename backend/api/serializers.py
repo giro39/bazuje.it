@@ -38,3 +38,12 @@ class BestOpiniaSerializer(serializers.Serializer):
     user = serializers.CharField()
     text = serializers.CharField()
     exists = serializers.BooleanField()
+
+
+class ChosenKierunekSerializer(serializers.Serializer):
+    kierunekId = serializers.IntegerField()
+    kierunek = serializers.CharField()
+    uczelnia = serializers.CharField()
+    wydzial = serializers.CharField()
+    sredniaOcen = serializers.FloatField()
+    listaPrzedmiotow = serializers.ListField(child=serializers.DictField())

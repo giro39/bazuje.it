@@ -10,6 +10,7 @@ from .serializers import (
     UsernameSerializer,
     BestOpiniaSerializer,
     KierunekIdSerializer,
+    ChosenKierunekSerializer,
 )
 from .models import (
     Rodzaj,
@@ -153,9 +154,50 @@ def getBestOpinia(request):
                 "rating": rating,
                 "user": user.username,
                 "text": text,
-                "exists": True
+                "exists": True,
             }
             serializer = BestOpiniaSerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def getChosenKierunek(request):
+    if request.method == "POST":
+        serializer = KierunekIdSerializer(data=request.data)
+        if serializer.is_valid():
+            kierunek_id = serializer.validated_data["kierunek_id"]
+            kierunek = Kierunek.objects.get(id=kierunek_id)
+
+            opinie = OpiniaKierunek.objects.filter(kierunek=kierunek.id)
+
+            sumaOcen = sum(opinia.ocena for opinia in opinie)
+            sredniaOcen = sumaOcen / len(opinie) if opinie else 0
+            przedmioty = Przedmiot.objects.filter(kierunek=kierunek.id)
+            przedmiotyList = []
+            for przedmiot in przedmioty:
+                opinie = OpiniaPrzedmiot.objects.filter(przedmiot=przedmiot.id)
+                sumaOcen = sum(opinia.ocena for opinia in opinie)
+                sredniaOcen = sumaOcen / len(opinie) if opinie else 0
+                przedmiotyList.append(
+                    {"nazwa": przedmiot.nazwa, "sredniaOcen": sredniaOcen}
+                )
+
+            data = {
+                "kierunekId": kierunek.id,
+                "kierunek": kierunek,
+                "uczelnia": kierunek.wydzial.uczelnia,
+                "wydzial": kierunek.wydzial,
+                "sredniaOcen": sredniaOcen,
+                "listaPrzedmiotow": przedmiotyList,
+            }
+            serializer = ChosenKierunekSerializer(data)
+
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
