@@ -52,7 +52,7 @@ const Home = () => {
                 <p className={styles.topMajorsText}>
                     Najlepsze kierunki informatyczne:
                 </p>
-                <OverallTop5 flag={flag} />
+                <OverallTop5 />
                 <GetUser />
             </div>
         </div>

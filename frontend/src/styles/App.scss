@@ -3,6 +3,7 @@
 * {
     margin: 0;
     font-family: "Alata", sans-serif;
+    transition: 0.05s;
 }
 
 main {
@@ -10,5 +11,7 @@ main {
         circle at 24.1% 68.8%,
         $background-color 5%,
         $alt-background-color 95%
-    );
+        );
+    padding: 0 5vw;
+    color: $text-color;
 }

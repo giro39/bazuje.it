@@ -4,9 +4,10 @@
         --alt-background-color: #2f2f2f;
         --primary-color: #bc865a;
         --secondary-color: #6f939f;
-        --text-color: #d3d3d3;
+        --text-color: #f0f0f0;
         --accent-color: #f1f1f1;
         --space-color: #202020;
+        --alt-space-color: #292929;
         --darker-primary-color: #996e4a;
         --darkest-primary-color: #885a3d;
     }
@@ -15,9 +16,10 @@
         --alt-background-color: #f0f0f0;
         --primary-color: #1e88e5;
         --secondary-color: #ffb74d;
-        --text-color: #333333;
+        --text-color: #1a1a1a;
         --accent-color: #202020;
         --space-color: #ffffff;
+        --alt-space-color: #f2f2f2;
         --darker-primary-color: #1063d1;
         --darkest-primary-color: #0241c0;
     }
@@ -30,5 +32,6 @@ $secondary-color: var(--secondary-color);
 $text-color: var(--text-color);
 $accent-color: var(--accent-color);
 $space-color: var(--space-color);
+$alt-space-color: var(--alt-space-color);
 $darker-primary-color: var(--darker-primary-color);
 $darkest-primary-color: var(--darkest-primary-color);

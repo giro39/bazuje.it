@@ -1,0 +1,45 @@
+@use "../../vars" as *;
+
+.container {
+    padding: 1em;
+    background-color: $space-color;
+    color: $text-color;
+    border-radius: 1em;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.userSegment {
+    display: flex;
+    align-items: center;
+}
+
+.userImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4em;
+    height: 4em;
+    background-color: #40974e;
+    border-radius: 2em;
+}
+
+.userFirstLetter {
+    font-size: 1.4em;
+}
+
+.username {
+    padding-left: 0.4em;
+}
+
+.commentSegment {
+    padding: 0 1em;
+}
+
+.noComment {
+    font-size: 1.4em;
+}

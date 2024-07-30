@@ -8,6 +8,9 @@ from .serializers import (
     CategorySerializer,
     UserIdSerializer,
     UsernameSerializer,
+    BestOpiniaSerializer,
+    KierunekIdSerializer,
+    ChosenKierunekSerializer,
 )
 from .models import (
     Rodzaj,
@@ -21,6 +24,7 @@ from .models import (
     OpiniaKierunek,
     Kategorie,
     User,
+    OcenaOpiniiKierunku,
 )
 
 
@@ -37,6 +41,7 @@ def getBestKierunki(request):
 
         data.append(
             {
+                "kierunek_id": kierunek.id,
                 "kierunek": kierunek,
                 "uczelnia": kierunek.wydzial.uczelnia,
                 "sredniaOcen": sredniaOcen,
@@ -87,6 +92,7 @@ def wynikQuizu(request):
         # print(wynikQuizu)
         data.append(
             {
+                "kierunek_id": kierunek.id,
                 "kierunek": kierunek,
                 "uczelnia": kierunek.wydzial.uczelnia,
                 "wynikQuizu": wynikQuizu,
@@ -113,6 +119,89 @@ def getUsername(request):
                 return Response(
                     {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
                 )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def getBestOpinia(request):
+    if request.method == "POST":
+        serializer = KierunekIdSerializer(data=request.data)
+        if serializer.is_valid():
+            kierunek_id = serializer.validated_data["kierunek_id"]
+            opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
+            if not opinie:
+                return Response(
+                    {"exists": False, "error": "No such a comment"},
+                    status=status.HTTP_200_OK,
+                )
+            best_opinia = opinie[0]
+            highest_rating = 0
+            for opinia in opinie:
+                oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
+                rating = sum(ocena.ocena for ocena in oceny)
+                if rating > highest_rating:
+                    highest_rating = rating
+                    best_opinia = opinia
+            user = User.objects.get(id=best_opinia.user_id)
+            text = best_opinia.opis
+            data = {
+                "opinia": best_opinia,
+                "rating": rating,
+                "user": user.username,
+                "text": text,
+                "exists": True,
+            }
+            serializer = BestOpiniaSerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def getChosenKierunek(request):
+    if request.method == "POST":
+        serializer = KierunekIdSerializer(data=request.data)
+        if serializer.is_valid():
+            kierunek_id = serializer.validated_data["kierunek_id"]
+            kierunek = Kierunek.objects.get(id=kierunek_id)
+
+            opinie = OpiniaKierunek.objects.filter(kierunek=kierunek.id)
+
+            sumaOcen = sum(opinia.ocena for opinia in opinie)
+            sredniaOcen = sumaOcen / len(opinie) if opinie else 0
+            przedmioty = Przedmiot.objects.filter(kierunek=kierunek.id)
+            przedmiotyList = []
+            for przedmiot in przedmioty:
+                opinie = OpiniaPrzedmiot.objects.filter(przedmiot=przedmiot.id)
+                sumaOcen = sum(opinia.ocena for opinia in opinie)
+                sredniaOcen = sumaOcen / len(opinie) if opinie else 0
+                przedmiotyList.append(
+                    {"nazwa": przedmiot.nazwa, "sredniaOcen": sredniaOcen}
+                )
+
+            sorted_data = sorted(
+                przedmiotyList, key=lambda x: x["sredniaOcen"], reverse=True
+            )
+            data = {
+                "kierunekId": kierunek.id,
+                "kierunek": kierunek,
+                "uczelnia": kierunek.wydzial.uczelnia,
+                "wydzial": kierunek.wydzial,
+                "sredniaOcen": sredniaOcen,
+                "listaPrzedmiotow": sorted_data,
+            }
+            serializer = ChosenKierunekSerializer(data)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(

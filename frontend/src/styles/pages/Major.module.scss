@@ -1,0 +1,69 @@
+@use "../vars" as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.majorName {
+    font-size: 4em;
+    margin-top: 0.6em;
+}
+
+.universityName {
+    font-size: 2em;
+    background: linear-gradient(50deg, $primary-color, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mostAccurateOpinion {
+    padding: 1.6em 0 0.2em 0;
+    font-size: 1.6em;
+    background: linear-gradient(50deg, $secondary-color, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subjects {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 2em;
+}
+
+.subject {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin: 1em;
+    padding: 1em;
+    width: 8em;
+    height: 8em;
+    background-color: $space-color;
+    border-radius: 0.4em;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.subject:hover {
+    background-color: $alt-space-color;
+    transition: 0.2s;
+}
+
+.subjectName {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.subjectGrade {
+    padding-top: 0.4em;
+    font-size: 1.4em;
+}
+
+.oneHundred {
+    color: $secondary-color;
+}
