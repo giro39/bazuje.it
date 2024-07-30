@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import OverallTop5 from "../components/OverallTop5/OverallTop5";
 import GetUser from "../components/GetUser/GetUser";
-import BestComment from "../components/BestComment/BestComment"; // to delete later
 
 import Button from "../components/BasicComponents/Button/Button";
 import styles from "../styles/pages/Home.module.scss";
@@ -55,7 +54,6 @@ const Home = () => {
                 </p>
                 <OverallTop5 />
                 <GetUser />
-                <BestComment />
             </div>
         </div>
     );

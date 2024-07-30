@@ -9,11 +9,10 @@ import styles from "../styles/pages/Major.module.scss";
 const Major = () => {
     const { majorId } = useParams();
     return (
-        <>
+        <div className={styles.container}>
             <Navbar />
-            {majorId}
             <BestComment majorId={majorId} />
-        </>
+        </div>
     );
 };
 

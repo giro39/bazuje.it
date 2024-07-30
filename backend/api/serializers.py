@@ -37,3 +37,4 @@ class BestOpiniaSerializer(serializers.Serializer):
     rating = serializers.IntegerField()
     user = serializers.CharField()
     text = serializers.CharField()
+    exists = serializers.BooleanField()

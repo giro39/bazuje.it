@@ -135,7 +135,7 @@ def getBestOpinia(request):
             opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
             if not opinie:
                 return Response(
-                    {"response": "No opinions found for this kierunek"},
+                    {"exists": False, "error": "No such a comment"},
                     status=status.HTTP_200_OK,
                 )
             best_opinia = opinie[0]
@@ -153,6 +153,7 @@ def getBestOpinia(request):
                 "rating": rating,
                 "user": user.username,
                 "text": text,
+                "exists": True
             }
             serializer = BestOpiniaSerializer(data)
             return Response(serializer.data, status=status.HTTP_200_OK)

@@ -25,11 +25,11 @@ const BestComment = ({ majorId }) => {
             })
             .catch((error) => {
                 console.error(
-                    "There was an error fetching the username!",
                     error
                 );
             });
     }, []);
+    
     return (
         <div className={styles.container}>
             <div className={styles.userSegment}>
