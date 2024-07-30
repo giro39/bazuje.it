@@ -197,7 +197,7 @@ def getChosenKierunek(request):
                 "uczelnia": kierunek.wydzial.uczelnia,
                 "wydzial": kierunek.wydzial,
                 "sredniaOcen": sredniaOcen,
-                "listaPrzedmiotow": przedmiotyList,
+                "listaPrzedmiotow": sorted_data,
             }
             serializer = ChosenKierunekSerializer(data)
 

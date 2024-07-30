@@ -7,6 +7,7 @@
 
 .majorName {
     font-size: 4em;
+    margin-top: 0.6em;
 }
 
 .universityName {
@@ -17,7 +18,7 @@
 }
 
 .mostAccurateOpinion {
-    padding: 2em 0 0.2em 0;
+    padding: 1.6em 0 0.2em 0;
     font-size: 1.6em;
     background: linear-gradient(50deg, $secondary-color, $text-color);
     background-clip: text;
