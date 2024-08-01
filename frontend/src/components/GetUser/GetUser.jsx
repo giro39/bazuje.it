@@ -14,7 +14,7 @@ const GetUser = () => {
             const decodedToken = jwtDecode(token);
             setUserId(decodedToken.user_id);
 
-            axios.post(`${SERVER_URL}/api/get_username/`, { user_id: decodedToken.user_id })
+            axios.post(`${SERVER_URL}/api/get_username/`, { inputData: decodedToken.user_id })
                 .then(response => {
                     setUsername(response.data.username);
                 })

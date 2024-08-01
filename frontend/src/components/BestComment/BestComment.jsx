@@ -17,7 +17,7 @@ const BestComment = ({ majorId }) => {
 
         axios
             .post(`${SERVER_URL}/api/best_opinia/`, {
-                kierunek_id: kierunek_id,
+                inputData: kierunek_id,
             })
             .then((response) => {
                 console.log(response.data);

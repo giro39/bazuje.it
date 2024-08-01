@@ -4,38 +4,29 @@ import { useParams } from "react-router-dom";
 
 import Navbar from "../components/Navbar/Navbar";
 import BestComment from "../components/BestComment/BestComment";
+import usePostAndFetch from "../hooks/usePostAndFetch";
 
 import styles from "../styles/pages/Major.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const Major = () => {
-    const [chosenKierunek, setChosenKierunek] = useState({});
-
-    useEffect(() => {
-        const kierunek_id = majorId;
-
-        axios
-            .post(`${SERVER_URL}/api/chosen_kierunek/`, {
-                kierunek_id: kierunek_id,
-            })
-            .then((response) => {
-                console.log(response.data);
-                setChosenKierunek(response.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, []);
-
     const { majorId } = useParams();
+    const { data, loading, error } = usePostAndFetch(
+        majorId, `${SERVER_URL}/api/chosen_kierunek/`
+    );
+
+    if (loading) return <div className={styles.container}></div>;
+
+    if (error) return <div className={styles.container}>Błąd pozyskania danych.</div>;
+
     return (
         <div className={styles.container}>
             <Navbar />
             <div className={styles.main}>
-                <p className={styles.majorName}>{chosenKierunek.kierunek}</p>
+                <p className={styles.majorName}>{data?.kierunek}</p>
                 <p className={styles.universityName}>
-                    {chosenKierunek.uczelnia}
+                    {data?.uczelnia}
                 </p>
                 <p className={styles.mostAccurateOpinion}>
                     Najtrafniejsza opinia
@@ -43,8 +34,8 @@ const Major = () => {
             </div>
             <BestComment majorId={majorId} />
             <div className={styles.subjects}>
-                {chosenKierunek.listaPrzedmiotow &&
-                    chosenKierunek.listaPrzedmiotow.map((major, index) => (
+                {data?.listaPrzedmiotow &&
+                    data.listaPrzedmiotow.map((major, index) => (
                         <div className={styles.subject} key={index}>
                             <p className={styles.subjectName}>{major.nazwa}</p>
                             <p className={styles.subjectGrade}>

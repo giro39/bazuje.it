@@ -64,7 +64,7 @@ const Quiz = () => {
                     const category = categories.find(
                         (cat) => cat.name === name
                     );
-                    return { title: category.title, name: category.name };
+                    return { inputData: category.title};
                 })
             )
             .then((response) => {
