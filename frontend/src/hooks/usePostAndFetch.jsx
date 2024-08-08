@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function useFetch(inputData, url) {
+const usePostAndFetch = (inputData, url) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -9,7 +9,7 @@ function useFetch(inputData, url) {
     const refetch = () => {
         setLoading(true);
         axios
-            .post(url,{
+            .post(url, {
                 inputData: inputData,
             })
             .then((response) => {
@@ -23,12 +23,11 @@ function useFetch(inputData, url) {
             });
     };
 
-
     useEffect(() => {
         refetch();
     }, [url]);
 
     return { data, loading, error, refetch };
-}
+};
 
-export default useFetch;
+export default usePostAndFetch;

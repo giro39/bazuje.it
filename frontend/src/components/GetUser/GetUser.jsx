@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
-import { jwtDecode } from 'jwt-decode'; // poprawka importu
-import axios from 'axios';
+import { jwtDecode } from "jwt-decode"; // poprawka importu
+import axios from "axios";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const GetUser = () => {
     const [userId, setUserId] = useState(null);
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
-        const token = localStorage.getItem('access');
+        const token = localStorage.getItem("access");
         if (token) {
             const decodedToken = jwtDecode(token);
             setUserId(decodedToken.user_id);
 
-            axios.post(`${SERVER_URL}/api/get_username/`, { inputData: decodedToken.user_id })
-                .then(response => {
+            axios
+                .post(`${SERVER_URL}/api/get_username/`, {
+                    inputData: decodedToken.user_id,
+                })
+                .then((response) => {
                     setUsername(response.data.username);
                 })
                 .catch((error) => {
-                    console.error("There was an error fetching the username!", error);
+                    console.error(
+                        "There was an error fetching the username!",
+                        error
+                    );
                 });
         }
     }, []);

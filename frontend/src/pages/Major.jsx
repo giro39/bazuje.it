@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -13,21 +12,21 @@ const SERVER_URL = "http://127.0.0.1:8000";
 const Major = () => {
     const { majorId } = useParams();
     const { data, loading, error } = usePostAndFetch(
-        majorId, `${SERVER_URL}/api/chosen_kierunek/`
+        majorId,
+        `${SERVER_URL}/api/chosen_kierunek/`
     );
 
     if (loading) return <div className={styles.container}></div>;
 
-    if (error) return <div className={styles.container}>Błąd pozyskania danych.</div>;
+    if (error)
+        return <div className={styles.container}>Błąd pozyskania danych.</div>;
 
     return (
         <div className={styles.container}>
             <Navbar />
             <div className={styles.main}>
                 <p className={styles.majorName}>{data?.kierunek}</p>
-                <p className={styles.universityName}>
-                    {data?.uczelnia}
-                </p>
+                <p className={styles.universityName}>{data?.uczelnia}</p>
                 <p className={styles.mostAccurateOpinion}>
                     Najtrafniejsza opinia
                 </p>
