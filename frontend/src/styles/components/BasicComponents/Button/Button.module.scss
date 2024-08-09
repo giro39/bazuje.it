@@ -50,6 +50,14 @@
     @include onclick();
 }
 
+.white {
+    @include theme($theme: $accent-color);
+    color: $primary-color;
+}
+.white:active {
+    @include onclick();
+}
+
 .small {
     font-size: 0.75rem;
     min-width: 4rem;
@@ -60,6 +68,7 @@
     font-size: 1rem;
     min-width: 4rem;
     height: 3rem;
+    padding: 1rem 1.2rem;
 }
 
 .large {

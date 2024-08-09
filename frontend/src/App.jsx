@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Quiz from "./pages/Quiz";
 import Login from "./pages/Login";
+import Major from "./pages/Major";
+import Quiz from "./pages/Quiz";
 import Register from "./pages/Register";
 import Results from "./pages/Results";
-import Major from "./pages/Major";
 
-import ProtectedRoute from "./components/ProtectedRoute";
-
-import { ThemeContext, initialThemeContext } from "./contexts/ThemeContext";
 import { ResultContext, initialResultContext } from "./contexts/ResultContext";
+import { ThemeContext, initialThemeContext } from "./contexts/ThemeContext";
+import {
+    UsernameContext,
+    initialUsernameContext,
+} from "./contexts/UsernameContext";
 
 import "./styles/App.scss";
 
@@ -28,32 +30,43 @@ const RegisterAndLogout = () => {
 const App = () => {
     const [theme, setTheme] = useState(initialThemeContext);
     const [result, setResult] = useState(initialResultContext);
+    const [username, setUsername] = useState(initialUsernameContext);
 
     return (
         <BrowserRouter>
             <main theme={theme}>
                 <ThemeContext.Provider value={{ theme, setTheme }}>
                     <ResultContext.Provider value={{ result, setResult }}>
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={
-                                    <Navigate to={"/home"} replace={true} />
-                                }
-                            />
-                            <Route path="/home" element={<Home />} />
-                            <Route path="/quiz" element={<Quiz />} />
-                            <Route path="/results" element={<Results />} />
-                            <Route path="/kierunki/:majorId" element={<Major />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/logout" element={<Logout />} />
-                            <Route
-                                path="/register"
-                                element={<RegisterAndLogout />}
-                            />
+                        <UsernameContext.Provider
+                            value={{ username, setUsername }}
+                        >
+                            <Routes>
+                                <Route
+                                    path="/"
+                                    element={
+                                        <Navigate to={"/home"} replace={true} />
+                                    }
+                                />
+                                <Route path="/home" element={<Home />} />
+                                <Route path="/quiz" element={<Quiz />} />
+                                <Route path="/results" element={<Results />} />
+                                <Route
+                                    path="/kierunki/:majorId"
+                                    element={<Major />}
+                                />
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/logout" element={<Logout />} />
+                                <Route
+                                    path="/register"
+                                    element={<RegisterAndLogout />}
+                                />
 
-                            <Route path="*" element={<h1>404. Not found</h1>} />
-                        </Routes>
+                                <Route
+                                    path="*"
+                                    element={<h1>404. Not found</h1>}
+                                />
+                            </Routes>
+                        </UsernameContext.Provider>
                     </ResultContext.Provider>
                 </ThemeContext.Provider>
             </main>

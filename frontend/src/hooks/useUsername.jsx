@@ -1,18 +1,17 @@
-import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode"; // poprawka importu
 import axios from "axios";
+import { jwtDecode } from "jwt-decode"; // poprawka importu
+import { useContext, useEffect } from "react";
+import { UsernameContext } from "../contexts/UsernameContext";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const GetUser = () => {
-    const [userId, setUserId] = useState(null);
-    const [username, setUsername] = useState("");
+const useUsername = () => {
+    const { username, setUsername } = useContext(UsernameContext);
 
     useEffect(() => {
         const token = localStorage.getItem("access");
         if (token) {
             const decodedToken = jwtDecode(token);
-            setUserId(decodedToken.user_id);
 
             axios
                 .post(`${SERVER_URL}/api/get_username/`, {
@@ -29,13 +28,6 @@ const GetUser = () => {
                 });
         }
     }, []);
-
-    return (
-        <div>
-            <h1>User ID: {userId}</h1>
-            <h1>Username: {username}</h1>
-        </div>
-    );
 };
 
-export default GetUser;
+export default useUsername;

@@ -4,9 +4,16 @@ import { useNavigate } from "react-router-dom";
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { UsernameContext } from "../../contexts/UsernameContext";
+
+import { default as useUsername } from "../../hooks/useUsername";
+import Button from "../BasicComponents/Button/Button";
 
 const Navbar = () => {
+    useUsername();
+
     const { theme, setTheme } = useContext(ThemeContext);
+    const { username } = useContext(UsernameContext);
 
     const navigate = useNavigate();
 
@@ -48,6 +55,18 @@ const Navbar = () => {
                     className={styles.themeIcon}
                     onClick={handleModeChange}
                 />
+
+                {!username ? (
+                    <Button
+                        onClick={() => navigate("/login")}
+                        buttonType={"white"}
+                        buttonSize={"medium"}
+                    >
+                        Zaloguj się
+                    </Button>
+                ) : (
+                    <p className={styles.helloText}>Hej {username}!</p>
+                )}
             </div>
         </div>
     );

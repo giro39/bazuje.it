@@ -7,7 +7,8 @@ const Button = ({ onClick, buttonType, buttonSize, children, ...rest }) => {
     if (
         buttonType === "contained" ||
         buttonType === "outlined" ||
-        buttonType === "distinctive"
+        buttonType === "distinctive" ||
+        buttonType === "white"
     ) {
         buttonTypeClass = buttonType;
     }
