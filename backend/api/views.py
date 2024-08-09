@@ -6,11 +6,10 @@ from .serializers import (
     BestKierunkiSerializer,
     WynikQuizuSerializer,
     CategorySerializer,
-    UserIdSerializer,
     UsernameSerializer,
     BestOpiniaSerializer,
-    KierunekIdSerializer,
     ChosenKierunekSerializer,
+    InputDataSerializer,
 )
 from .models import (
     Rodzaj,
@@ -58,11 +57,11 @@ def getBestKierunki(request):
 def wynikQuizu(request):
     kat = ["brak kategorii"] * 3
     if request.method == "POST":
-        serializer = CategorySerializer(data=request.data, many=True)
+        serializer = InputDataSerializer(data=request.data, many=True)
         if serializer.is_valid():
 
             for i in range(len(serializer.data)):
-                kat[i] = serializer.data[i]["title"]
+                kat[i] = serializer.data[i]["inputData"]
             print(kat)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -108,9 +107,9 @@ def wynikQuizu(request):
 @permission_classes([AllowAny])
 def getUsername(request):
     if request.method == "POST":
-        serializer = UserIdSerializer(data=request.data)
+        serializer = InputDataSerializer(data=request.data)
         if serializer.is_valid():
-            user_id = serializer.validated_data["user_id"]
+            user_id = serializer.validated_data["inputData"]
             try:
                 user = User.objects.get(id=user_id)
                 user_serializer = UsernameSerializer(user)
@@ -130,9 +129,9 @@ def getUsername(request):
 @permission_classes([AllowAny])
 def getBestOpinia(request):
     if request.method == "POST":
-        serializer = KierunekIdSerializer(data=request.data)
+        serializer = InputDataSerializer(data=request.data)
         if serializer.is_valid():
-            kierunek_id = serializer.validated_data["kierunek_id"]
+            kierunek_id = serializer.validated_data["inputData"]
             opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
             if not opinie:
                 return Response(
@@ -169,9 +168,9 @@ def getBestOpinia(request):
 @permission_classes([AllowAny])
 def getChosenKierunek(request):
     if request.method == "POST":
-        serializer = KierunekIdSerializer(data=request.data)
+        serializer = InputDataSerializer(data=request.data)
         if serializer.is_valid():
-            kierunek_id = serializer.validated_data["kierunek_id"]
+            kierunek_id = serializer.validated_data["inputData"]
             kierunek = Kierunek.objects.get(id=kierunek_id)
 
             opinie = OpiniaKierunek.objects.filter(kierunek=kierunek.id)

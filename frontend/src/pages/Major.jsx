@@ -17,10 +17,9 @@ const Major = () => {
 
         axios
             .post(`${SERVER_URL}/api/chosen_kierunek/`, {
-                kierunek_id: kierunek_id,
+                inputData: kierunek_id,
             })
             .then((response) => {
-                console.log(response.data);
                 setChosenKierunek(response.data);
             })
             .catch((error) => {
