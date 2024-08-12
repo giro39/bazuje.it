@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Major from "./pages/Major";
+import MajorOpinions from "./pages/MajorOpinions";
 import Quiz from "./pages/Quiz";
 import Register from "./pages/Register";
 import Results from "./pages/Results";
@@ -62,6 +63,10 @@ const App = () => {
                                 <Route
                                     path="/register"
                                     element={<RegisterAndLogout />}
+                                />
+                                <Route
+                                    path="/kieunki/1/opinions"
+                                    element={<MajorOpinions />}
                                 />
 
                                 <Route

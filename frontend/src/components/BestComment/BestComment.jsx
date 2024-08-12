@@ -1,11 +1,11 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "../../components/BasicComponents/Button/Button";
 
 import styles from "../../styles/components/BestComment/BestComment.module.scss";
 
 import axios from "axios";
+import UserProfileIcon from "../UserProfileIcon/UserProfileIcon";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
@@ -26,19 +26,15 @@ const BestComment = ({ majorId }) => {
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
+    }, [majorId]);
 
     return (
         <div className={styles.container}>
             {bestComment.exists ? (
                 <div className={styles.comment}>
                     <div className={styles.userSegment}>
-                        <div className={styles.userImage}>
-                            <p className={styles.userFirstLetter}>
-                                {bestComment.user &&
-                                    bestComment.user[0].toUpperCase()}
-                            </p>
-                        </div>
+                        <UserProfileIcon user={bestComment.user} />
+
                         <p className={styles.username}>{bestComment.user}:</p>
                     </div>
                     <div className={styles.commentSegment}>
