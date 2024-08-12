@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
 
@@ -16,6 +16,7 @@ const Navbar = () => {
     const { username } = useContext(UsernameContext);
 
     const navigate = useNavigate();
+    const location = useLocation().pathname;
 
     const handleModeChange = () => {
         setTheme((prevState) => (prevState === "light" ? "dark" : "light"));
@@ -35,35 +36,37 @@ const Navbar = () => {
                     onClick={() => navigate("/home")}
                 />
             </button>
-            <div className={styles.inputContainer}>
-                <input
-                    type="text"
-                    className={styles.inputText}
-                    // placeholder="Wyszukaj uczelnię..."
-                />
-                <img
-                    src={
-                        theme === "dark"
-                            ? "/moon_icon.png"
-                            : "/sun_icon_orange.png"
-                    }
-                    alt="Change theme"
-                    className={styles.themeIcon}
-                    onClick={handleModeChange}
-                />
+            {location === "/login" || location === "/register" ? null : (
+                <div className={styles.inputContainer}>
+                    <input
+                        type="text"
+                        className={styles.inputText}
+                        // placeholder="Wyszukaj uczelnię..."
+                    />
+                    <img
+                        src={
+                            theme === "dark"
+                                ? "/moon_icon.png"
+                                : "/sun_icon_orange.png"
+                        }
+                        alt="Change theme"
+                        className={styles.themeIcon}
+                        onClick={handleModeChange}
+                    />
 
-                {!username ? (
-                    <Button
-                        onClick={() => navigate("/login")}
-                        buttonType={"white"}
-                        buttonSize={"medium"}
-                    >
-                        Zaloguj się
-                    </Button>
-                ) : (
-                    <p className={styles.helloText}>Hej {username}!</p>
-                )}
-            </div>
+                    {!username ? (
+                        <Button
+                            onClick={() => navigate("/login")}
+                            buttonType={"white"}
+                            buttonSize={"medium"}
+                        >
+                            Zaloguj się
+                        </Button>
+                    ) : (
+                        <p className={styles.helloText}>Hej {username}!</p>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

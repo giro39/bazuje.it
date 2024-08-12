@@ -15,6 +15,7 @@ import {
     initialUsernameContext,
 } from "./contexts/UsernameContext";
 
+import Navbar from "./components/Navbar/Navbar";
 import "./styles/App.scss";
 
 const Logout = () => {
@@ -40,6 +41,8 @@ const App = () => {
                         <UsernameContext.Provider
                             value={{ username, setUsername }}
                         >
+                            <Navbar />
+
                             <Routes>
                                 <Route
                                     path="/"
