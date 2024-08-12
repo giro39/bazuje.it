@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
 import useFetch from "../../hooks/useFetch";
 
 import styles from "../../styles/components/OverallTop5/OverallTop5.module.scss";
@@ -27,12 +24,8 @@ const OverallTop5 = () => {
                             majorTitle={kierunek.kierunek}
                             universityTitle={kierunek.uczelnia}
                             rating={Math.round(kierunek.sredniaOcen)}
+                            majorId={kierunek.kierunek_id}
                         />
-                        <Link to={`/kierunki/${kierunek.kierunek_id}`}>
-                            <button className={styles.buttonCheck}>
-                                Sprawdź
-                            </button>
-                        </Link>
                     </div>
                 ))}
         </div>

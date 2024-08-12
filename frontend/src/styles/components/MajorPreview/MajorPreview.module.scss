@@ -3,7 +3,7 @@
 .container {
     background-color: $background-color;
 
-    width: 60vw;
+    width: 65vw;
     height: 6.5rem;
     border-radius: 9px;
 
@@ -13,7 +13,8 @@
     align-items: center;
 
     .title {
-        margin-left: 2rem;
+        margin-left: 1.4rem;
+        font-size: 1.1em;
 
         h3 {
             color: $accent-color;
@@ -30,5 +31,11 @@
         span {
             color: $secondary-color;
         }
+    }
+
+    .ratingAndButton {
+        display: flex;
+        align-items: center;
+        margin-right: 2rem;
     }
 }

@@ -17,17 +17,13 @@ const Navbar = () => {
 
     const navigate = useNavigate();
 
-    const handleClickOnLogo = () => {
-        navigate("/home");
-    };
-
     const handleModeChange = () => {
         setTheme((prevState) => (prevState === "light" ? "dark" : "light"));
     };
 
     return (
         <div className={styles.navbar}>
-            <div className={styles.logoContainer}>
+            <button className={styles.logoContainer}>
                 <img
                     src={
                         theme === "dark"
@@ -36,9 +32,9 @@ const Navbar = () => {
                     }
                     alt="Bazuje.it"
                     className={styles.logo}
-                    onClick={handleClickOnLogo}
+                    onClick={() => navigate("/home")}
                 />
-            </div>
+            </button>
             <div className={styles.inputContainer}>
                 <input
                     type="text"
