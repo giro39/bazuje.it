@@ -10,6 +10,7 @@
         --alt-space-color: #292929;
         --darker-primary-color: #996e4a;
         --darkest-primary-color: #885a3d;
+        --input-text-color: #1a1a1a;
     }
     [theme="light"] {
         --background-color: #e0e0e0;
@@ -22,6 +23,7 @@
         --alt-space-color: #f2f2f2;
         --darker-primary-color: #1063d1;
         --darkest-primary-color: #0241c0;
+        --input-text-color: #f0f0f0;
     }
 }
 
@@ -35,3 +37,4 @@ $space-color: var(--space-color);
 $alt-space-color: var(--alt-space-color);
 $darker-primary-color: var(--darker-primary-color);
 $darkest-primary-color: var(--darkest-primary-color);
+$input-text-color: var(--input-text-color);

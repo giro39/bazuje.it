@@ -1,0 +1,18 @@
+@use "../vars" as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.opinionsOfStudents {
+    padding: 1.6em 0 0.2em 0;
+    font-size: 1.6em;
+    background: linear-gradient(50deg, $secondary-color, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.opinionsContainer {
+    margin: auto;
+}

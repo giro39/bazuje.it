@@ -1,9 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import BestComment from "../components/BestComment/BestComment";
 
+import MajorPageTopper from "../components/BasicComponents/MajorPageTopper/MajorPageTopper";
 import styles from "../styles/pages/Major.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
@@ -30,10 +31,8 @@ const Major = () => {
     return (
         <div className={styles.container}>
             <div className={styles.main}>
-                <p className={styles.majorName}>{chosenKierunek.kierunek}</p>
-                <p className={styles.universityName}>
-                    {chosenKierunek.uczelnia}
-                </p>
+                <MajorPageTopper chosenMajor={chosenKierunek} />
+
                 <p className={styles.mostAccurateOpinion}>
                     Najtrafniejsza opinia
                 </p>

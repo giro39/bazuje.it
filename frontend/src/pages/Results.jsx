@@ -1,5 +1,3 @@
-import React from "react";
-
 import styles from "../styles/pages/Home.module.scss";
 
 import QuizResult from "../components/OverallTop5/QuizResult";

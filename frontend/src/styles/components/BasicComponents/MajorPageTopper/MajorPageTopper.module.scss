@@ -1,0 +1,18 @@
+@use "../../../vars" as *;
+
+.majorName {
+    font-size: 4em;
+    margin-top: 0.6em;
+}
+
+.universityName {
+    font-size: 2em;
+    background: linear-gradient(50deg, $primary-color, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.majorPageTopper {
+    display: flex;
+    flex-direction: column;
+}
