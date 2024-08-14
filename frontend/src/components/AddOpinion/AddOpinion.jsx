@@ -1,8 +1,23 @@
+import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Button from "../BasicComponents/Button/Button";
 import styles from "../../styles/components/AddOpinion/AddOpinion.module.scss";
 
 const AddOpinion = ({ isOpen, onClose }) => {
+    const textareaRef = useRef(null);
+
+    const handleTextareaInput = () => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = "auto";
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+    };
+
+    useEffect(() => {
+        handleTextareaInput();
+    }, []);
+
     if (!isOpen) return null;
 
     return createPortal(
@@ -28,8 +43,11 @@ const AddOpinion = ({ isOpen, onClose }) => {
                     </span>
                 </div>
                 <textarea
+                    ref={textareaRef}
+                    rows="1"
                     className={styles.opinionText}
                     placeholder="Podziel się swoją opinią..."
+                    onInput={handleTextareaInput}
                 ></textarea>
                 <Button buttonType="contained" buttonSize="medium">
                     Prześlij ocenę
