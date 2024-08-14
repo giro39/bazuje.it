@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import Button from "../components/BasicComponents/Button/Button";
 import Navbar from "../components/Navbar/Navbar";
 import BestComment from "../components/BestComment/BestComment";
 import AddOpinion from "../components/AddOpinion/AddOpinion";
@@ -12,6 +13,11 @@ const SERVER_URL = "http://127.0.0.1:8000";
 
 const Major = () => {
     const [chosenKierunek, setChosenKierunek] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const toggleModal = () => {
+        setIsModalOpen((prevState) => !prevState);
+    };
 
     useEffect(() => {
         const kierunek_id = majorId;
@@ -31,16 +37,25 @@ const Major = () => {
     const { majorId } = useParams();
     return (
         <div className={styles.container}>
-            <AddOpinion />
+            <AddOpinion isOpen={isModalOpen} onClose={toggleModal} />
             <Navbar />
             <div className={styles.main}>
                 <p className={styles.majorName}>{chosenKierunek.kierunek}</p>
                 <p className={styles.universityName}>
                     {chosenKierunek.uczelnia}
                 </p>
-                <p className={styles.mostAccurateOpinion}>
-                    Najtrafniejsza opinia
-                </p>
+                <div className={styles.overBestComment}>
+                    <p className={styles.mostAccurateOpinion}>
+                        Najtrafniejsza opinia
+                    </p>
+                    <Button
+                        buttonType="white"
+                        buttonSize="medium"
+                        onClick={toggleModal}
+                    >
+                        Dodaj opinię
+                    </Button>
+                </div>
             </div>
             <BestComment majorId={majorId} />
             <div className={styles.subjects}>
