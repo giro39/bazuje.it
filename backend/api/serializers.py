@@ -1,5 +1,10 @@
 from rest_framework import serializers
+from .models import OpiniaKierunek
 
+class OpiniaKierunekSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpiniaKierunek
+        fields = ['kierunek', 'user', 'ocena', 'opis']
 
 class BestKierunkiSerializer(serializers.Serializer):
     kierunek_id = serializers.IntegerField()
@@ -40,3 +45,5 @@ class ChosenKierunekSerializer(serializers.Serializer):
     wydzial = serializers.CharField()
     sredniaOcen = serializers.FloatField()
     listaPrzedmiotow = serializers.ListField(child=serializers.DictField())
+
+
