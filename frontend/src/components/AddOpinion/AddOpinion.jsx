@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Button from "../BasicComponents/Button/Button";
 import styles from "../../styles/components/AddOpinion/AddOpinion.module.scss";
 
 const AddOpinion = ({ isOpen, onClose }) => {
     const textareaRef = useRef(null);
+    const [rating, setRating] = useState(50);
+    const [opinion, setOpinion] = useState("");
 
     const handleTextareaInput = () => {
         const textarea = textareaRef.current;
@@ -33,12 +35,14 @@ const AddOpinion = ({ isOpen, onClose }) => {
                 <div className={styles.rating}>
                     <input
                         type="range"
+                        value={rating}
                         min="0"
                         max="100"
                         className={styles.ratingSlider}
+                        onChange={(e) => setRating(e.target.value)}
                     ></input>
                     <span className={styles.ratingValue}>
-                        <span className={styles.value}>50</span>
+                        <span className={styles.value}>{rating}</span>
                         <span className={styles.valueOutOf}>/100</span>
                     </span>
                 </div>
@@ -48,6 +52,7 @@ const AddOpinion = ({ isOpen, onClose }) => {
                     className={styles.opinionText}
                     placeholder="Podziel się swoją opinią..."
                     onInput={handleTextareaInput}
+                    onChange={(e) => setOpinion(e.target.value)}
                 ></textarea>
                 <Button buttonType="contained" buttonSize="medium">
                     Prześlij ocenę
