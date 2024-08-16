@@ -216,7 +216,7 @@ def addOpiniaKierunek(request):
             "kierunek": request.data.get("kierunek"),
             "user": request.data.get("user"),
             "ocena": request.data.get("ocena"),
-            "opis": request.data.get("opis", ""),
+            "opis": request.data.get("opis"),
         }
 
         serializer = OpiniaKierunekSerializer(data=data)
