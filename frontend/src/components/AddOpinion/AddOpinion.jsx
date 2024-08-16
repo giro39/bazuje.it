@@ -20,12 +20,17 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
         }
     };
 
+    const handleClose = () => {
+        setRating(50);
+        setOpinion("");
+        onClose();
+    };
+
     const postOpinion = () => {
         const token = localStorage.getItem("access");
         if (token) {
             const decodedToken = jwtDecode(token);
             const userId = decodedToken.user_id;
-            console.log("bodzio");
             axios
                 .post(`${SERVER_URL}/api/dodaj_opinie/`, {
                     kierunek: majorId,
@@ -34,14 +39,13 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
                     opis: opinion,
                 })
                 .then((response) => {
-                    console.log(response.data);
-                    setBestComment(response.data);
+                    console.log(response.data, response.status, "success!");
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         }
-        onClose();
+        handleClose();
     };
 
     useEffect(() => {
@@ -53,7 +57,7 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
     return createPortal(
         <div className={styles.overlay}>
             <div className={styles.container}>
-                <button className={styles.closeButton} onClick={onClose}>
+                <button className={styles.closeButton} onClick={handleClose}>
                     x
                 </button>
                 <h2 className={styles.title}>

@@ -209,12 +209,12 @@ def getChosenKierunek(request):
     )
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def addOpiniaKierunek(request):
     if request.method == "POST":
         data = {
-            "kierunek": request.data.get("kierunek_id"),
-            "user": request.user.id,
+            "kierunek": request.data.get("kierunek"),
+            "user": request.data.get("user"),
             "ocena": request.data.get("ocena"),
             "opis": request.data.get("opis", ""),
         }
