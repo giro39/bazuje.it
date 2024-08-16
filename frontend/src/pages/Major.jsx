@@ -43,7 +43,7 @@ const Major = () => {
     const { majorId } = useParams();
     return (
         <div className={styles.container}>
-            <AddOpinion isOpen={isModalOpen} onClose={toggleModal} />
+            <AddOpinion isOpen={isModalOpen} onClose={toggleModal} majorId={majorId} />
             <Navbar />
             <div className={styles.main}>
                 <p className={styles.majorName}>{chosenKierunek.kierunek}</p>

@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 import Button from "../BasicComponents/Button/Button";
 import styles from "../../styles/components/AddOpinion/AddOpinion.module.scss";
 
-const AddOpinion = ({ isOpen, onClose }) => {
+const SERVER_URL = "http://127.0.0.1:8000";
+
+const AddOpinion = ({ isOpen, onClose, majorId }) => {
     const textareaRef = useRef(null);
     const [rating, setRating] = useState(50);
     const [opinion, setOpinion] = useState("");
+    
 
     const handleTextareaInput = () => {
         const textarea = textareaRef.current;
@@ -16,8 +21,32 @@ const AddOpinion = ({ isOpen, onClose }) => {
         }
     };
 
+
+
     useEffect(() => {
         handleTextareaInput();
+        const token = localStorage.getItem("access");
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken.user_id
+        
+            axios
+                .post(`${SERVER_URL}/api/dodaj_opinie/`, {
+                    kierunek: majorId,
+                    user: userId,
+                    ocena: {rating},
+                    opis: {opinion},
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    setBestComment(response.data);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    
+
     }, []);
 
     if (!isOpen) return null;
@@ -30,7 +59,7 @@ const AddOpinion = ({ isOpen, onClose }) => {
                 </button>
                 <h2 className={styles.title}>
                     Oceń kierunek:{" "}
-                    <span className={styles.majorName}>Nazwa kierunku</span>
+                    <span className={styles.majorName}>{majorId}</span>
                 </h2>
                 <div className={styles.rating}>
                     <input
@@ -62,5 +91,6 @@ const AddOpinion = ({ isOpen, onClose }) => {
         document.getElementById("overlay")
     );
 };
+
 
 export default AddOpinion;
