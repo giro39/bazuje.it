@@ -7,11 +7,10 @@ import styles from "../../styles/components/AddOpinion/AddOpinion.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const AddOpinion = ({ isOpen, onClose, majorId }) => {
+const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
     const textareaRef = useRef(null);
     const [rating, setRating] = useState(50);
     const [opinion, setOpinion] = useState("");
-    
 
     const handleTextareaInput = () => {
         const textarea = textareaRef.current;
@@ -21,21 +20,18 @@ const AddOpinion = ({ isOpen, onClose, majorId }) => {
         }
     };
 
-
-
-    useEffect(() => {
-        handleTextareaInput();
+    const postOpinion = () => {
         const token = localStorage.getItem("access");
         if (token) {
             const decodedToken = jwtDecode(token);
-            const userId = decodedToken.user_id
-        
+            const userId = decodedToken.user_id;
+            console.log("bodzio");
             axios
                 .post(`${SERVER_URL}/api/dodaj_opinie/`, {
                     kierunek: majorId,
                     user: userId,
-                    ocena: {rating},
-                    opis: {opinion},
+                    ocena: rating,
+                    opis: opinion,
                 })
                 .then((response) => {
                     console.log(response.data);
@@ -45,8 +41,11 @@ const AddOpinion = ({ isOpen, onClose, majorId }) => {
                     console.error(error);
                 });
         }
-    
+        onClose();
+    };
 
+    useEffect(() => {
+        handleTextareaInput();
     }, []);
 
     if (!isOpen) return null;
@@ -59,7 +58,7 @@ const AddOpinion = ({ isOpen, onClose, majorId }) => {
                 </button>
                 <h2 className={styles.title}>
                     Oceń kierunek:{" "}
-                    <span className={styles.majorName}>{majorId}</span>
+                    <span className={styles.majorName}>{majorName}</span>
                 </h2>
                 <div className={styles.rating}>
                     <input
@@ -83,7 +82,11 @@ const AddOpinion = ({ isOpen, onClose, majorId }) => {
                     onInput={handleTextareaInput}
                     onChange={(e) => setOpinion(e.target.value)}
                 ></textarea>
-                <Button buttonType="contained" buttonSize="medium">
+                <Button
+                    buttonType="contained"
+                    buttonSize="medium"
+                    onClick={postOpinion}
+                >
                     Prześlij ocenę
                 </Button>
             </div>
@@ -91,6 +94,5 @@ const AddOpinion = ({ isOpen, onClose, majorId }) => {
         document.getElementById("overlay")
     );
 };
-
 
 export default AddOpinion;
