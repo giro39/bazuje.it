@@ -5,9 +5,13 @@ import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 const Rating = ({ rating }) => {
     return (
         <div className={styles.ratingContainer}>
-            <FaArrowUp className={styles.arrowUp} />
+            <button className={styles.ratingButton}>
+                <FaArrowUp className={styles.arrowUp} />
+            </button>
             <p className={styles.rating}>{rating}</p>
-            <FaArrowDown className={styles.arrowDown} />
+            <button className={styles.ratingButton}>
+                <FaArrowDown className={styles.arrowDown} />
+            </button>
         </div>
     );
 };

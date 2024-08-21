@@ -4,18 +4,29 @@
     background-color: $alt-background-color;
     display: flex;
     flex-direction: row;
-
-    min-height: 4rem;
+    min-height: 8rem;
     width: 60rem;
     margin-bottom: 4rem;
-    padding: 1rem 0;
-
+    padding: 1rem;
     border-radius: 1rem;
 }
 
+.smallText {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .contained {
-    max-height: 12rem;
-    overflow-y: hidden;
+    max-height: 18rem;
+
+    .opinionText {
+        line-clamp: 6;
+        -webkit-line-clamp: 6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+    }
 }
 
 .userTag {
@@ -27,6 +38,7 @@
     padding: 0 2rem;
 
     .userName {
+        margin-left: 0.4rem;
         font-size: 1.5rem;
         color: $text-color;
     }
@@ -34,6 +46,11 @@
 
 .opinionText {
     width: 100%;
+    line-height: 1.2rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    word-break: break-all;
 }
 
 .ratingContainer {
@@ -51,13 +68,32 @@
 .buttonPlace {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
+    margin: none;
 }
 
-.arrowUp {
-    cursor: pointer;
-}
-
+/* .arrowUp,
 .arrowDown {
     cursor: pointer;
+} */
+
+.ratingButton {
+    background-color: $alt-background-color;
+    color: $text-color;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: none;
+
+    &:hover {
+        background-color: darken(rgb(48, 48, 48), 1%);
+        color: $primary-color;
+    }
+
+    &:active {
+        scale: 0.98;
+    }
 }
