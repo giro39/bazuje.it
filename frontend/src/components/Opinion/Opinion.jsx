@@ -1,80 +1,60 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/components/Opinion/Opinion.module.scss";
 import Button from "../BasicComponents/Button/Button";
 import Rating from "./Rating";
 import UserTag from "./UserTag";
 
 const Opinion = ({ opinion }) => {
+    const [isLarge, setIsLarge] = useState(false);
     const [isContained, setIsContained] = useState(true);
-    const opinionRef = useRef(null);
-    const largeText = useRef(false);
 
-    const MaxREMTextSize = 8;
-    const maxLINESOfText = 5;
+    const maxSizeOfText = 750;
 
-    const txt = `dolores perferendis magnam id nobis exercitationem? Illum
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                    assume dolores perferendis magnam id nobis exercitationem?
-                    dolores perferen dis magnam id nobis exercitationem? Illum
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-                    assume dolores perferendis magnam id nobis exercitationem?
-                    dolores perferendis magnam id nobis exercitationem? Illum
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    HicLorem ipsum dolor sit amet consectetur adipisicing elit.
-                    HicLorem dddddddddddddddddddddddddddddd`;
+    const fullTxt = `dolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Loremdolores perferendis magnam id nobis exercitationem? Illum
+                        Lorem ipsum`;
+    const croppedTxt = fullTxt.slice(0, maxSizeOfText) + "...";
 
     useEffect(() => {
-        if (opinionRef.current) {
-            // USUNAC JAK JUZ BEDZIE POSTANOWIONE
-            //const containerHeight = opinionRef.current.offsetHeight;
-            //const rootFontSize = parseFloat(
-            //    getComputedStyle(document.documentElement).fontSize
-            //);
-            //const threshold = MaxREMTextSize * rootFontSize;
-            //largeText.current = containerHeight >= threshold;
-            console.log(txt.length);
-            largeText.current = txt.length > 750;
-
-            /*             const computedStyle = getComputedStyle(opinionRef.current);
-            let lineHeight = parseFloat(computedStyle.lineHeight);
-
-            console.log(lineHeight);
-            if (isNaN(lineHeight)) {
-                const fontSize = parseFloat(computedStyle.fontSize);
-                lineHeight = fontSize * 1.2; // Zakładamy, że line-height wynosi 1.2 em
-            }
-            // Oblicz wysokość odpowiadającą 5 liniom tekstu
-            const maxLinesHeight = lineHeight * maxLINESOfText;
-
-            const containerHeight = opinionRef.current.offsetHeight;
-
-            console.log(maxLinesHeight, containerHeight);
-            largeText.current = containerHeight >= maxLinesHeight;
- */
+        if (fullTxt.length > maxSizeOfText) {
+            setIsLarge(true);
         }
-    }, [txt]);
+    }, [fullTxt]);
 
     function changeContainer() {
         setIsContained((prevState) => !prevState);
     }
 
     return (
-        <div
-            className={`${styles.container} ${
-                isContained ? styles.contained : ""
-            } ${largeText.current ? "" : styles.smallText}`}
-        >
+        <div className={`${styles.container}`}>
             <UserTag user="Giro" />
             <div>
-                <div className={styles.opinionText} ref={opinionRef}>
-                    {txt}
+                <div className={styles.opinionText}>
+                    {isLarge ? (isContained ? croppedTxt : fullTxt) : fullTxt}
                 </div>
-                {largeText.current && (
+                {isLarge && (
                     <div className={styles.buttonPlace}>
                         <Button
                             onClick={changeContainer}
-                            buttonType={"outlined"}
-                            buttonSize={"medium"}
+                            buttonType={"inlined"}
+                            buttonSize={"inlineSize"}
                         >
                             {isContained ? "czytaj więcej" : "czytaj mniej"}
                         </Button>
