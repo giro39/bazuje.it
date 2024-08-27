@@ -1,0 +1,11 @@
+@use "../../vars" as *;
+
+.input {
+    height: 2.2em;
+    width: 50vw;
+    padding: 1em;
+    background-color: $space-color;
+    color: $text-color;
+    border: none;
+    border-radius: 10px;
+}
