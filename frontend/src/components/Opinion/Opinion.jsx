@@ -4,32 +4,13 @@ import Button from "../BasicComponents/Button/Button";
 import Rating from "./Rating";
 import UserTag from "./UserTag";
 
-const Opinion = ({ opinion }) => {
+const Opinion = ({ text, rating, user }) => {
     const [isLarge, setIsLarge] = useState(false);
     const [isContained, setIsContained] = useState(true);
 
     const maxSizeOfText = 750;
 
-    const fullTxt = `dolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Loremdolores perferendis magnam id nobis exercitationem? Illum
-                        Lorem ipsum`;
+    const fullTxt = text;
     const croppedTxt = fullTxt.slice(0, maxSizeOfText) + "...";
 
     useEffect(() => {
@@ -44,7 +25,7 @@ const Opinion = ({ opinion }) => {
 
     return (
         <div className={`${styles.container}`}>
-            <UserTag user="Giro" />
+            <UserTag user={user} />
             <div>
                 <div className={styles.opinionText}>
                     {isLarge ? (isContained ? croppedTxt : fullTxt) : fullTxt}
@@ -61,7 +42,7 @@ const Opinion = ({ opinion }) => {
                     </div>
                 )}
             </div>
-            <Rating rating={4} />
+            <Rating rating={rating} />
         </div>
     );
 };

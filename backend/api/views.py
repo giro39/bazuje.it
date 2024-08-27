@@ -1,29 +1,14 @@
 from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from .serializers import (
-    BestKierunkiSerializer,
-    WynikQuizuSerializer,
-    UsernameSerializer,
-    BestOpiniaSerializer,
-    ChosenKierunekSerializer,
-    AllOpinionsSerializer,
-)
-from .models import (
-    Rodzaj,
-    Miasto,
-    Uczelnia,
-    Wydzial,
-    Kierunek,
-    Przedmiot,
-    OpiniaPrzedmiot,
-    OpiniaUczelnia,
-    OpiniaKierunek,
-    Kategorie,
-    User,
-    OcenaOpiniiKierunku,
-)
+
+from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
+                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
+                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
+from .serializers import (AllOpinionsSerializer, BestKierunkiSerializer,
+                          BestOpiniaSerializer, ChosenKierunekSerializer,
+                          UsernameSerializer, WynikQuizuSerializer)
 
 
 @api_view(["GET"])
@@ -198,19 +183,22 @@ def getChosenKierunek(request):
 @permission_classes([AllowAny])
 def getAllOpinions(request):
     if request.method == "POST":
-        kieruenk_id = (request.data.get("user"),)
-        user_id = (request.data.get("kierunek"),)
+        kierunek_id = request.data.get("kierunek")
+        user_id = request.data.get("user")
 
-        opinie = OpiniaKierunek.objects.filter(kierunek=kieruenk_id)
+        opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
         data = []
         for opinia in opinie:
             oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
             rating = sum(ocena.ocena for ocena in oceny)
 
+            ocena = None
             if opinia.user_id == user_id:
-                ocena = OcenaOpiniiKierunku.objects.filter(
+                ocena_obj = OcenaOpiniiKierunku.objects.filter(
                     opinia=opinia.id, user=user_id
                 )
+                ocena = ocena_obj.ocena if ocena_obj else None
+
             data.append(
                 {
                     "opinia": opinia,
@@ -218,11 +206,13 @@ def getAllOpinions(request):
                     "user": opinia.user.username,
                     "text": opinia.opis,
                     "exists": True,
-                    "loggedUserRating": ocena.ocena if ocena else None,
+                    "loggedUserRating": ocena,
                 }
             )
-            serializer = AllOpinionsSerializer(data)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        serializer = AllOpinionsSerializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
     return Response(
         {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )

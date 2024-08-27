@@ -5,13 +5,14 @@ import Button from "../../components/BasicComponents/Button/Button";
 import styles from "../../styles/components/BestComment/BestComment.module.scss";
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import UserProfileIcon from "../UserProfileIcon/UserProfileIcon";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const BestComment = ({ majorId }) => {
     const [bestComment, setBestComment] = useState({});
-
+    const navigate = useNavigate();
     useEffect(() => {
         const kierunek_id = majorId;
 
@@ -41,7 +42,11 @@ const BestComment = ({ majorId }) => {
                         {bestComment.text}
                     </div>
                     <div className={styles.moreSegment}>
-                        <Button buttonType="contained" buttonSize="medium">
+                        <Button
+                            buttonType="contained"
+                            buttonSize="medium"
+                            onClick={() => navigate(`./opinions`)}
+                        >
                             więcej
                         </Button>
                     </div>

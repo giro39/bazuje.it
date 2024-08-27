@@ -65,7 +65,7 @@ const App = () => {
                                     element={<RegisterAndLogout />}
                                 />
                                 <Route
-                                    path="/kierunki/1/opinions"
+                                    path="/kierunki/:majorId/opinions"
                                     element={<MajorOpinions />}
                                 />
 

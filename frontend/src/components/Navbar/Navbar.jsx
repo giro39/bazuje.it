@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
@@ -10,10 +10,13 @@ import useUsername from "../../hooks/useUsername";
 import Button from "../BasicComponents/Button/Button";
 
 const Navbar = () => {
-    useUsername();
-
     const { theme, setTheme } = useContext(ThemeContext);
     const { username } = useContext(UsernameContext);
+    useUsername();
+
+    useEffect(() => {
+        console.log("Username changed to: ", username);
+    }, [username]);
 
     const navigate = useNavigate();
     const location = useLocation().pathname;
