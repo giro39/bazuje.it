@@ -52,9 +52,9 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
         handleTextareaInput();
     }, []);
 
-    if (!isOpen) return null;
+    if (!isOpen) return <></>;
 
-    return createPortal(
+    return (
         <div className={styles.overlay}>
             <div className={styles.container}>
                 <button className={styles.closeButton} onClick={handleClose}>
@@ -94,8 +94,7 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
                     Prześlij ocenę
                 </Button>
             </div>
-        </div>,
-        document.getElementById("overlay")
+        </div>
     );
 };
 

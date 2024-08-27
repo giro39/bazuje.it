@@ -13,11 +13,11 @@
 }
 
 .container {
-    // background-color: $background-color;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #3b3b3b;
+    background-color: $background-color;
+    // background-color: #3b3b3b;
     color: #f3f3f3;
     border-radius: 10px;
     padding: 1.2em 2em;

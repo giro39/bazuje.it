@@ -7,6 +7,8 @@ import Navbar from "../components/Navbar/Navbar";
 import BestComment from "../components/BestComment/BestComment";
 import AddOpinion from "../components/AddOpinion/AddOpinion";
 
+import PortalBox from "../components/PortalBox";
+
 import { UsernameContext } from "../contexts/UsernameContext";
 
 import styles from "../styles/pages/Major.module.scss";
@@ -43,12 +45,14 @@ const Major = () => {
     const { majorId } = useParams();
     return (
         <div className={styles.container}>
-            <AddOpinion
-                isOpen={isModalOpen}
-                onClose={toggleModal}
-                majorId={majorId}
-                majorName={chosenKierunek.kierunek}
-            />
+            <PortalBox>
+                <AddOpinion
+                    isOpen={isModalOpen}
+                    onClose={toggleModal}
+                    majorId={majorId}
+                    majorName={chosenKierunek.kierunek}
+                />
+            </PortalBox>
             <Navbar />
             <div className={styles.main}>
                 <p className={styles.majorName}>{chosenKierunek.kierunek}</p>
