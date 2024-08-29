@@ -8,6 +8,7 @@ import styles from "../../styles/components/AddOpinion/AddOpinion.module.scss";
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
+    const containerRef = useRef(null);
     const textareaRef = useRef(null);
     const [rating, setRating] = useState(50);
     const [opinion, setOpinion] = useState("");
@@ -17,6 +18,16 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
         if (textarea) {
             textarea.style.height = "auto";
             textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+    };
+
+    const handleBackgroundClick = (e) => {
+        if (
+            containerRef.current &&
+            !containerRef.current.contains(e.target) &&
+            opinion.length < 10
+        ) {
+            handleClose();
         }
     };
 
@@ -55,8 +66,8 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
     if (!isOpen) return <></>;
 
     return (
-        <div className={styles.overlay}>
-            <div className={styles.container}>
+        <div className={styles.overlay} onClick={handleBackgroundClick}>
+            <div className={styles.container} ref={containerRef}>
                 <button className={styles.closeButton} onClick={handleClose}>
                     x
                 </button>
