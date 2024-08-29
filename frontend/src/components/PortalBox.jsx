@@ -14,5 +14,5 @@ const PortalBox = ({ children }) => {
 export const PortalBoxParent = forwardRef(({ children }, ref) => (
     <div ref={ref}>{children}</div>
 ));
-// className={`${styles.customModuleContainer}`}
+
 export default PortalBox;

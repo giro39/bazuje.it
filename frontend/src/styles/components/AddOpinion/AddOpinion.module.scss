@@ -17,8 +17,7 @@
     flex-direction: column;
     justify-content: center;
     background-color: $background-color;
-    // background-color: #3b3b3b;
-    color: #f3f3f3;
+    color: $text-color;
     border-radius: 10px;
     padding: 1.2em 2em;
     min-width: 30em;
@@ -30,7 +29,7 @@
     top: 0em;
     right: 0.8em;
     background-color: transparent;
-    color: #fff;
+    color: $text-color;
     font-size: 1.4em;
     border: none;
     cursor: pointer;
@@ -43,8 +42,7 @@
 }
 
 .majorName {
-    // color: $primary-color;
-    color: #bc865a;
+    color: $primary-color;
 }
 
 .rating {
@@ -56,11 +54,10 @@
 
 .ratingSlider {
     appearance: none;
-    // margin-right: 0.6em;
     width: 85%;
     height: 1em;
     border-radius: 10px;
-    background: #2b2b2b;
+    background: $alt-space-color;
     -webkit-transition: 0.2s;
     transition: opacity 0.2s;
 }
@@ -74,7 +71,7 @@
     width: 1.75em;
     height: 1.75em;
     border-radius: 50%;
-    background: #bc865a;
+    background: $primary-color;
     cursor: pointer;
 }
 
@@ -82,22 +79,21 @@
     width: 1.75em;
     height: 1.75em;
     border-radius: 50%;
-    background: #bc865a;
+    background: $primary-color;
     cursor: pointer;
 }
 
 .valueOutOf {
-    background: linear-gradient(50deg, #6f939f, #fff);
+    background: linear-gradient(50deg, $secondary-color, $text-color);
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .opinionText {
-    width: 100%;
     height: 100%;
     padding: 0.6em;
-    background-color: #2b2b2b;
-    color: #f2f2f2;
+    background-color: $alt-space-color;
+    color: $text-color;
     border: none;
     border-radius: 5px;
     font-size: 0.9em;
