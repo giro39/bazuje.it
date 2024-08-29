@@ -40,3 +40,10 @@ class ChosenKierunekSerializer(serializers.Serializer):
     wydzial = serializers.CharField()
     sredniaOcen = serializers.FloatField()
     listaPrzedmiotow = serializers.ListField(child=serializers.DictField())
+
+class AllMajorsSerializer(serializers.Serializer):
+    majorId = serializers.IntegerField()
+    majorName = serializers.CharField()
+    universityId  = serializers.IntegerField()
+    universityName = serializers.CharField()
+    location = serializers.CharField()

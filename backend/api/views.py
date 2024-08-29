@@ -10,6 +10,7 @@ from .serializers import (
     BestOpiniaSerializer,
     ChosenKierunekSerializer,
     InputDataSerializer,
+    AllMajorsSerializer
 )
 from .models import (
     Rodzaj,
@@ -206,3 +207,27 @@ def getChosenKierunek(request):
     return Response(
         {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )
+
+
+@api_view(["GET"])
+def getAllMajors(request):
+    if request.method == "GET":
+        kierunki = Kierunek.objects.all()
+        data = []
+        for kierunek in kierunki:
+            data.append(
+                {
+                    "majorId": kierunek.id,
+                    "majorName": kierunek.nazwa,
+                    "universityId": kierunek.wydzial.uczelnia.id,
+                    "universityName": kierunek.wydzial.uczelnia.nazwa,
+                    "location": kierunek.wydzial.uczelnia.Miasto.nazwa,
+                }
+            )
+        
+        serializer = AllMajorsSerializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(
+            {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
