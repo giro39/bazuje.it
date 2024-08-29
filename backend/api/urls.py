@@ -7,4 +7,5 @@ urlpatterns = [
     path("get_username/", views.getUsername),
     path("best_opinia/", views.getBestOpinia),
     path("chosen_kierunek/", views.getChosenKierunek),
+    path('dodaj_opinie/', views.addOpiniaKierunek),
 ]
