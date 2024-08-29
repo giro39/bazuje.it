@@ -5,15 +5,17 @@ import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 
 const Rating = ({ rating }) => {
     const [currentRating, setCurrentRating] = useState(rating);
-
-    const downVoted = rating - 1;
-    const upVoted = rating + 1;
+    const [isVoted, setIsVoted] = useState(null);
 
     function handleVote(type) {
-        if (type === "up") {
-            setCurrentRating(() => rating + 1);
+        if (type === isVoted) {
+            setCurrentRating(() => rating);
+            setIsVoted(null);
         } else {
-            setCurrentRating(() => rating - 1);
+            setIsVoted(type);
+            type === "up"
+                ? setCurrentRating(() => rating + 1)
+                : setCurrentRating(() => rating - 1);
         }
     }
 
@@ -23,14 +25,16 @@ const Rating = ({ rating }) => {
                 className={styles.ratingButton}
                 onClick={() => handleVote("up")}
             >
-                <FaArrowUp className={styles.arrowUp} />
+                <FaArrowUp className={`${isVoted === "up" && styles.active}`} />
             </button>
             <p className={styles.rating}>{currentRating}</p>
             <button
                 className={styles.ratingButton}
                 onClick={() => handleVote("down")}
             >
-                <FaArrowDown className={styles.arrowDown} />
+                <FaArrowDown
+                    className={`${isVoted === "down" && styles.active}`}
+                />
             </button>
         </div>
     );

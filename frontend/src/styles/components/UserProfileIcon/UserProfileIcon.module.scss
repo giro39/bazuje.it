@@ -4,8 +4,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 4em;
-    height: 4em;
+    min-width: 4em;
+    min-height: 4em;
     background-color: #40974e;
     border-radius: 2em;
 }

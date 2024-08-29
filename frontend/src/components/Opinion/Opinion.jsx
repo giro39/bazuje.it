@@ -9,8 +9,8 @@ const Opinion = ({ text, rating, user }) => {
     const [isContained, setIsContained] = useState(true);
 
     const maxSizeOfText = 750;
-
     const fullTxt = text;
+
     const croppedTxt = fullTxt.slice(0, maxSizeOfText) + "...";
 
     useEffect(() => {
