@@ -8,4 +8,5 @@ urlpatterns = [
     path("best_opinia/", views.getBestOpinia),
     path("chosen_kierunek/", views.getChosenKierunek),
     path("all_opinions/", views.getAllOpinions),
+    path("vote/", views.vote_opinia_kierunek, name="voteOpiniaKierunek"),
 ]

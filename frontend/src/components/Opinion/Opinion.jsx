@@ -4,7 +4,7 @@ import Button from "../BasicComponents/Button/Button";
 import Rating from "./Rating";
 import UserTag from "./UserTag";
 
-const Opinion = ({ text, rating, user }) => {
+const Opinion = ({ text, rating, user, opinionId }) => {
     const [isLarge, setIsLarge] = useState(false);
     const [isContained, setIsContained] = useState(true);
 
@@ -42,7 +42,7 @@ const Opinion = ({ text, rating, user }) => {
                     </div>
                 )}
             </div>
-            <Rating rating={rating} />
+            <Rating rating={rating} opinionId={opinionId} />
         </div>
     );
 };

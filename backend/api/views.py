@@ -3,12 +3,28 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
-                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
-                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
-from .serializers import (AllOpinionsSerializer, BestKierunkiSerializer,
-                          BestOpiniaSerializer, ChosenKierunekSerializer,
-                          UsernameSerializer, WynikQuizuSerializer)
+from .models import (
+    Kategorie,
+    Kierunek,
+    Miasto,
+    OcenaOpiniiKierunku,
+    OpiniaKierunek,
+    OpiniaPrzedmiot,
+    OpiniaUczelnia,
+    Przedmiot,
+    Rodzaj,
+    Uczelnia,
+    User,
+    Wydzial,
+)
+from .serializers import (
+    AllOpinionsSerializer,
+    BestKierunkiSerializer,
+    BestOpiniaSerializer,
+    ChosenKierunekSerializer,
+    UsernameSerializer,
+    WynikQuizuSerializer,
+)
 
 
 @api_view(["GET"])
@@ -197,11 +213,14 @@ def getAllOpinions(request):
                 ocena_obj = OcenaOpiniiKierunku.objects.filter(
                     opinia=opinia.id, user=user_id
                 )
-                ocena = ocena_obj.ocena if ocena_obj else None
+                # Sprawdź, czy ocena_obj ma jakiekolwiek elementy
+                if ocena_obj.exists():
+                    # Pobierz pierwszą ocenę
+                    ocena = ocena_obj.first().ocena
 
             data.append(
                 {
-                    "opinia": opinia,
+                    "opinia": opinia.id,
                     "rating": rating,
                     "user": opinia.user.username,
                     "text": opinia.opis,
@@ -209,10 +228,43 @@ def getAllOpinions(request):
                     "loggedUserRating": ocena,
                 }
             )
-        
+
         serializer = AllOpinionsSerializer(data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
     return Response(
         {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def vote_opinia_kierunek(request):
+    user_id = request.data.get("userId")
+    opinia_id = request.data.get("opinionId")
+    ocena = request.data.get("grade")
+
+    try:
+        user = User.objects.get(id=user_id)
+        opinia = OpiniaKierunek.objects.get(id=opinia_id)
+    except User.DoesNotExist:
+        return Response(
+            {"error": "User not found"}, status=status.HTTP_404_METHOD_NOT_ALLOWED
+        )
+    except OpiniaKierunek.DoesNotExist:
+        return Response(
+            {"error": "Opinia not found"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
+
+    try:
+        ocena_opinii = OcenaOpiniiKierunku.objects.get(user=user, opinia=opinia)
+        if ocena_opinii.ocena == ocena:
+            ocena_opinii.delete()
+            return Response({"message": "Vote removed"}, status=status.HTTP_200_OK)
+        else:
+            ocena_opinii.ocena = ocena
+            ocena_opinii.save()
+            return Response({"message": "Vote updated"}, status=status.HTTP_200_OK)
+    except OcenaOpiniiKierunku.DoesNotExist:
+        OcenaOpiniiKierunku.objects.create(user=user, opinia=opinia, ocena=ocena)
+        return Response({"message": "Vote added"}, status=status.HTTP_201_CREATED)

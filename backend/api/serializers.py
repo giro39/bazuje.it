@@ -37,7 +37,7 @@ class ChosenKierunekSerializer(serializers.Serializer):
 
 
 class AllOpinionsSerializer(serializers.Serializer):
-    opinia = serializers.CharField()
+    opinia = serializers.IntegerField()
     rating = serializers.IntegerField()
     user = serializers.CharField()
     text = serializers.CharField()
