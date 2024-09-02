@@ -3,9 +3,15 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .serializers import (AllOpinionsSerializer, BestKierunkiSerializer,
-                          BestOpiniaSerializer, ChosenKierunekSerializer,
-                          UsernameSerializer, WynikQuizuSerializer, OpiniaKierunekSerializer,)
+from .serializers import (
+    AllOpinionsSerializer,
+    BestKierunkiSerializer,
+    BestOpiniaSerializer,
+    ChosenKierunekSerializer,
+    UsernameSerializer,
+    WynikQuizuSerializer,
+    OpiniaKierunekSerializer,
+)
 
 from .models import (
     Rodzaj,
@@ -21,7 +27,6 @@ from .models import (
     User,
     OcenaOpiniiKierunku,
 )
-
 
 
 @api_view(["GET"])
@@ -192,7 +197,6 @@ def getChosenKierunek(request):
     )
 
 
-
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def getAllOpinions(request):
@@ -266,6 +270,7 @@ def vote_opinia_kierunek(request):
         OcenaOpiniiKierunku.objects.create(user=user, opinia=opinia, ocena=ocena)
         return Response({"message": "Vote added"}, status=status.HTTP_201_CREATED)
 
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def addOpiniaKierunek(request):
@@ -279,11 +284,16 @@ def addOpiniaKierunek(request):
 
         serializer = OpiniaKierunekSerializer(data=data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            if OpiniaKierunek.objects.get(kierunek=data["kierunek"], user=data["user"]):
+                return Response(
+                    {"error": "You have already added an opinion for this course"},
+                    status=status.HTTP_409_CONFLICT,
+                )
+            else:
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(
         {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )
-
