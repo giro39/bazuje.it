@@ -229,8 +229,8 @@ def getAllOpinions(request):
                     "loggedUserRating": ocena,
                 }
             )
-
-        serializer = AllOpinionsSerializer(data, many=True)
+        sorted_data = sorted(data, key=lambda x: x["rating"], reverse=True)
+        serializer = AllOpinionsSerializer(sorted_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     return Response(
