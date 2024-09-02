@@ -7,58 +7,15 @@ import styles from "../../styles/components/SearchBar/SearchBar.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const dataTemplate = [
-    {
-        id: 1,
-        major: "Informatyka",
-        university: "Politechnika Poznańska",
-        location: "Poznań",
-    },
-    {
-        id: 2,
-        major: "Bioinformatyka",
-        university: "Politechnika Poznańska",
-        location: "Poznań",
-    },
-    {
-        id: 3,
-        major: "Informatyka",
-        university: "Politechnika Gdańska",
-        location: "Gdańsk",
-    },
-    {
-        id: 4,
-        major: "Informatyka",
-        university: "Akademia Nauk Stosowanych w Pile",
-        location: "Piła",
-    },
-    {
-        id: 5,
-        major: "Sztuczna Inteligencja",
-        university: "Politechnika Poznańska",
-        location: "Poznań",
-    },
-    {
-        id: 6,
-        major: "Bioinformatyka",
-        university: "Akademia Nauk Stosowanych w Pile",
-        location: "Piła",
-    },
-    {
-        id: 6,
-        major: "Informatyka",
-        university: "Politechnika Bydgoska",
-        location: "Bydgoszcz",
-    },
-];
-
 const SearchBar = () => {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
+    const [dropdownActive, setDropdownActive] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (query.length > 1) {
+            setDropdownActive(true);
             const filteredResults = data
                 .filter(
                     (item) =>
@@ -75,6 +32,7 @@ const SearchBar = () => {
                 .slice(0, 8);
             setResults(filteredResults);
         } else {
+            setDropdownActive(false);
             setResults([]);
         }
         console.log(results);
@@ -94,7 +52,9 @@ const SearchBar = () => {
     return (
         <div className={styles.container}>
             <input
-                className={styles.input}
+                className={`${styles.input} ${
+                    dropdownActive ? styles.inputActive : ""
+                }`}
                 type="search"
                 placeholder="Wyszukaj uczelnię lub kierunek..."
                 value={query}
@@ -103,7 +63,13 @@ const SearchBar = () => {
             {results.length > 0 && (
                 <ul className={styles.dropdown}>
                     {results.map((result) => (
-                        <li key={result.id} className={styles.dropdownItem}>
+                        <li
+                            key={result.majorId}
+                            className={styles.dropdownItem}
+                            onClick={() =>
+                                navigate(`/kierunki/${result.majorId}`)
+                            }
+                        >
                             <div className={styles.itemContent}>
                                 <b>{result.majorName}</b>
                                 <p>
