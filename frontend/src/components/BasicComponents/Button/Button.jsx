@@ -6,7 +6,7 @@ const Button = ({ onClick, buttonType, buttonSize, children, ...rest }) => {
 
     if (
         buttonType === "contained" ||
-        buttonType === "outlined" ||
+        buttonType === "inlined" ||
         buttonType === "distinctive" ||
         buttonType === "white"
     ) {
@@ -17,7 +17,8 @@ const Button = ({ onClick, buttonType, buttonSize, children, ...rest }) => {
         buttonSize === "small" ||
         buttonSize === "medium" ||
         buttonSize === "large" ||
-        buttonSize === "giant"
+        buttonSize === "giant" ||
+        buttonSize === "inlineSize"
     ) {
         buttonSizeClass = buttonSize;
     }

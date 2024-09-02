@@ -1,7 +1,3 @@
-import React, { useState, useContext } from "react";
-
-import Navbar from "../components/Navbar/Navbar";
-
 import styles from "../styles/pages/Home.module.scss";
 
 import QuizResult from "../components/OverallTop5/QuizResult";
@@ -9,7 +5,6 @@ import QuizResult from "../components/OverallTop5/QuizResult";
 const Results = () => {
     return (
         <div className={styles.container}>
-            <Navbar />
             <div className={styles.mainResults}>
                 <div className={styles.textResults}>
                     <p className={styles.largeText}>

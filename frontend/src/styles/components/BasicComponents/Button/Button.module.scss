@@ -37,10 +37,24 @@
 .contained:active {
     @include onclick();
 }
-.outlined {
+.inlined {
     @include theme($theme: rgba(0, 0, 0, 0));
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background: linear-gradient(90deg, $text-color, $secondary-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    padding: 0;
 }
-.outlined:active {
+
+.inlined:hover {
+    text-shadow: $secondary-color 0.2em 0.2em 1em;
+    transition: 0.2s;
+}
+
+.inlined:active {
     @include onclick();
 }
 .distinctive {
@@ -84,4 +98,12 @@
     max-width: 25rem;
     height: 10rem;
     padding: 1rem 1.2rem;
+}
+
+.inlineSize {
+    font-size: 1rem;
+    min-width: 4rem;
+
+    padding: 0;
+    margin: 0 0.5rem 0 0;
 }

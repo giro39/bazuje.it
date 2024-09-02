@@ -5,25 +5,6 @@
     flex-direction: column;
 }
 
-.majorName {
-    font-size: 4em;
-    margin-top: 0.6em;
-}
-
-.universityName {
-    font-size: 2em;
-    background: linear-gradient(50deg, $primary-color, $text-color);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.overBestComment {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.6em 0 0.2em 0;
-}
-
 .mostAccurateOpinion {
     font-size: 1.6em;
     background: linear-gradient(50deg, $secondary-color, $text-color);

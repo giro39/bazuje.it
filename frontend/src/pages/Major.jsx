@@ -11,6 +11,7 @@ import PortalBox from "../components/PortalBox";
 
 import { UsernameContext } from "../contexts/UsernameContext";
 
+import MajorPageTopper from "../components/BasicComponents/MajorPageTopper/MajorPageTopper";
 import styles from "../styles/pages/Major.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
@@ -53,16 +54,12 @@ const Major = () => {
                     majorName={chosenKierunek.kierunek}
                 />
             </PortalBox>
-            <Navbar />
             <div className={styles.main}>
-                <p className={styles.majorName}>{chosenKierunek.kierunek}</p>
-                <p className={styles.universityName}>
-                    {chosenKierunek.uczelnia}
+                <MajorPageTopper chosenMajor={chosenKierunek} />
+
+                <p className={styles.mostAccurateOpinion}>
+                    Najtrafniejsza opinia
                 </p>
-                <div className={styles.overBestComment}>
-                    <p className={styles.mostAccurateOpinion}>
-                        Najtrafniejsza opinia
-                    </p>
                     {!username ? (
                         <Button
                             buttonType="white"

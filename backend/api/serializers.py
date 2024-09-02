@@ -20,15 +20,9 @@ class WynikQuizuSerializer(serializers.Serializer):
     wynikQuizu = serializers.FloatField()
 
 
-class CategorySerializer(serializers.Serializer):
-    title = serializers.CharField()
-    name = serializers.CharField()
-
 class UsernameSerializer(serializers.Serializer):
     username = serializers.CharField()
 
-class InputDataSerializer(serializers.Serializer):
-    inputData = serializers.CharField()
 
 class BestOpiniaSerializer(serializers.Serializer):
     opinia = serializers.CharField()
@@ -46,4 +40,12 @@ class ChosenKierunekSerializer(serializers.Serializer):
     sredniaOcen = serializers.FloatField()
     listaPrzedmiotow = serializers.ListField(child=serializers.DictField())
 
+
+class AllOpinionsSerializer(serializers.Serializer):
+    opinia = serializers.IntegerField()
+    rating = serializers.IntegerField()
+    user = serializers.CharField()
+    text = serializers.CharField()
+    exists = serializers.BooleanField()
+    loggedUserRating = serializers.IntegerField()
 
