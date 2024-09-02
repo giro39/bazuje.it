@@ -284,7 +284,9 @@ def addOpiniaKierunek(request):
 
         serializer = OpiniaKierunekSerializer(data=data)
         if serializer.is_valid():
-            if OpiniaKierunek.objects.get(kierunek=data["kierunek"], user=data["user"]):
+            if OpiniaKierunek.objects.filter(
+                kierunek=data["kierunek"], user=data["user"]
+            ).exists():
                 return Response(
                     {"error": "You have already added an opinion for this course"},
                     status=status.HTTP_409_CONFLICT,
