@@ -3,28 +3,12 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import (
-    Kategorie,
-    Kierunek,
-    Miasto,
-    OcenaOpiniiKierunku,
-    OpiniaKierunek,
-    OpiniaPrzedmiot,
-    OpiniaUczelnia,
-    Przedmiot,
-    Rodzaj,
-    Uczelnia,
-    User,
-    Wydzial,
-)
-from .serializers import (
-    AllOpinionsSerializer,
-    BestKierunkiSerializer,
-    BestOpiniaSerializer,
-    ChosenKierunekSerializer,
-    UsernameSerializer,
-    WynikQuizuSerializer,
-)
+from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
+                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
+                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
+from .serializers import (AllOpinionsSerializer, BestKierunkiSerializer,
+                          BestOpiniaSerializer, ChosenKierunekSerializer,
+                          UsernameSerializer, WynikQuizuSerializer)
 
 
 @api_view(["GET"])
@@ -208,7 +192,7 @@ def getAllOpinions(request):
             oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
             rating = sum(ocena.ocena for ocena in oceny)
 
-            ocena = None
+            ocena = 0
 
             ocena_obj = OcenaOpiniiKierunku.objects.filter(
                 opinia=opinia.id, user=user_id

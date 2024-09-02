@@ -43,13 +43,13 @@ const MajorOpinions = () => {
     }, [majorId]);
 
     const allOpinions = opinions.map((opinion, index) => (
-        console.log(opinion),
         <Opinion
             key={index}
             text={opinion.text}
             rating={opinion.rating}
             user={opinion.user}
             opinionId={opinion.opinia}
+            loggedUserRating={opinion.loggedUserRating}
         />
     ));
 

@@ -42,4 +42,4 @@ class AllOpinionsSerializer(serializers.Serializer):
     user = serializers.CharField()
     text = serializers.CharField()
     exists = serializers.BooleanField()
-    loggedUserRating = serializers.CharField()
+    loggedUserRating = serializers.IntegerField()
