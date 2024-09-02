@@ -209,14 +209,13 @@ def getAllOpinions(request):
             rating = sum(ocena.ocena for ocena in oceny)
 
             ocena = None
-            if opinia.user_id == user_id:
-                ocena_obj = OcenaOpiniiKierunku.objects.filter(
-                    opinia=opinia.id, user=user_id
-                )
-                # Sprawdź, czy ocena_obj ma jakiekolwiek elementy
-                if ocena_obj.exists():
-                    # Pobierz pierwszą ocenę
-                    ocena = ocena_obj.first().ocena
+
+            ocena_obj = OcenaOpiniiKierunku.objects.filter(
+                opinia=opinia.id, user=user_id
+            )
+
+            if ocena_obj.exists():
+                ocena = ocena_obj.first().ocena
 
             data.append(
                 {

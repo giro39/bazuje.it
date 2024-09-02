@@ -24,7 +24,6 @@ const MajorOpinions = () => {
                 user: decodedToken.user_id,
             })
             .then((response) => {
-                console.log(response.data);
                 setOpinions(response.data);
             })
             .catch((error) => {
