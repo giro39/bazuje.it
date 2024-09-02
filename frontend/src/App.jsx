@@ -40,6 +40,7 @@ const App = () => {
     const [result, setResult] = useState(initialResultContext);
     const [username, setUsername] = useState(initialUsernameContext);
     const portalBox = useRef();
+
     return (
         <BrowserRouter>
             <main theme={theme}>
@@ -48,42 +49,17 @@ const App = () => {
                         <UsernameContext.Provider
                             value={{ username, setUsername }}
                         >
-
-                            <Routes>
-                                <Route
-                                    path="/"
-                                    element={
-                                        <Navigate to={"/home"} replace={true} />
-                                    }
-                                />
-                                <Route path="/home" element={<Home />} />
-                                <Route path="/quiz" element={<Quiz />} />
-                                <Route path="/results" element={<Results />} />
-                                <Route
-                                    path="/kierunki/:majorId"
-                                    element={<Major />}
-                                />
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/logout" element={<Logout />} />
-                                <Route
-                                    path="/register"
-                                    element={<RegisterAndLogout />}
-                                />
-                                <Route
-                                    path="/kierunki/:majorId/opinions"
-                                    element={<MajorOpinions />}
-                                />
                             <PortalBoxContext.Provider
                                 value={portalBox.current}
                             >
-                                <PortalBoxParent ref={portalBox} />
                                 <Navbar />
+                                <PortalBoxParent ref={portalBox} />
                                 <Routes>
                                     <Route
                                         path="/"
                                         element={
                                             <Navigate
-                                                to={"/home"}
+                                                to="/home"
                                                 replace={true}
                                             />
                                         }
@@ -97,6 +73,10 @@ const App = () => {
                                     <Route
                                         path="/kierunki/:majorId"
                                         element={<Major />}
+                                    />
+                                    <Route
+                                        path="/kierunki/:majorId/opinions"
+                                        element={<MajorOpinions />}
                                     />
                                     <Route path="/login" element={<Login />} />
                                     <Route
@@ -120,4 +100,5 @@ const App = () => {
         </BrowserRouter>
     );
 };
+
 export default App;

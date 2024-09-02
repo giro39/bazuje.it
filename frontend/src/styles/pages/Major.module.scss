@@ -5,6 +5,12 @@
     flex-direction: column;
 }
 
+.aboveMostAccOpinion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .mostAccurateOpinion {
     font-size: 1.6em;
     background: linear-gradient(50deg, $secondary-color, $text-color);

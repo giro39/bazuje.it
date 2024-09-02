@@ -3,7 +3,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Button from "../components/BasicComponents/Button/Button";
-import Navbar from "../components/Navbar/Navbar";
 import BestComment from "../components/BestComment/BestComment";
 import AddOpinion from "../components/AddOpinion/AddOpinion";
 
@@ -21,6 +20,8 @@ const Major = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { username } = useContext(UsernameContext);
+
+    const { majorId } = useParams();
 
     const navigate = useNavigate();
 
@@ -41,9 +42,8 @@ const Major = () => {
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
+    }, [majorId]);
 
-    const { majorId } = useParams();
     return (
         <div className={styles.container}>
             <PortalBox>
@@ -56,10 +56,10 @@ const Major = () => {
             </PortalBox>
             <div className={styles.main}>
                 <MajorPageTopper chosenMajor={chosenKierunek} />
-
-                <p className={styles.mostAccurateOpinion}>
-                    Najtrafniejsza opinia
-                </p>
+                <div className={styles.aboveMostAccOpinion}>
+                    <p className={styles.mostAccurateOpinion}>
+                        Najtrafniejsza opinia
+                    </p>
                     {!username ? (
                         <Button
                             buttonType="white"
