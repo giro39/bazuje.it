@@ -1,5 +1,5 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode"; // poprawka importu
+import { jwtDecode } from "jwt-decode";
 import { useContext, useEffect } from "react";
 import { UsernameContext } from "../contexts/UsernameContext";
 

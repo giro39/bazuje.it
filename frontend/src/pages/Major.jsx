@@ -1,8 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
+import Button from "../components/BasicComponents/Button/Button";
+import Navbar from "../components/Navbar/Navbar";
 import BestComment from "../components/BestComment/BestComment";
+import AddOpinion from "../components/AddOpinion/AddOpinion";
+
+import PortalBox from "../components/PortalBox";
+
+import { UsernameContext } from "../contexts/UsernameContext";
 
 import MajorPageTopper from "../components/BasicComponents/MajorPageTopper/MajorPageTopper";
 import styles from "../styles/pages/Major.module.scss";
@@ -11,6 +18,15 @@ const SERVER_URL = "http://127.0.0.1:8000";
 
 const Major = () => {
     const [chosenKierunek, setChosenKierunek] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const { username } = useContext(UsernameContext);
+
+    const navigate = useNavigate();
+
+    const toggleModal = () => {
+        setIsModalOpen((prevState) => !prevState);
+    };
 
     useEffect(() => {
         const kierunek_id = majorId;
@@ -30,12 +46,38 @@ const Major = () => {
     const { majorId } = useParams();
     return (
         <div className={styles.container}>
+            <PortalBox>
+                <AddOpinion
+                    isOpen={isModalOpen}
+                    onClose={toggleModal}
+                    majorId={majorId}
+                    majorName={chosenKierunek.kierunek}
+                />
+            </PortalBox>
             <div className={styles.main}>
                 <MajorPageTopper chosenMajor={chosenKierunek} />
 
                 <p className={styles.mostAccurateOpinion}>
                     Najtrafniejsza opinia
                 </p>
+                    {!username ? (
+                        <Button
+                            buttonType="white"
+                            buttonSize="medium"
+                            onClick={() => navigate("/login")}
+                        >
+                            Zaloguj się, aby dodać opinię
+                        </Button>
+                    ) : (
+                        <Button
+                            buttonType="white"
+                            buttonSize="medium"
+                            onClick={toggleModal}
+                        >
+                            Dodaj opinię
+                        </Button>
+                    )}
+                </div>
             </div>
             <BestComment majorId={majorId} />
             <div className={styles.subjects}>

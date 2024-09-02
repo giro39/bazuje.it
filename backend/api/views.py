@@ -3,12 +3,25 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
-                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
-                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
 from .serializers import (AllOpinionsSerializer, BestKierunkiSerializer,
                           BestOpiniaSerializer, ChosenKierunekSerializer,
-                          UsernameSerializer, WynikQuizuSerializer)
+                          UsernameSerializer, WynikQuizuSerializer, OpiniaKierunekSerializer,)
+
+from .models import (
+    Rodzaj,
+    Miasto,
+    Uczelnia,
+    Wydzial,
+    Kierunek,
+    Przedmiot,
+    OpiniaPrzedmiot,
+    OpiniaUczelnia,
+    OpiniaKierunek,
+    Kategorie,
+    User,
+    OcenaOpiniiKierunku,
+)
+
 
 
 @api_view(["GET"])
@@ -179,6 +192,7 @@ def getChosenKierunek(request):
     )
 
 
+
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def getAllOpinions(request):
@@ -251,3 +265,25 @@ def vote_opinia_kierunek(request):
     except OcenaOpiniiKierunku.DoesNotExist:
         OcenaOpiniiKierunku.objects.create(user=user, opinia=opinia, ocena=ocena)
         return Response({"message": "Vote added"}, status=status.HTTP_201_CREATED)
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def addOpiniaKierunek(request):
+    if request.method == "POST":
+        data = {
+            "kierunek": request.data.get("kierunek"),
+            "user": request.data.get("user"),
+            "ocena": request.data.get("ocena"),
+            "opis": request.data.get("opis"),
+        }
+
+        serializer = OpiniaKierunekSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+

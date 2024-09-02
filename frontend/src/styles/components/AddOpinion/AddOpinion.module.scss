@@ -1,0 +1,116 @@
+@use "../../vars" as *;
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.75;
+    }
+    94% {
+        transform: scale(1.01);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $background-color;
+    color: $text-color;
+    border-radius: 10px;
+    padding: 1.2em 2em;
+    min-width: 30em;
+    position: relative;
+    animation: scaleIn 0.1s ease;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0em;
+    right: 0.8em;
+    background-color: transparent;
+    color: $text-color;
+    font-size: 1.4em;
+    border: none;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 1.75em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.majorName {
+    color: $primary-color;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+}
+
+.ratingSlider {
+    appearance: none;
+    width: 85%;
+    height: 1em;
+    border-radius: 10px;
+    background: $alt-space-color;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+}
+
+.ratingSlider:hover {
+    opacity: 0.95;
+}
+
+.ratingSlider::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.75em;
+    height: 1.75em;
+    border-radius: 50%;
+    background: $primary-color;
+    cursor: pointer;
+}
+
+.ratingSlider::-moz-range-thumb {
+    width: 1.75em;
+    height: 1.75em;
+    border-radius: 50%;
+    background: $primary-color;
+    cursor: pointer;
+}
+
+.valueOutOf {
+    background: linear-gradient(50deg, $secondary-color, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.opinionText {
+    height: 100%;
+    padding: 0.6em;
+    background-color: $alt-space-color;
+    color: $text-color;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    resize: none;
+}

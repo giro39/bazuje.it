@@ -1,5 +1,10 @@
 from rest_framework import serializers
+from .models import OpiniaKierunek
 
+class OpiniaKierunekSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpiniaKierunek
+        fields = ['kierunek', 'user', 'ocena', 'opis']
 
 class BestKierunkiSerializer(serializers.Serializer):
     kierunek_id = serializers.IntegerField()
@@ -43,3 +48,4 @@ class AllOpinionsSerializer(serializers.Serializer):
     text = serializers.CharField()
     exists = serializers.BooleanField()
     loggedUserRating = serializers.IntegerField()
+
