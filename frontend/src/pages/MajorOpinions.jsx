@@ -16,12 +16,15 @@ const MajorOpinions = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("access");
-        const decodedToken = jwtDecode(token);
+        let user = null;
+        if (token) {
+            user = jwtDecode(token).user_id;
+        }
 
         axios
             .post(`${SERVER_URL}/api/all_opinions/`, {
                 kierunek: majorId,
-                user: decodedToken.user_id,
+                user: user,
             })
             .then((response) => {
                 setOpinions(response.data);

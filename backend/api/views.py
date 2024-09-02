@@ -224,12 +224,17 @@ def getAllOpinions(request):
                     "opinia": opinia.id,
                     "rating": rating,
                     "user": opinia.user.username,
+                    "userId": opinia.user.id,
                     "text": opinia.opis,
                     "exists": True,
                     "loggedUserRating": ocena,
                 }
             )
         sorted_data = sorted(data, key=lambda x: x["rating"], reverse=True)
+        for i in range(len(sorted_data)):
+            if sorted_data[i]["userId"] == user_id:
+                sorted_data[i], sorted_data[0] = sorted_data[0], sorted_data[i]
+
         serializer = AllOpinionsSerializer(sorted_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
