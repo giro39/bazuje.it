@@ -6,7 +6,9 @@ import styles from "../../styles/components/Navbar/Navbar.module.scss";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { UsernameContext } from "../../contexts/UsernameContext";
 
+import SearchBar from "../SearchBar/SearchBar";
 import useUsername from "../../hooks/useUsername";
+
 import Button from "../BasicComponents/Button/Button";
 
 const Navbar = () => {
@@ -45,11 +47,7 @@ const Navbar = () => {
             </button>
 
             <div className={styles.inputContainer}>
-                <input
-                    type="text"
-                    className={styles.inputText}
-                    // placeholder="Wyszukaj uczelnię..."
-                />
+                <SearchBar />
                 <img
                     src={
                         theme === "dark"
