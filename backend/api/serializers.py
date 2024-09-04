@@ -1,4 +1,11 @@
 from rest_framework import serializers
+from .models import OpiniaKierunek
+
+
+class OpiniaKierunekSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpiniaKierunek
+        fields = ["kierunek", "user", "ocena", "opis"]
 
 
 class BestKierunkiSerializer(serializers.Serializer):
@@ -15,15 +22,9 @@ class WynikQuizuSerializer(serializers.Serializer):
     wynikQuizu = serializers.FloatField()
 
 
-class CategorySerializer(serializers.Serializer):
-    title = serializers.CharField()
-    name = serializers.CharField()
-
 class UsernameSerializer(serializers.Serializer):
     username = serializers.CharField()
 
-class InputDataSerializer(serializers.Serializer):
-    inputData = serializers.CharField()
 
 class BestOpiniaSerializer(serializers.Serializer):
     opinia = serializers.CharField()
@@ -47,3 +48,12 @@ class AllMajorsSerializer(serializers.Serializer):
     universityId  = serializers.IntegerField()
     universityName = serializers.CharField()
     location = serializers.CharField()
+
+class AllOpinionsSerializer(serializers.Serializer):
+    opinia = serializers.IntegerField()
+    rating = serializers.IntegerField()
+    user = serializers.CharField()
+    userId = serializers.IntegerField()
+    text = serializers.CharField()
+    exists = serializers.BooleanField()
+    loggedUserRating = serializers.IntegerField()

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Navbar from "../components/Navbar/Navbar";
 import OverallTop5 from "../components/OverallTop5/OverallTop5";
 
 import Button from "../components/BasicComponents/Button/Button";
@@ -25,7 +24,6 @@ const Home = () => {
 
     return (
         <div className={styles.container}>
-            <Navbar />
             <div className={styles.main}>
                 <div className={styles.textMain}>
                     <p className={styles.largeText}>

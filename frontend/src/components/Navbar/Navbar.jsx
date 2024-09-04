@@ -1,26 +1,35 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { UsernameContext } from "../../contexts/UsernameContext";
 
-import { default as useUsername } from "../../hooks/useUsername";
 import SearchBar from "../SearchBar/SearchBar";
+import useUsername from "../../hooks/useUsername";
+
 import Button from "../BasicComponents/Button/Button";
 
 const Navbar = () => {
-    useUsername();
-
     const { theme, setTheme } = useContext(ThemeContext);
     const { username } = useContext(UsernameContext);
+    useUsername();
+
+    useEffect(() => {
+        console.log("Username changed to: ", username);
+    }, [username]);
 
     const navigate = useNavigate();
+    const location = useLocation().pathname;
 
     const handleModeChange = () => {
         setTheme((prevState) => (prevState === "light" ? "dark" : "light"));
     };
+
+    if (location === "/login" || location === "/register") {
+        return null;
+    }
 
     return (
         <div className={styles.navbar}>
@@ -36,12 +45,8 @@ const Navbar = () => {
                     onClick={() => navigate("/home")}
                 />
             </button>
+
             <div className={styles.inputContainer}>
-                {/* <input
-                    type="text"
-                    className={styles.inputText}
-                    // placeholder="Wyszukaj uczelnię..."
-                /> */}
                 <SearchBar />
                 <img
                     src={

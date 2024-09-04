@@ -1,0 +1,105 @@
+@use "../../vars" as *;
+
+.container {
+    background-color: $alt-background-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 8rem;
+    width: 60rem;
+    margin-bottom: 4rem;
+    padding: 0.6rem 1rem;
+    border-radius: 1rem;
+}
+
+.smallText {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.contained {
+    max-height: 18rem;
+
+    .opinionText {
+        line-clamp: 6;
+        -webkit-line-clamp: 6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+    }
+}
+
+.userTag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 160px;
+    padding: 0 2rem;
+
+    .userName {
+        width: inherit;
+        text-align: center;
+        font-size: 1.3rem;
+        color: $text-color;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.opinionText {
+    width: 100%;
+    line-height: 1.2rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+
+    text-align: justify;
+}
+
+.ratingContainer {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    margin: auto 1rem;
+
+    .rating {
+        margin: 1rem 0;
+    }
+}
+
+.buttonPlace {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: none;
+}
+
+.ratingButton {
+    background-color: $alt-background-color;
+    color: $text-color;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: none;
+
+    &:hover {
+        background-color: darken(rgb(48, 48, 48), 1%);
+        color: $primary-color;
+    }
+
+    &:active {
+        scale: 0.98;
+    }
+
+    .active {
+        color: $primary-color;
+    }
+}
