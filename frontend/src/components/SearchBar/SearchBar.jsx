@@ -35,7 +35,6 @@ const SearchBar = () => {
             setDropdownActive(false);
             setResults([]);
         }
-        console.log(results);
     }, [query]);
 
     const { data, loading, error } = useFetch(`${SERVER_URL}/api/all_majors/`);
@@ -66,14 +65,20 @@ const SearchBar = () => {
                         <li
                             key={result.majorId}
                             className={styles.dropdownItem}
-                            onClick={() =>
-                                navigate(`/kierunki/${result.majorId}`)
-                            }
+                            onClick={() => {
+                                navigate(`/kierunki/${result.majorId}`);
+                                setQuery("");
+                            }}
                         >
                             <div className={styles.itemContent}>
-                                <b>{result.majorName}</b>
+                                <b className={styles.majorName}>
+                                    {result.majorName}
+                                </b>
                                 <p>
-                                    {result.universityName}, {result.location}
+                                    <span className={styles.universityName}>
+                                        {result.universityName}
+                                    </span>
+                                    , {result.location}
                                 </p>
                             </div>
                         </li>
