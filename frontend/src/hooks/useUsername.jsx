@@ -1,12 +1,12 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useContext, useEffect } from "react";
-import { UsernameContext } from "../contexts/UsernameContext";
+import { LoggedUsernameContext } from "../contexts/LoggedUsernameContext";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const useUsername = () => {
-    const { setUsername } = useContext(UsernameContext);
+    const { setLoggedUsername } = useContext(LoggedUsernameContext);
 
     useEffect(() => {
         const token = localStorage.getItem("access");
@@ -18,7 +18,7 @@ const useUsername = () => {
                     inputData: decodedToken.user_id,
                 })
                 .then((response) => {
-                    setUsername(response.data.username);
+                    setLoggedUsername(response.data.username);
                 })
                 .catch((error) => {
                     console.error(
@@ -27,7 +27,7 @@ const useUsername = () => {
                     );
                 });
         }
-    }, [setUsername]);
+    }, [setLoggedUsername]);
 };
 
 export default useUsername;

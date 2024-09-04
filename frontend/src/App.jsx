@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -11,16 +11,13 @@ import Results from "./pages/Results";
 
 import { PortalBoxParent } from "./components/PortalBox";
 
+import {
+    LoggedUsernameContext,
+    initialLoggedUsernameContext,
+} from "./contexts/LoggedUsernameContext";
+import { PortalBoxContext } from "./contexts/PortalBoxContext";
 import { ResultContext, initialResultContext } from "./contexts/ResultContext";
 import { ThemeContext, initialThemeContext } from "./contexts/ThemeContext";
-import {
-    UsernameContext,
-    initialUsernameContext,
-} from "./contexts/UsernameContext";
-import {
-    PortalBoxContext,
-    initialPortalBoxContext,
-} from "./contexts/PortalBoxContext";
 
 import Navbar from "./components/Navbar/Navbar";
 import "./styles/App.scss";
@@ -38,21 +35,28 @@ const RegisterAndLogout = () => {
 const App = () => {
     const [theme, setTheme] = useState(initialThemeContext);
     const [result, setResult] = useState(initialResultContext);
-    const [username, setUsername] = useState(initialUsernameContext);
+    const [loggedUsername, setLoggedUsername] = useState(
+        initialLoggedUsernameContext
+    );
     const portalBox = useRef();
+    const [token, setToken] = useState(localStorage.getItem("access"));
+
+    useEffect(() => {
+        setToken(localStorage.getItem("access"));
+    }, [token]);
 
     return (
         <BrowserRouter>
             <main theme={theme}>
                 <ThemeContext.Provider value={{ theme, setTheme }}>
                     <ResultContext.Provider value={{ result, setResult }}>
-                        <UsernameContext.Provider
-                            value={{ username, setUsername }}
+                        <LoggedUsernameContext.Provider
+                            value={{ loggedUsername, setLoggedUsername }}
                         >
                             <PortalBoxContext.Provider
                                 value={portalBox.current}
                             >
-                                <Navbar />
+                                <Navbar token={token} />
                                 <PortalBoxParent ref={portalBox} />
                                 <Routes>
                                     <Route
@@ -93,7 +97,7 @@ const App = () => {
                                     />
                                 </Routes>
                             </PortalBoxContext.Provider>
-                        </UsernameContext.Provider>
+                        </LoggedUsernameContext.Provider>
                     </ResultContext.Provider>
                 </ThemeContext.Provider>
             </main>
