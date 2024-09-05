@@ -6,7 +6,9 @@ import { LoggedUsernameContext } from "../contexts/LoggedUsernameContext";
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const useUsername = () => {
-    const { setLoggedUsername } = useContext(LoggedUsernameContext);
+    const { loggedUsername, setLoggedUsername } = useContext(
+        LoggedUsernameContext
+    );
 
     useEffect(() => {
         const token = localStorage.getItem("access");
@@ -27,7 +29,7 @@ const useUsername = () => {
                     );
                 });
         }
-    }, [setLoggedUsername]);
+    }, [loggedUsername, setLoggedUsername]);
 };
 
 export default useUsername;

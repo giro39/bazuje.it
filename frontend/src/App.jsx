@@ -56,7 +56,7 @@ const App = () => {
                             <PortalBoxContext.Provider
                                 value={portalBox.current}
                             >
-                                <Navbar token={token} />
+                                <Navbar />
                                 <PortalBoxParent ref={portalBox} />
                                 <Routes>
                                     <Route
