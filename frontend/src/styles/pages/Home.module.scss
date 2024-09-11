@@ -14,6 +14,7 @@
 
 .largeText {
     font-size: 4em;
+    padding-right: 1em;
 }
 
 .textGradient1 {
@@ -29,9 +30,55 @@
 }
 
 .topMajors {
-    margin-top: 30pt;
+    margin-top: 2em;
 }
 
 .topMajorsText {
-    font-size: 28pt;
+    font-size: 2em;
+}
+
+@media screen and (max-width: 1199.98px) {
+    .largeText {
+        font-size: 3em;
+    }
+
+    .topMajorsText {
+        font-size: 1.6em;
+    }
+}
+
+@media screen and (max-width: 991.98px) {
+    .largeText {
+        font-size: 2.6em;
+    }
+
+    .topMajors {
+        margin-top: 1.2em;
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .largeText {
+        font-size: 3.4em;
+        padding-right: 0;
+        text-align: center;
+    }
+
+    .topMajors {
+        margin-top: 1em;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 575.98px) {
+    .largeText {
+        font-size: 3em;
+    }
 }
