@@ -329,3 +329,46 @@ def getAllMajors(request):
         return Response(
             {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
         )
+    
+
+@api_view(["PUT", "PATCH"])
+@permission_classes([AllowAny])
+def editOpiniaKierunek(request, id): #tutaj moze potestowac z tym id zeby przekazac inaczej jak nie bedzie dzialac
+    try:
+        opinia = OpiniaKierunek.objects.get(id=id)
+    except OpiniaKierunek.DoesNotExist:
+        return Response(
+            {"error": "Opinion not found or you are not the owner"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+    
+    if request.method in ["PUT", "PATCH"]:
+        data = {
+            "ocena": request.data.get("ocena"),
+            "opis": request.data.get("opis"),
+        }
+
+        serializer = OpiniaKierunekSerializer(opinia, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+def deleteOpiniaKierunek(request, id):
+    try:
+        opinia = OpiniaKierunek.objects.get(id=id)
+    except OpiniaKierunek.DoesNotExist:
+        return Response(
+            {"error": "Opinion not found or you are not the owner"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    opinia.delete()
+    return Response({"message": "Opinion deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
