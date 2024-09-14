@@ -9,6 +9,7 @@ from .serializers import (
     BestOpiniaSerializer,
     ChosenKierunekSerializer,
     AllMajorsSerializer,
+    AllUnisSerializer,
     UsernameSerializer,
     WynikQuizuSerializer,
     OpiniaKierunekSerializer,
@@ -324,6 +325,30 @@ def getAllMajors(request):
             )
         
         serializer = AllMajorsSerializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(
+            {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
+
+
+@api_view(["GET"])
+def getAllUnis(request):
+    if request.method == "GET":
+        uczelnie = Uczelnia.objects.all()
+        data = []
+        for uczelnia in uczelnie:
+            data.append(
+                {
+                    "universityId": uczelnia.id,
+                    "universityName": uczelnia.nazwa,
+                    "location": uczelnia.Miasto.nazwa,
+                    "type": uczelnia.Rodzaj.nazwa,
+                    "description": uczelnia.opis,
+                }
+            )
+
+        serializer = AllUnisSerializer(data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(

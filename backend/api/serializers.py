@@ -45,9 +45,17 @@ class ChosenKierunekSerializer(serializers.Serializer):
 class AllMajorsSerializer(serializers.Serializer):
     majorId = serializers.IntegerField()
     majorName = serializers.CharField()
-    universityId  = serializers.IntegerField()
+    universityId = serializers.IntegerField()
     universityName = serializers.CharField()
     location = serializers.CharField()
+
+class AllUnisSerializer(serializers.Serializer):
+    universityId = serializers.IntegerField()
+    universityName = serializers.CharField()
+    location = serializers.CharField()
+    type = serializers.CharField()
+    description = serializers.CharField()
+
 
 class AllOpinionsSerializer(serializers.Serializer):
     opinia = serializers.IntegerField()
