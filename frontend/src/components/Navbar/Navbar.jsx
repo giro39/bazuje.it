@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
@@ -20,8 +20,17 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation().pathname;
 
+    const intialState = localStorage.getItem("theme") || "light";
+
+    useEffect(() => {
+        setTheme(intialState);
+    }, [setTheme, intialState]);
+
     const handleModeChange = () => {
-        setTheme((prevState) => (prevState === "light" ? "dark" : "light"));
+        const newTheme = theme === "light" ? "dark" : "light";
+
+        localStorage.setItem("theme", newTheme);
+        setTheme(() => newTheme);
     };
 
     if (location === "/login" || location === "/register") {
