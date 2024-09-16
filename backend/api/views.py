@@ -3,31 +3,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .serializers import (
-    AllOpinionsSerializer,
-    BestKierunkiSerializer,
-    BestOpiniaSerializer,
-    ChosenKierunekSerializer,
-    AllMajorsSerializer,
-    UsernameSerializer,
-    WynikQuizuSerializer,
-    OpiniaKierunekSerializer,
-)
-
-from .models import (
-    Rodzaj,
-    Miasto,
-    Uczelnia,
-    Wydzial,
-    Kierunek,
-    Przedmiot,
-    OpiniaPrzedmiot,
-    OpiniaUczelnia,
-    OpiniaKierunek,
-    Kategorie,
-    User,
-    OcenaOpiniiKierunku,
-)
+from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
+                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
+                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
+from .serializers import (AllMajorsSerializer, AllOpinionsSerializer,
+                          BestKierunkiSerializer, BestOpiniaSerializer,
+                          ChosenKierunekSerializer, OpiniaKierunekSerializer,
+                          UsernameSerializer, WynikQuizuSerializer)
 
 
 @api_view(["GET"])

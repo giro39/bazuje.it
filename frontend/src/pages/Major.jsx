@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
+import AddOpinion from "../components/AddOpinion/AddOpinion";
 import Button from "../components/BasicComponents/Button/Button";
 import BestComment from "../components/BestComment/BestComment";
-import AddOpinion from "../components/AddOpinion/AddOpinion";
 
 import PortalBox from "../components/PortalBox";
 
-import { UsernameContext } from "../contexts/UsernameContext";
+import { LoggedUsernameContext } from "../contexts/LoggedUsernameContext";
 
 import MajorPageTopper from "../components/BasicComponents/MajorPageTopper/MajorPageTopper";
 import styles from "../styles/pages/Major.module.scss";
@@ -19,7 +19,7 @@ const Major = () => {
     const [chosenKierunek, setChosenKierunek] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { username } = useContext(UsernameContext);
+    const { loggedUsername } = useContext(LoggedUsernameContext);
 
     const { majorId } = useParams();
 
@@ -60,7 +60,7 @@ const Major = () => {
                     <p className={styles.mostAccurateOpinion}>
                         Najtrafniejsza opinia
                     </p>
-                    {!username ? (
+                    {!loggedUsername ? (
                         <Button
                             buttonType="white"
                             buttonSize="medium"

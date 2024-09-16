@@ -3,28 +3,34 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
 
+import { LoggedUsernameContext } from "../../contexts/LoggedUsernameContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { UsernameContext } from "../../contexts/UsernameContext";
+
+import useUsername from "../../hooks/useUsername";
 
 import SearchBar from "../SearchBar/SearchBar";
-import useUsername from "../../hooks/useUsername";
 
 import Button from "../BasicComponents/Button/Button";
 
 const Navbar = () => {
     const { theme, setTheme } = useContext(ThemeContext);
-    const { username } = useContext(UsernameContext);
+    const { loggedUsername } = useContext(LoggedUsernameContext);
     useUsername();
-
-    useEffect(() => {
-        console.log("Username changed to: ", username);
-    }, [username]);
 
     const navigate = useNavigate();
     const location = useLocation().pathname;
 
+    const intialState = localStorage.getItem("theme") || "light";
+
+    useEffect(() => {
+        setTheme(intialState);
+    }, [setTheme, intialState]);
+
     const handleModeChange = () => {
-        setTheme((prevState) => (prevState === "light" ? "dark" : "light"));
+        const newTheme = theme === "light" ? "dark" : "light";
+
+        localStorage.setItem("theme", newTheme);
+        setTheme(() => newTheme);
     };
 
     if (location === "/login" || location === "/register") {
@@ -59,7 +65,7 @@ const Navbar = () => {
                     onClick={handleModeChange}
                 />
 
-                {!username ? (
+                {!loggedUsername ? (
                     <Button
                         onClick={() => navigate("/login")}
                         buttonType={"white"}
@@ -68,7 +74,7 @@ const Navbar = () => {
                         Zaloguj się
                     </Button>
                 ) : (
-                    <p className={styles.helloText}>Hej {username}!</p>
+                    <p className={styles.helloText}>Hej {loggedUsername}!</p>
                 )}
             </div>
         </div>
