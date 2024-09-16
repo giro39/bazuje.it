@@ -3,13 +3,32 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
-                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
-                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
-from .serializers import (AllMajorsSerializer, AllOpinionsSerializer,
-                          BestKierunkiSerializer, BestOpiniaSerializer,
-                          ChosenKierunekSerializer, OpiniaKierunekSerializer,
-                          UsernameSerializer, WynikQuizuSerializer)
+from .serializers import (
+    AllOpinionsSerializer,
+    BestKierunkiSerializer,
+    BestOpiniaSerializer,
+    ChosenKierunekSerializer,
+    AllMajorsSerializer,
+    AllUnisSerializer,
+    UsernameSerializer,
+    WynikQuizuSerializer,
+    OpiniaKierunekSerializer,
+)
+
+from .models import (
+    Rodzaj,
+    Miasto,
+    Uczelnia,
+    Wydzial,
+    Kierunek,
+    Przedmiot,
+    OpiniaPrzedmiot,
+    OpiniaUczelnia,
+    OpiniaKierunek,
+    Kategorie,
+    User,
+    OcenaOpiniiKierunku,
+)
 
 
 @api_view(["GET"])
@@ -311,3 +330,70 @@ def getAllMajors(request):
         return Response(
             {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
         )
+
+
+@api_view(["GET"])
+def getAllUnis(request):
+    if request.method == "GET":
+        uczelnie = Uczelnia.objects.all()
+        data = []
+        for uczelnia in uczelnie:
+            data.append(
+                {
+                    "universityId": uczelnia.id,
+                    "universityName": uczelnia.nazwa,
+                    "location": uczelnia.Miasto.nazwa,
+                    "type": uczelnia.Rodzaj.nazwa,
+                    "description": uczelnia.opis,
+                }
+            )
+
+        serializer = AllUnisSerializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(
+            {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+        )
+    
+
+@api_view(["PUT", "PATCH"])
+@permission_classes([AllowAny])
+def editOpiniaKierunek(request, id): #tutaj moze potestowac z tym id zeby przekazac inaczej jak nie bedzie dzialac
+    try:
+        opinia = OpiniaKierunek.objects.get(id=id)
+    except OpiniaKierunek.DoesNotExist:
+        return Response(
+            {"error": "Opinion not found or you are not the owner"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+    
+    if request.method in ["PUT", "PATCH"]:
+        data = {
+            "ocena": request.data.get("ocena"),
+            "opis": request.data.get("opis"),
+        }
+
+        serializer = OpiniaKierunekSerializer(opinia, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+def deleteOpiniaKierunek(request, id):
+    try:
+        opinia = OpiniaKierunek.objects.get(id=id)
+    except OpiniaKierunek.DoesNotExist:
+        return Response(
+            {"error": "Opinion not found or you are not the owner"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    opinia.delete()
+    return Response({"message": "Opinion deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
