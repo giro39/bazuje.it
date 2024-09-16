@@ -50,13 +50,43 @@
     }
 }
 
+.userModule {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.utilIcons {
+    padding: 0.4em;
+}
+
+.utilIcon {
+    width: 1.4em;
+    padding: 0.4em;
+    margin: 0.2em;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: darken(rgb(48, 48, 48), 1%);
+        color: $primary-color;
+    }
+
+    &:active {
+        scale: 0.98;
+    }
+
+    // .active {
+    //     color: $primary-color;
+    // }
+}
+
 .opinionText {
     width: 100%;
     line-height: 1.2rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     white-space: normal;
-
     text-align: justify;
 }
 
