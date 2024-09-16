@@ -1,17 +1,33 @@
-import React, { useState, useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import Button from "../BasicComponents/Button/Button";
 import styles from "../../styles/components/AddOpinion/AddOpinion.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
+const AddOpinion = ({
+    isOpen,
+    onClose,
+    majorId,
+    majorName,
+    opinionToEdit,
+    onOpinionUpdated,
+}) => {
     const containerRef = useRef(null);
     const textareaRef = useRef(null);
     const [rating, setRating] = useState(50);
     const [opinion, setOpinion] = useState("");
+
+    useEffect(() => {
+        if (opinionToEdit) {
+            setRating(opinionToEdit.rating);
+            setOpinion(opinionToEdit.text);
+        } else {
+            setRating(50);
+            setOpinion("");
+        }
+    }, [opinionToEdit]);
 
     const handleTextareaInput = () => {
         const textarea = textareaRef.current;
@@ -42,28 +58,39 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
         if (token) {
             const decodedToken = jwtDecode(token);
             const userId = decodedToken.user_id;
-            axios
-                .post(`${SERVER_URL}/api/dodaj_opinie/`, {
-                    kierunek: majorId,
-                    user: userId,
-                    ocena: rating,
-                    opis: opinion,
-                })
+            const request = opinionToEdit
+                ? axios.patch(
+                      `${SERVER_URL}/api/edytuj_opinie/${opinionToEdit.opinia}`,
+                      {
+                          ocena: rating,
+                          opis: opinion,
+                      }
+                  )
+                : axios.post(`${SERVER_URL}/api/dodaj_opinie/`, {
+                      kierunek: majorId,
+                      user: userId,
+                      ocena: rating,
+                      opis: opinion,
+                  });
+
+            request
                 .then((response) => {
-                    console.log(response.data, response.status, "success!");
+                    if (onOpinionUpdated) {
+                        onOpinionUpdated(response.data);
+                    }
+                    handleClose();
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         }
-        handleClose();
     };
 
     useEffect(() => {
         handleTextareaInput();
     }, []);
 
-    if (!isOpen) return <></>;
+    if (!isOpen) return null;
 
     return (
         <div className={styles.overlay} onClick={handleBackgroundClick}>
@@ -72,7 +99,7 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
                     x
                 </button>
                 <h2 className={styles.title}>
-                    Oceń kierunek:{" "}
+                    {opinionToEdit ? "Edytuj opinię" : "Oceń kierunek: "}
                     <span className={styles.majorName}>{majorName}</span>
                 </h2>
                 <div className={styles.rating}>
@@ -95,6 +122,7 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
                     className={styles.opinionText}
                     placeholder="Podziel się swoją opinią..."
                     onInput={handleTextareaInput}
+                    value={opinion}
                     onChange={(e) => setOpinion(e.target.value)}
                 ></textarea>
                 <Button
@@ -102,7 +130,7 @@ const AddOpinion = ({ isOpen, onClose, majorId, majorName }) => {
                     buttonSize="medium"
                     onClick={postOpinion}
                 >
-                    Prześlij ocenę
+                    {opinionToEdit ? "Zaktualizuj opinię" : "Prześlij ocenę"}
                 </Button>
             </div>
         </div>

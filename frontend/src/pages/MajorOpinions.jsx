@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import MajorPageTopper from "../components/BasicComponents/MajorPageTopper/MajorPageTopper";
 import Opinion from "../components/Opinion/Opinion";
+import AddOpinion from "../components/AddOpinion/AddOpinion";
+import PortalBox from "../components/PortalBox";
 
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -13,42 +15,64 @@ const MajorOpinions = () => {
     const { majorId } = useParams();
     const [opinions, setOpinions] = useState([]);
     const [majorInfo, setMajorInfo] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [opinionToEdit, setOpinionToEdit] = useState(null);
 
     useEffect(() => {
-        const token = localStorage.getItem("access");
-        let user = null;
-        if (token) {
-            user = jwtDecode(token).user_id;
-        }
+        const fetchData = async () => {
+            try {
+                const token = localStorage.getItem("access");
+                let user = null;
+                if (token) {
+                    user = jwtDecode(token).user_id;
+                }
 
-        axios
-            .post(`${SERVER_URL}/api/all_opinions/`, {
-                kierunek: majorId,
-                user: user,
-            })
-            .then((response) => {
-                setOpinions(response.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                const [opinionsResponse, majorInfoResponse] = await Promise.all(
+                    [
+                        axios.post(`${SERVER_URL}/api/all_opinions/`, {
+                            kierunek: majorId,
+                            user: user,
+                        }),
+                        axios.post(`${SERVER_URL}/api/chosen_kierunek/`, {
+                            inputData: majorId,
+                        }),
+                    ]
+                );
 
-        axios
-            .post(`${SERVER_URL}/api/chosen_kierunek/`, {
-                inputData: majorId,
-            })
-            .then((response) => {
-                setMajorInfo(response.data);
-            })
-            .catch((error) => {
+                setOpinions(opinionsResponse.data);
+                setMajorInfo(majorInfoResponse.data);
+            } catch (error) {
                 console.error(error);
-            });
+            }
+        };
+
+        fetchData();
     }, [majorId]);
 
     const handleDelete = (deletedOpinionId) => {
         setOpinions((prevOpinions) =>
             prevOpinions.filter(
                 (opinion) => opinion.opinia !== deletedOpinionId
+            )
+        );
+    };
+
+    const handleEdit = (opinion) => {
+        setOpinionToEdit(opinion);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+        setOpinionToEdit(null);
+    };
+
+    const handleOpinionUpdate = (updatedOpinion) => {
+        setOpinions((prevOpinions) =>
+            prevOpinions.map((opinion) =>
+                opinion.opinia === updatedOpinion.opinia
+                    ? updatedOpinion
+                    : opinion
             )
         );
     };
@@ -62,6 +86,7 @@ const MajorOpinions = () => {
             opinionId={opinion.opinia}
             loggedUserRating={opinion.loggedUserRating}
             onDelete={handleDelete}
+            onEdit={() => handleEdit(opinion)}
         />
     ));
 
@@ -75,10 +100,19 @@ const MajorOpinions = () => {
                     }}
                 />
             )}
-
             <p className={styles.opinionsOfStudents}>Opinie studentów</p>
-
             <div className={styles.opinionsContainer}>{allOpinions}</div>
+
+            <PortalBox>
+                <AddOpinion
+                    isOpen={isModalOpen}
+                    onClose={handleModalClose}
+                    majorId={majorId}
+                    majorName={majorInfo.kierunek}
+                    opinionToEdit={opinionToEdit}
+                    onOpinionUpdated={handleOpinionUpdate}
+                />
+            </PortalBox>
         </div>
     );
 };

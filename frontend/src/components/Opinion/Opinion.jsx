@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styles from "../../styles/components/Opinion/Opinion.module.scss";
 import Button from "../BasicComponents/Button/Button";
@@ -17,6 +17,7 @@ const Opinion = ({
     opinionId,
     loggedUserRating,
     onDelete,
+    onEdit,
 }) => {
     const [isLarge, setIsLarge] = useState(false);
     const [isContained, setIsContained] = useState(true);
@@ -76,6 +77,7 @@ const Opinion = ({
                             alt="Edit opinion"
                             className={styles.utilIcon}
                             style={{ transform: "scale(1.25)" }}
+                            onClick={onEdit}
                         />
                     </div>
                 )}
