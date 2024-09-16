@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import axios from "axios";
 import styles from "../../styles/components/Opinion/Opinion.module.scss";
 import Button from "../BasicComponents/Button/Button";
 import Rating from "./Rating";
@@ -7,7 +8,16 @@ import UserTag from "./UserTag";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { LoggedUsernameContext } from "../../contexts/LoggedUsernameContext";
 
-const Opinion = ({ text, rating, user, opinionId, loggedUserRating }) => {
+const SERVER_URL = "http://127.0.0.1:8000";
+
+const Opinion = ({
+    text,
+    rating,
+    user,
+    opinionId,
+    loggedUserRating,
+    onDelete,
+}) => {
     const [isLarge, setIsLarge] = useState(false);
     const [isContained, setIsContained] = useState(true);
     const { theme } = useContext(ThemeContext);
@@ -23,6 +33,19 @@ const Opinion = ({ text, rating, user, opinionId, loggedUserRating }) => {
             setIsLarge(true);
         }
     }, [fullTxt]);
+
+    const deleteOpinion = () => {
+        axios
+            .delete(`${SERVER_URL}/api/usun_opinie/${opinionId}`)
+            .then(() => {
+                if (onDelete) {
+                    onDelete(opinionId);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
     const changeContainer = () => {
         setIsContained((prevState) => !prevState);
@@ -42,6 +65,7 @@ const Opinion = ({ text, rating, user, opinionId, loggedUserRating }) => {
                             }
                             alt="Delete opinion"
                             className={styles.utilIcon}
+                            onClick={deleteOpinion}
                         />
                         <img
                             src={

@@ -13,5 +13,5 @@ urlpatterns = [
     path("vote/", views.vote_opinia_kierunek, name="voteOpiniaKierunek"),
     path('dodaj_opinie/', views.addOpiniaKierunek),
     path('edytuj_opinie/', views.editOpiniaKierunek),
-    path('usun_opinie/', views.deleteOpiniaKierunek),
+    path('usun_opinie/<str:id>', views.deleteOpiniaKierunek),
 ]

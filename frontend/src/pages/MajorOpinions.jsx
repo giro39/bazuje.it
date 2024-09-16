@@ -45,6 +45,14 @@ const MajorOpinions = () => {
             });
     }, [majorId]);
 
+    const handleDelete = (deletedOpinionId) => {
+        setOpinions((prevOpinions) =>
+            prevOpinions.filter(
+                (opinion) => opinion.opinia !== deletedOpinionId
+            )
+        );
+    };
+
     const allOpinions = opinions.map((opinion, index) => (
         <Opinion
             key={index}
@@ -53,6 +61,7 @@ const MajorOpinions = () => {
             user={opinion.user}
             opinionId={opinion.opinia}
             loggedUserRating={opinion.loggedUserRating}
+            onDelete={handleDelete}
         />
     ));
 
