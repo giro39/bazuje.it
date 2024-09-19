@@ -23,12 +23,14 @@ import Navbar from "./components/Navbar/Navbar";
 import "./styles/App.scss";
 
 const Logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
     return <Navigate to="/login" />;
 };
 
 const RegisterAndLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
     return <Register />;
 };
 
