@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants";
 
 import Button from "../../components/BasicComponents/Button/Button";
 
+import { LoggedUsernameContext } from "../../contexts/LoggedUsernameContext";
 import styles from "../../styles/components/Form/Form.module.scss";
 
 function Form({ route, method }) {
@@ -15,6 +16,11 @@ function Form({ route, method }) {
         contain: false,
         match: false,
     });
+
+    const { loggedUsername, setLoggedUsername } = useContext(
+        LoggedUsernameContext
+    );
+
     const navigate = useNavigate();
 
     const name = method === "login" ? "Login" : "Register";
@@ -52,6 +58,7 @@ function Form({ route, method }) {
                 if (method === "login") {
                     localStorage.setItem(ACCESS_TOKEN, res.data.access);
                     localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+                    setLoggedUsername(username);
                     navigate("/");
                 } else {
                     navigate("/login");
