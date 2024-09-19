@@ -20,7 +20,7 @@ const categories = [
 ];
 
 const Quiz = () => {
-    const { result, setResult } = useContext(ResultContext);
+    const { setResult } = useContext(ResultContext);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
