@@ -21,7 +21,6 @@ const BestComment = ({ majorId }) => {
                 inputData: kierunek_id,
             })
             .then((response) => {
-                console.log(response.data);
                 setBestComment(response.data);
             })
             .catch((error) => {

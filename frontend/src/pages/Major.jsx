@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate, useParams } from "react-router-dom";
 
 import AddOpinion from "../components/AddOpinion/AddOpinion";
@@ -18,6 +19,7 @@ const SERVER_URL = "http://127.0.0.1:8000";
 const Major = () => {
     const [chosenKierunek, setChosenKierunek] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [userHasOpinion, setUserHasOpinion] = useState(false);
 
     const { loggedUsername } = useContext(LoggedUsernameContext);
 
@@ -42,6 +44,20 @@ const Major = () => {
             .catch((error) => {
                 console.error(error);
             });
+
+        const token = localStorage.getItem("access");
+        if (token) {
+            axios
+                .post(`${SERVER_URL}/api/has_opinion/`, {
+                    inputData: jwtDecode(token).user_id,
+                })
+                .then((response) => {
+                    setUserHasOpinion(response.data);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
     }, [majorId]);
 
     return (
@@ -74,7 +90,7 @@ const Major = () => {
                         >
                             Zaloguj się, aby dodać opinię
                         </Button>
-                    ) : (
+                    ) : !userHasOpinion ? (
                         <Button
                             buttonType="white"
                             buttonSize="medium"
@@ -82,6 +98,8 @@ const Major = () => {
                         >
                             Dodaj opinię
                         </Button>
+                    ) : (
+                        <></>
                     )}
                 </div>
             </div>
