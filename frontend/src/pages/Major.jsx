@@ -55,7 +55,13 @@ const Major = () => {
                 />
             </PortalBox>
             <div className={styles.main}>
-                <MajorPageTopper chosenMajor={chosenKierunek} />
+                <MajorPageTopper
+                    chosenMajor={{
+                        id: chosenKierunek.kierunekId,
+                        kierunek: chosenKierunek.kierunek,
+                        uczelnia: chosenKierunek.uczelnia,
+                    }}
+                />
                 <div className={styles.aboveMostAccOpinion}>
                     <p className={styles.mostAccurateOpinion}>
                         Najtrafniejsza opinia

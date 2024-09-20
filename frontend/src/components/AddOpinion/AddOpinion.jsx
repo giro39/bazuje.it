@@ -36,7 +36,6 @@ const AddOpinion = ({
             textarea.style.height = "auto";
             textarea.style.height = `${textarea.scrollHeight}px`;
         }
-        console.log(grade);
     };
 
     const handleBackgroundClick = (e) => {
@@ -79,6 +78,7 @@ const AddOpinion = ({
                 .then((response) => {
                     if (onOpinionUpdated) {
                         onOpinionUpdated(response.data);
+                        window.location.reload(false);
                     }
                     handleClose();
                 })

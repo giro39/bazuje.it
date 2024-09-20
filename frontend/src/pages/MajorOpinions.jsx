@@ -96,6 +96,7 @@ const MajorOpinions = () => {
             {majorInfo.kierunek && (
                 <MajorPageTopper
                     chosenMajor={{
+                        id: majorInfo.kierunekId,
                         kierunek: majorInfo.kierunek,
                         uczelnia: majorInfo.uczelnia,
                     }}
