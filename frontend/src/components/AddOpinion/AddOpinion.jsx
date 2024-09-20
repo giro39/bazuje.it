@@ -61,26 +61,26 @@ const AddOpinion = ({
             const userId = decodedToken.user_id;
             const request = opinionToEdit
                 ? axios.patch(
-                      `${SERVER_URL}/api/edytuj_opinie/${opinionToEdit.opinia}`,
-                      {
-                          ocena: grade,
-                          opis: opinion,
-                      }
-                  )
+                    `${SERVER_URL}/api/edytuj_opinie/${opinionToEdit.opinia}`,
+                    {
+                        ocena: grade,
+                        opis: opinion,
+                    }
+                )
                 : axios.post(`${SERVER_URL}/api/dodaj_opinie/`, {
-                      kierunek: majorId,
-                      user: userId,
-                      ocena: grade,
-                      opis: opinion,
-                  });
+                    kierunek: majorId,
+                    user: userId,
+                    ocena: grade,
+                    opis: opinion,
+                });
 
             request
                 .then((response) => {
                     if (onOpinionUpdated) {
                         onOpinionUpdated(response.data);
-                        window.location.reload(false);
                     }
                     handleClose();
+                    window.location.reload(false);
                 })
                 .catch((error) => {
                     console.error(error);

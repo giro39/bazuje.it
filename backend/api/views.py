@@ -406,3 +406,27 @@ def deleteOpiniaKierunek(request, id):
     return Response(
         {"message": "Opinion deleted successfully"}, status=status.HTTP_204_NO_CONTENT
     )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def hasOpinion(request):
+    if request.method == "POST":
+        user_id = request.data.get("userId")
+        kierunek_id = request.data.get("majorId")
+        opinia = OpiniaKierunek.objects.filter(kierunek=kierunek_id, user=user_id)
+
+        if opinia.exists():
+            return Response(
+                {"exists": True, "message": "You have already added an opinion"},
+                status=status.HTTP_200_OK,
+            )
+        else:
+            return Response(
+                {"exists": False, "message": "You have not added an opinion yet"},
+                status=status.HTTP_200_OK,
+            )
+
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )

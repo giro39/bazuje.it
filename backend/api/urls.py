@@ -11,7 +11,8 @@ urlpatterns = [
     path("all_unis/", views.getAllUnis),
     path("all_opinions/", views.getAllOpinions),
     path("vote/", views.vote_opinia_kierunek, name="voteOpiniaKierunek"),
-    path('dodaj_opinie/', views.addOpiniaKierunek),
-    path('edytuj_opinie/<str:id>', views.editOpiniaKierunek),
-    path('usun_opinie/<str:id>', views.deleteOpiniaKierunek),
+    path("dodaj_opinie/", views.addOpiniaKierunek),
+    path("edytuj_opinie/<str:id>", views.editOpiniaKierunek),
+    path("usun_opinie/<str:id>", views.deleteOpiniaKierunek),
+    path("has_opinion/", views.hasOpinion),
 ]

@@ -49,10 +49,11 @@ const Major = () => {
         if (token) {
             axios
                 .post(`${SERVER_URL}/api/has_opinion/`, {
-                    inputData: jwtDecode(token).user_id,
+                    majorId: majorId,
+                    userId: jwtDecode(token).user_id,
                 })
                 .then((response) => {
-                    setUserHasOpinion(response.data);
+                    setUserHasOpinion(response.data.exists);
                 })
                 .catch((error) => {
                     console.error(error);
