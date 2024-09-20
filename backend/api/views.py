@@ -225,6 +225,7 @@ def getAllOpinions(request):
                 {
                     "opinia": opinia.id,
                     "rating": rating,
+                    "grade": opinia.ocena,
                     "user": opinia.user.username,
                     "userId": opinia.user.id,
                     "text": opinia.opis,
@@ -232,6 +233,7 @@ def getAllOpinions(request):
                     "loggedUserRating": ocena,
                 }
             )
+            print(data)
         sorted_data = sorted(data, key=lambda x: x["rating"], reverse=True)
         for i in range(len(sorted_data)):
             if sorted_data[i]["userId"] == user_id:
@@ -323,12 +325,13 @@ def getAllMajors(request):
                     "location": kierunek.wydzial.uczelnia.Miasto.nazwa,
                 }
             )
-        
+
         serializer = AllMajorsSerializer(data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(
-            {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+            {"error": "Invalid request method"},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
 
 
@@ -352,13 +355,16 @@ def getAllUnis(request):
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(
-            {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+            {"error": "Invalid request method"},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
-    
+
 
 @api_view(["PUT", "PATCH"])
 @permission_classes([AllowAny])
-def editOpiniaKierunek(request, id): #tutaj moze potestowac z tym id zeby przekazac inaczej jak nie bedzie dzialac
+def editOpiniaKierunek(
+    request, id
+):  # tutaj moze potestowac z tym id zeby przekazac inaczej jak nie bedzie dzialac
     try:
         opinia = OpiniaKierunek.objects.get(id=id)
     except OpiniaKierunek.DoesNotExist:
@@ -366,7 +372,7 @@ def editOpiniaKierunek(request, id): #tutaj moze potestowac z tym id zeby przeka
             {"error": "Opinion not found or you are not the owner"},
             status=status.HTTP_404_NOT_FOUND,
         )
-    
+
     if request.method in ["PUT", "PATCH"]:
         data = {
             "ocena": request.data.get("ocena"),
@@ -379,10 +385,11 @@ def editOpiniaKierunek(request, id): #tutaj moze potestowac z tym id zeby przeka
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     return Response(
         {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )
+
 
 @api_view(["DELETE"])
 @permission_classes([AllowAny])
@@ -396,4 +403,6 @@ def deleteOpiniaKierunek(request, id):
         )
 
     opinia.delete()
-    return Response({"message": "Opinion deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    return Response(
+        {"message": "Opinion deleted successfully"}, status=status.HTTP_204_NO_CONTENT
+    )

@@ -43,12 +43,14 @@ class ChosenKierunekSerializer(serializers.Serializer):
     sredniaOcen = serializers.FloatField()
     listaPrzedmiotow = serializers.ListField(child=serializers.DictField())
 
+
 class AllMajorsSerializer(serializers.Serializer):
     majorId = serializers.IntegerField()
     majorName = serializers.CharField()
     universityId = serializers.IntegerField()
     universityName = serializers.CharField()
     location = serializers.CharField()
+
 
 class AllUnisSerializer(serializers.Serializer):
     universityId = serializers.IntegerField()
@@ -61,6 +63,7 @@ class AllUnisSerializer(serializers.Serializer):
 class AllOpinionsSerializer(serializers.Serializer):
     opinia = serializers.IntegerField()
     rating = serializers.IntegerField()
+    grade = serializers.IntegerField()
     user = serializers.CharField()
     userId = serializers.IntegerField()
     text = serializers.CharField()
