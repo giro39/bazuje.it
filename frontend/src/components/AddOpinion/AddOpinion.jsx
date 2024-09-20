@@ -16,15 +16,16 @@ const AddOpinion = ({
 }) => {
     const containerRef = useRef(null);
     const textareaRef = useRef(null);
-    const [rating, setRating] = useState(50);
+    const [grade, setGrade] = useState(50);
     const [opinion, setOpinion] = useState("");
 
     useEffect(() => {
         if (opinionToEdit) {
-            setRating(opinionToEdit.rating);
+            console.log(opinionToEdit);
+            setGrade(opinionToEdit.grade);
             setOpinion(opinionToEdit.text);
         } else {
-            setRating(50);
+            setGrade(50);
             setOpinion("");
         }
     }, [opinionToEdit]);
@@ -35,6 +36,7 @@ const AddOpinion = ({
             textarea.style.height = "auto";
             textarea.style.height = `${textarea.scrollHeight}px`;
         }
+        console.log(grade);
     };
 
     const handleBackgroundClick = (e) => {
@@ -48,7 +50,7 @@ const AddOpinion = ({
     };
 
     const handleClose = () => {
-        setRating(50);
+        setGrade(50);
         setOpinion("");
         onClose();
     };
@@ -62,14 +64,14 @@ const AddOpinion = ({
                 ? axios.patch(
                       `${SERVER_URL}/api/edytuj_opinie/${opinionToEdit.opinia}`,
                       {
-                          ocena: rating,
+                          ocena: grade,
                           opis: opinion,
                       }
                   )
                 : axios.post(`${SERVER_URL}/api/dodaj_opinie/`, {
                       kierunek: majorId,
                       user: userId,
-                      ocena: rating,
+                      ocena: grade,
                       opis: opinion,
                   });
 
@@ -99,20 +101,20 @@ const AddOpinion = ({
                     x
                 </button>
                 <h2 className={styles.title}>
-                    {opinionToEdit ? "Edytuj opinię" : "Oceń kierunek: "}
+                    {opinionToEdit ? "Edytuj opinię o: " : "Oceń kierunek: "}
                     <span className={styles.majorName}>{majorName}</span>
                 </h2>
                 <div className={styles.rating}>
                     <input
                         type="range"
-                        value={rating}
+                        value={grade}
                         min="0"
                         max="100"
                         className={styles.ratingSlider}
-                        onChange={(e) => setRating(e.target.value)}
+                        onChange={(e) => setGrade(e.target.value)}
                     ></input>
                     <span className={styles.ratingValue}>
-                        <span className={styles.value}>{rating}</span>
+                        <span className={styles.value}>{grade}</span>
                         <span className={styles.valueOutOf}>/100</span>
                     </span>
                 </div>

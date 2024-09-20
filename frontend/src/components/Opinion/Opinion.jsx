@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styles from "../../styles/components/Opinion/Opinion.module.scss";
 import Button from "../BasicComponents/Button/Button";
+import Grade from "./Grade";
 import Rating from "./Rating";
 import UserTag from "./UserTag";
 
@@ -13,6 +14,7 @@ const SERVER_URL = "http://127.0.0.1:8000";
 const Opinion = ({
     text,
     rating,
+    grade,
     user,
     opinionId,
     loggedUserRating,
@@ -56,6 +58,7 @@ const Opinion = ({
         <div className={`${styles.container}`}>
             <div className={styles.userModule}>
                 <UserTag user={user} />
+                <Grade opinionId={opinionId} userGrade={grade} />
                 {loggedUsername === user && (
                     <div className={styles.utilIcons}>
                         <img

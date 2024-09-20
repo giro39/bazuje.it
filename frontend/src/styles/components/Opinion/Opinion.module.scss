@@ -9,7 +9,7 @@
     min-height: 8rem;
     width: 60rem;
     margin-bottom: 4rem;
-    padding: 0.6rem 1rem;
+    padding: 1rem 1rem;
     border-radius: 1rem;
 }
 
@@ -62,8 +62,8 @@
 
 .utilIcon {
     width: 1.4em;
-    padding: 0.4em;
-    margin: 0.2em;
+    padding: 0 0.4em;
+    // margin: 0.2em;
     border-radius: 0.5rem;
     cursor: pointer;
 
@@ -75,10 +75,6 @@
     &:active {
         scale: 0.98;
     }
-
-    // .active {
-    //     color: $primary-color;
-    // }
 }
 
 .opinionText {
@@ -132,4 +128,14 @@
     .active {
         color: $primary-color;
     }
+}
+
+.gradeComponent {
+    padding-top: 1em;
+}
+
+.gradient {
+    background: linear-gradient(90deg, $text-color, $secondary-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

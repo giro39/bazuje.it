@@ -82,6 +82,7 @@ const MajorOpinions = () => {
             key={index}
             text={opinion.text}
             rating={opinion.rating}
+            grade={opinion.grade}
             user={opinion.user}
             opinionId={opinion.opinia}
             loggedUserRating={opinion.loggedUserRating}
