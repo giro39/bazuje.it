@@ -18,6 +18,7 @@ const Opinion = ({
     user,
     opinionId,
     loggedUserRating,
+    edited,
     onDelete,
     onEdit,
 }) => {
@@ -89,17 +90,22 @@ const Opinion = ({
                 <div className={styles.opinionText}>
                     {isLarge ? (isContained ? croppedTxt : fullTxt) : fullTxt}
                 </div>
-                {isLarge && (
-                    <div className={styles.buttonPlace}>
-                        <Button
-                            onClick={changeContainer}
-                            buttonType={"inlined"}
-                            buttonSize={"inlineSize"}
-                        >
-                            {isContained ? "czytaj więcej" : "czytaj mniej"}
-                        </Button>
-                    </div>
-                )}
+                <div className={styles.bottomLine}>
+                    <p className={styles.edited}>
+                        {edited ? "Opinia edytowana" : ""}
+                    </p>
+                    {isLarge && (
+                        <div className={styles.buttonPlace}>
+                            <Button
+                                onClick={changeContainer}
+                                buttonType={"inlined"}
+                                buttonSize={"inlineSize"}
+                            >
+                                {isContained ? "czytaj więcej" : "czytaj mniej"}
+                            </Button>
+                        </div>
+                    )}
+                </div>
             </div>
             <Rating
                 rating={rating}

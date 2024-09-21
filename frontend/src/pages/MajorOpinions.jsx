@@ -58,7 +58,6 @@ const MajorOpinions = () => {
         );
         window.location.reload(false);
     };
-    
 
     const handleEdit = (opinion) => {
         setOpinionToEdit(opinion);
@@ -89,6 +88,7 @@ const MajorOpinions = () => {
             user={opinion.user}
             opinionId={opinion.opinia}
             loggedUserRating={opinion.loggedUserRating}
+            edited={opinion.edited}
             onDelete={handleDelete}
             onEdit={() => handleEdit(opinion)}
         />

@@ -77,8 +77,7 @@ class OpiniaKierunek(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ocena = models.IntegerField(null=False)
     opis = models.TextField(blank=True)
-    edytowana = models.BooleanField(default=False)
-
+    edytowana = models.BooleanField(default=False, null=True)
 
 class OpiniaPrzedmiot(models.Model):
     przedmiot = models.ForeignKey(Przedmiot, on_delete=models.CASCADE)

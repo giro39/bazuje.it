@@ -63,7 +63,6 @@
 .utilIcon {
     width: 1.4em;
     padding: 0 0.4em;
-    // margin: 0.2em;
     border-radius: 0.5rem;
     cursor: pointer;
 
@@ -96,6 +95,19 @@
     .rating {
         margin: 1rem 0;
     }
+}
+
+.bottomLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.25em;
+}
+
+.edited {
+    background: linear-gradient(120deg, $secondary-color, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .buttonPlace {
