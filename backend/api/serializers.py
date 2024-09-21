@@ -6,7 +6,7 @@ from .models import OpiniaKierunek
 class OpiniaKierunekSerializer(serializers.ModelSerializer):
     class Meta:
         model = OpiniaKierunek
-        fields = ["kierunek", "user", "ocena", "opis"]
+        fields = ["kierunek", "user", "ocena", "opis", "edytowana"]
 
 
 class BestKierunkiSerializer(serializers.Serializer):
@@ -43,18 +43,30 @@ class ChosenKierunekSerializer(serializers.Serializer):
     sredniaOcen = serializers.FloatField()
     listaPrzedmiotow = serializers.ListField(child=serializers.DictField())
 
+
 class AllMajorsSerializer(serializers.Serializer):
     majorId = serializers.IntegerField()
     majorName = serializers.CharField()
-    universityId  = serializers.IntegerField()
+    universityId = serializers.IntegerField()
     universityName = serializers.CharField()
     location = serializers.CharField()
+
+
+class AllUnisSerializer(serializers.Serializer):
+    universityId = serializers.IntegerField()
+    universityName = serializers.CharField()
+    location = serializers.CharField()
+    type = serializers.CharField()
+    description = serializers.CharField()
+
 
 class AllOpinionsSerializer(serializers.Serializer):
     opinia = serializers.IntegerField()
     rating = serializers.IntegerField()
+    grade = serializers.IntegerField()
     user = serializers.CharField()
     userId = serializers.IntegerField()
     text = serializers.CharField()
     exists = serializers.BooleanField()
     loggedUserRating = serializers.IntegerField()
+    edited = serializers.BooleanField()

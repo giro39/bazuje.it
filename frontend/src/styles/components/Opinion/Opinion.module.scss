@@ -9,7 +9,7 @@
     min-height: 8rem;
     width: 60rem;
     margin-bottom: 4rem;
-    padding: 0.6rem 1rem;
+    padding: 1rem 1rem;
     border-radius: 1rem;
 }
 
@@ -50,13 +50,38 @@
     }
 }
 
+.userModule {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.utilIcons {
+    padding: 0.4em;
+}
+
+.utilIcon {
+    width: 1.4em;
+    padding: 0 0.4em;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: darken(rgb(48, 48, 48), 1%);
+        color: $primary-color;
+    }
+
+    &:active {
+        scale: 0.98;
+    }
+}
+
 .opinionText {
     width: 100%;
     line-height: 1.2rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     white-space: normal;
-
     text-align: justify;
 }
 
@@ -70,6 +95,19 @@
     .rating {
         margin: 1rem 0;
     }
+}
+
+.bottomLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.25em;
+}
+
+.edited {
+    background: linear-gradient(120deg, $secondary-color, $text-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .buttonPlace {
@@ -102,4 +140,14 @@
     .active {
         color: $primary-color;
     }
+}
+
+.gradeComponent {
+    padding-top: 1em;
+}
+
+.gradient {
+    background: linear-gradient(90deg, $text-color, $secondary-color);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
