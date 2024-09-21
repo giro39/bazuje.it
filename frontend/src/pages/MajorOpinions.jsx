@@ -55,7 +55,9 @@ const MajorOpinions = () => {
                 (opinion) => opinion.opinia !== deletedOpinionId
             )
         );
+        window.location.reload(false);
     };
+    
 
     const handleEdit = (opinion) => {
         setOpinionToEdit(opinion);

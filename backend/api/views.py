@@ -206,45 +206,48 @@ def getAllOpinions(request):
         kierunek_id = request.data.get("kierunek")
         user_id = request.data.get("user")
 
+        # Pobieramy wszystkie opinie dla danego kierunku
         opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
         data = []
+
         for opinia in opinie:
             oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
+            # Sumowanie ocen, aby uzyskać ranking
             rating = sum(ocena.ocena for ocena in oceny)
 
             ocena = 0
-
-            ocena_obj = OcenaOpiniiKierunku.objects.filter(
-                opinia=opinia.id, user=user_id
-            )
-
+            # Sprawdzamy, czy istnieje ocena użytkownika
+            ocena_obj = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id, user=user_id)
             if ocena_obj.exists():
                 ocena = ocena_obj.first().ocena
 
-            data.append(
-                {
-                    "opinia": opinia.id,
-                    "rating": rating,
-                    "grade": opinia.ocena,
-                    "user": opinia.user.username,
-                    "userId": opinia.user.id,
-                    "text": opinia.opis,
-                    "exists": True,
-                    "loggedUserRating": ocena,
-                }
-            )
-            print(data)
-        sorted_data = sorted(data, key=lambda x: x["rating"], reverse=True)
-        for i in range(len(sorted_data)):
-            if sorted_data[i]["userId"] == user_id:
-                sorted_data[i], sorted_data[0] = sorted_data[0], sorted_data[i]
+            # Tworzymy strukturę danych
+            data.append({
+                "opinia": opinia.id,
+                "rating": rating,
+                "grade": opinia.ocena,
+                "user": opinia.user.username,
+                "userId": opinia.user.id,
+                "text": opinia.opis,
+                "exists": True,
+                "loggedUserRating": ocena,
+            })
 
+        # Sortujemy dane według ratingu (malejąco)
+        sorted_data = sorted(data, key=lambda x: x["rating"], reverse=True)
+
+        # Znajdujemy opinię zalogowanego użytkownika i przenosimy ją na pierwsze miejsce
+        logged_user_opinia = next((opinia for opinia in sorted_data if opinia["userId"] == user_id), None)
+
+        if logged_user_opinia:
+            sorted_data.remove(logged_user_opinia)
+            sorted_data.insert(0, logged_user_opinia)
+
+        # Serializacja danych
         serializer = AllOpinionsSerializer(sorted_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    return Response(
-        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
-    )
+    return Response({"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 @api_view(["POST"])
