@@ -6,7 +6,7 @@ from .models import OpiniaKierunek
 class OpiniaKierunekSerializer(serializers.ModelSerializer):
     class Meta:
         model = OpiniaKierunek
-        fields = ["kierunek", "user", "ocena", "opis"]
+        fields = ["kierunek", "user", "ocena", "opis", "edytowana"]
 
 
 class BestKierunkiSerializer(serializers.Serializer):
@@ -69,3 +69,4 @@ class AllOpinionsSerializer(serializers.Serializer):
     text = serializers.CharField()
     exists = serializers.BooleanField()
     loggedUserRating = serializers.IntegerField()
+    edited = serializers.BooleanField()

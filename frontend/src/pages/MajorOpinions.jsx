@@ -40,6 +40,7 @@ const MajorOpinions = () => {
                 );
 
                 setOpinions(opinionsResponse.data);
+                console.log(opinionsResponse.data);
                 setMajorInfo(majorInfoResponse.data);
             } catch (error) {
                 console.error(error);

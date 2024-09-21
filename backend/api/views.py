@@ -231,6 +231,7 @@ def getAllOpinions(request):
                 "text": opinia.opis,
                 "exists": True,
                 "loggedUserRating": ocena,
+                "edited": opinia.edytowana
             })
 
         # Sortujemy dane według ratingu (malejąco)
@@ -367,7 +368,7 @@ def getAllUnis(request):
 @permission_classes([AllowAny])
 def editOpiniaKierunek(
     request, id
-):  # tutaj moze potestowac z tym id zeby przekazac inaczej jak nie bedzie dzialac
+):
     try:
         opinia = OpiniaKierunek.objects.get(id=id)
     except OpiniaKierunek.DoesNotExist:
@@ -380,10 +381,12 @@ def editOpiniaKierunek(
         data = {
             "ocena": request.data.get("ocena"),
             "opis": request.data.get("opis"),
+            "edytowana": True,
         }
 
         serializer = OpiniaKierunekSerializer(opinia, data=data, partial=True)
         if serializer.is_valid():
+            
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
