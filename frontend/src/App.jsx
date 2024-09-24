@@ -16,7 +16,6 @@ import {
     initialLoggedUsernameContext,
 } from "./contexts/LoggedUsernameContext";
 import { PortalBoxContext } from "./contexts/PortalBoxContext";
-import { ResultContext, initialResultContext } from "./contexts/ResultContext";
 import { ThemeContext, initialThemeContext } from "./contexts/ThemeContext";
 
 import Navbar from "./components/Navbar/Navbar";
@@ -36,7 +35,6 @@ const RegisterAndLogout = () => {
 
 const App = () => {
     const [theme, setTheme] = useState(initialThemeContext);
-    const [result, setResult] = useState(initialResultContext);
     const [loggedUsername, setLoggedUsername] = useState(
         initialLoggedUsernameContext
     );
@@ -51,56 +49,43 @@ const App = () => {
         <BrowserRouter>
             <main theme={theme}>
                 <ThemeContext.Provider value={{ theme, setTheme }}>
-                    <ResultContext.Provider value={{ result, setResult }}>
-                        <LoggedUsernameContext.Provider
-                            value={{ loggedUsername, setLoggedUsername }}
-                        >
-                            <PortalBoxContext.Provider
-                                value={portalBox.current}
-                            >
-                                <Navbar />
-                                <PortalBoxParent ref={portalBox} />
-                                <Routes>
-                                    <Route
-                                        path="/"
-                                        element={
-                                            <Navigate
-                                                to="/home"
-                                                replace={true}
-                                            />
-                                        }
-                                    />
-                                    <Route path="/home" element={<Home />} />
-                                    <Route path="/quiz" element={<Quiz />} />
-                                    <Route
-                                        path="/results"
-                                        element={<Results />}
-                                    />
-                                    <Route
-                                        path="/kierunki/:majorId"
-                                        element={<Major />}
-                                    />
-                                    <Route
-                                        path="/kierunki/:majorId/opinions"
-                                        element={<MajorOpinions />}
-                                    />
-                                    <Route path="/login" element={<Login />} />
-                                    <Route
-                                        path="/logout"
-                                        element={<Logout />}
-                                    />
-                                    <Route
-                                        path="/register"
-                                        element={<RegisterAndLogout />}
-                                    />
-                                    <Route
-                                        path="*"
-                                        element={<h1>404. Not found</h1>}
-                                    />
-                                </Routes>
-                            </PortalBoxContext.Provider>
-                        </LoggedUsernameContext.Provider>
-                    </ResultContext.Provider>
+                    <LoggedUsernameContext.Provider
+                        value={{ loggedUsername, setLoggedUsername }}
+                    >
+                        <PortalBoxContext.Provider value={portalBox.current}>
+                            <Navbar />
+                            <PortalBoxParent ref={portalBox} />
+                            <Routes>
+                                <Route
+                                    path="/"
+                                    element={
+                                        <Navigate to="/home" replace={true} />
+                                    }
+                                />
+                                <Route path="/home" element={<Home />} />
+                                <Route path="/quiz" element={<Quiz />} />
+                                <Route path="/results" element={<Results />} />
+                                <Route
+                                    path="/kierunki/:majorId"
+                                    element={<Major />}
+                                />
+                                <Route
+                                    path="/kierunki/:majorId/opinions"
+                                    element={<MajorOpinions />}
+                                />
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/logout" element={<Logout />} />
+                                <Route
+                                    path="/register"
+                                    element={<RegisterAndLogout />}
+                                />
+                                <Route
+                                    path="*"
+                                    element={<h1>404. Not found</h1>}
+                                />
+                            </Routes>
+                        </PortalBoxContext.Provider>
+                    </LoggedUsernameContext.Provider>
                 </ThemeContext.Provider>
             </main>
         </BrowserRouter>
