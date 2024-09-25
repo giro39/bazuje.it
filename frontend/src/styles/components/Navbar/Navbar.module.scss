@@ -34,10 +34,10 @@
 }
 
 .themeIcon {
-    height: 22pt;
+    height: 1.8em;
     background-color: $space-color;
-    padding: 3pt;
-    border-radius: 15pt;
+    padding: 0.25em;
+    border-radius: 20px;
     margin: 0 2.3rem 0 1rem;
     cursor: pointer;
 }
@@ -45,3 +45,27 @@
 .helloText {
     font-size: 1.2rem;
 }
+
+// @media screen and (max-width: 1199.98px) {
+//     .helloText {
+//         color: pink;
+//     }
+// }
+
+// @media screen and (max-width: 991.98px) {
+//     .helloText {
+//         color: tan;
+//     }
+// }
+
+// @media screen and (max-width: 767.98px) {
+//     .helloText {
+//         color: gold;
+//     }
+// }
+
+// @media screen and (max-width: 575.98px) {
+//     .helloText {
+//         color: tomato;
+//     }
+// }

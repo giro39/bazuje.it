@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import useFetch from "../../hooks/useFetch";
 
+import { FaMagnifyingGlass } from "react-icons/fa6";
+
 import styles from "../../styles/components/SearchBar/SearchBar.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const SearchBar = () => {
+const SearchBar = ({ isNavbarOpen, setIsNavbarOpen }) => {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
     const [dropdownActive, setDropdownActive] = useState(false);
@@ -50,15 +52,21 @@ const SearchBar = () => {
 
     return (
         <div className={styles.container}>
-            <input
-                className={`${styles.input} ${
-                    dropdownActive ? styles.inputActive : ""
-                }`}
-                type="search"
-                placeholder="Wyszukaj uczelnię lub kierunek..."
-                value={query}
-                onChange={handleQueryChange}
-            />
+            <div className={styles.inputField}>
+                {isNavbarOpen ? (
+                    <input
+                        className={`${styles.input} ${
+                            dropdownActive ? styles.inputActive : ""
+                        }`}
+                        type="search"
+                        placeholder="Wyszukaj uczelnię lub kierunek..."
+                        value={query}
+                        onChange={handleQueryChange}
+                    />
+                ) : (
+                    <FaMagnifyingGlass className={styles.magnifyingGlass} />
+                )}
+            </div>
             {results.length > 0 && (
                 <ul className={styles.dropdown}>
                     {results.map((result) => (

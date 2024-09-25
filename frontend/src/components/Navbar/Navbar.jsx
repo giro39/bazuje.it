@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
@@ -15,6 +15,7 @@ import Button from "../BasicComponents/Button/Button";
 const Navbar = () => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { loggedUsername } = useContext(LoggedUsernameContext);
+    const [isNavbarOpen, setIsNavbarOpen] = useState(true);
     useUsername();
 
     const navigate = useNavigate();
@@ -25,6 +26,24 @@ const Navbar = () => {
     useEffect(() => {
         setTheme(intialState);
     }, [setTheme, intialState]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setIsNavbarOpen(false);
+            } else {
+                setIsNavbarOpen(true);
+            }
+        };
+
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     const handleModeChange = () => {
         const newTheme = theme === "light" ? "dark" : "light";
@@ -53,7 +72,11 @@ const Navbar = () => {
             </button>
 
             <div className={styles.inputContainer}>
-                <SearchBar />
+                <SearchBar
+                    className={styles.searchBar}
+                    isNavbarOpen={isNavbarOpen}
+                    setIsNavbarOpen={setIsNavbarOpen}
+                />
                 <img
                     src={
                         theme === "dark"
