@@ -9,7 +9,11 @@ import styles from "../../styles/components/SearchBar/SearchBar.module.scss";
 
 const SERVER_URL = "http://127.0.0.1:8000";
 
-const SearchBar = ({ isNavbarOpen, setIsNavbarOpen }) => {
+const SearchBar = ({
+    isNavbarOpen,
+    setIsNavbarOpen,
+    setIsEverythingHidden,
+}) => {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
     const [dropdownActive, setDropdownActive] = useState(false);
@@ -50,6 +54,11 @@ const SearchBar = ({ isNavbarOpen, setIsNavbarOpen }) => {
         setQuery(e.target.value);
     };
 
+    const handleGlassClick = () => {
+        setIsNavbarOpen(true);
+        setIsEverythingHidden(true);
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.inputField}>
@@ -64,7 +73,10 @@ const SearchBar = ({ isNavbarOpen, setIsNavbarOpen }) => {
                         onChange={handleQueryChange}
                     />
                 ) : (
-                    <FaMagnifyingGlass className={styles.magnifyingGlass} />
+                    <FaMagnifyingGlass
+                        className={styles.magnifyingGlass}
+                        onClick={handleGlassClick}
+                    />
                 )}
             </div>
             {results.length > 0 && (

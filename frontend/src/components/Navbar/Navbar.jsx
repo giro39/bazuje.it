@@ -16,6 +16,8 @@ const Navbar = () => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { loggedUsername } = useContext(LoggedUsernameContext);
     const [isNavbarOpen, setIsNavbarOpen] = useState(true);
+    const [isEverythingHidden, setIsEverythingHidden] = useState(false);
+
     useUsername();
 
     const navigate = useNavigate();
@@ -40,9 +42,10 @@ const Navbar = () => {
 
         window.addEventListener("resize", handleResize);
 
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
+        // return () => {
+        //     window.removeEventListener("resize", handleResize);
+        // };
+        // commenting this is probably not the best idea ever
     }, []);
 
     const handleModeChange = () => {
@@ -56,50 +59,73 @@ const Navbar = () => {
         return null;
     }
 
+    const searchBarComponent = (
+        <SearchBar
+            className={styles.searchBar}
+            isNavbarOpen={isNavbarOpen}
+            setIsNavbarOpen={setIsNavbarOpen}
+            setIsEverythingHidden={setIsEverythingHidden}
+        />
+    );
+
     return (
-        <div className={styles.navbar}>
-            <button className={styles.logoContainer}>
-                <img
-                    src={
-                        theme === "dark"
-                            ? "/bazujepl_logo_orange.png"
-                            : "/bazujepl_logo_blue.png"
-                    }
-                    alt="Bazuje.it"
-                    className={styles.logo}
-                    onClick={() => navigate("/home")}
-                />
-            </button>
+        <div>
+            {!isEverythingHidden ? (
+                <div className={styles.navbar}>
+                    <button className={styles.logoContainer}>
+                        <img
+                            src={
+                                theme === "dark"
+                                    ? "/bazujepl_logo_orange.png"
+                                    : "/bazujepl_logo_blue.png"
+                            }
+                            alt="Bazuje.it"
+                            className={styles.logo}
+                            onClick={() => navigate("/home")}
+                        />
+                    </button>
 
-            <div className={styles.inputContainer}>
-                <SearchBar
-                    className={styles.searchBar}
-                    isNavbarOpen={isNavbarOpen}
-                    setIsNavbarOpen={setIsNavbarOpen}
-                />
-                <img
-                    src={
-                        theme === "dark"
-                            ? "/moon_icon.png"
-                            : "/sun_icon_orange.png"
-                    }
-                    alt="Change theme"
-                    className={styles.themeIcon}
-                    onClick={handleModeChange}
-                />
+                    <div className={styles.inputContainer}>
+                        {searchBarComponent}
+                        <img
+                            src={
+                                theme === "dark"
+                                    ? "/moon_icon.png"
+                                    : "/sun_icon_orange.png"
+                            }
+                            alt="Change theme"
+                            className={styles.themeIcon}
+                            onClick={handleModeChange}
+                        />
 
-                {!loggedUsername ? (
-                    <Button
-                        onClick={() => navigate("/login")}
-                        buttonType={"white"}
-                        buttonSize={"medium"}
+                        {!loggedUsername ? (
+                            <Button
+                                onClick={() => navigate("/login")}
+                                buttonType={"white"}
+                                buttonSize={"medium"}
+                            >
+                                Zaloguj się
+                            </Button>
+                        ) : (
+                            <p className={styles.helloText}>
+                                Hej {loggedUsername}!
+                            </p>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.navbar}>
+                    {searchBarComponent}
+                    <p
+                        onClick={() => {
+                            setIsEverythingHidden(false);
+                            handleResize();
+                        }}
                     >
-                        Zaloguj się
-                    </Button>
-                ) : (
-                    <p className={styles.helloText}>Hej {loggedUsername}!</p>
-                )}
-            </div>
+                        x
+                    </p>
+                </div>
+            )}
         </div>
     );
 };
