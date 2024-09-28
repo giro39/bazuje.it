@@ -79,7 +79,7 @@ const SearchBar = ({
                     />
                 )}
             </div>
-            {results.length > 0 && (
+            {results.length > 0 && isSearchbarOpen && (
                 <ul className={styles.dropdown}>
                     {results.map((result) => (
                         <li
