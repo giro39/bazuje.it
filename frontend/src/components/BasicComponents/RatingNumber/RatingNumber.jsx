@@ -3,17 +3,24 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 
 const RatingNumber = ({ number }) => {
     const { theme } = useContext(ThemeContext);
-    let r, g, b;
 
+
+    let r, g, b;
+    let negativeColor = [];
+    let positiveColor = [];
     if (theme === "light") {
-        r = 30 + (number / 100) * 225;
-        g = 136 + (number / 100) * 47;
-        b = 229 - (number / 100) * 152;
+        negativeColor = [30, 136, 229];
+        positiveColor = [255, 183, 77];
     } else {
-        r = 188 - (number / 100) * 77;
-        g = 134 + (number / 100) * 13;
-        b = 90 + (number / 100) * 69;
+        negativeColor = [188, 134, 90];
+        positiveColor = [111, 147, 159];
+
     }
+
+    r = negativeColor[0] + (number / 100) * (positiveColor[0] - negativeColor[0]);
+    g = negativeColor[1] + (number / 100) * (positiveColor[1] - negativeColor[1]);
+    b = negativeColor[2] + (number / 100) * (positiveColor[2] - negativeColor[2]);
+
 
     return <span style={{ color: `rgb(${r},${g},${b})` }}>{number}</span>;
 };
