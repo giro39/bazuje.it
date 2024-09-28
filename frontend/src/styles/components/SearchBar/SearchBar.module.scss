@@ -33,6 +33,11 @@
     padding: 0.5em;
     border-radius: 200px;
     cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 .dropdown {
@@ -96,7 +101,15 @@
 }
 
 @media screen and (max-width: 767.98px) {
+    .input,
+    .dropdown {
+        width: 60vw;
+    }
 }
 
 @media screen and (max-width: 575.98px) {
+    .input,
+    .dropdown {
+        width: 40vw;
+    }
 }

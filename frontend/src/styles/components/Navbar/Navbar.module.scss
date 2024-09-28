@@ -40,6 +40,11 @@
     color: $text-color;
 }
 
+.closeSearchbar {
+    cursor: pointer;
+    padding: 0 1em 0.25em;
+}
+
 .themeIcon {
     height: 1.8em;
     background-color: $space-color;
@@ -47,6 +52,11 @@
     border-radius: 20px;
     margin: 0 2.3rem 0 1rem;
     cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 .helloText {

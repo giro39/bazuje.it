@@ -52,18 +52,18 @@ const Navbar = () => {
     useEffect(() => {
         if (theme === "dark") {
             setNavbarLogo(
-                isEverythingHidden
+                !isSearchbarOpen || isEverythingHidden
                     ? "/bazujepl_mini_logo_orange.png"
                     : "/bazujepl_logo_orange.png"
             );
         } else {
             setNavbarLogo(
-                isEverythingHidden
+                !isSearchbarOpen || isEverythingHidden
                     ? "/bazujepl_mini_logo_blue.png"
                     : "/bazujepl_logo_blue.png"
             );
         }
-    }, [isEverythingHidden]);
+    }, [isSearchbarOpen]);
 
     const handleModeChange = () => {
         const newTheme = theme === "light" ? "dark" : "light";
@@ -129,6 +129,7 @@ const Navbar = () => {
                 <div className={styles.navbar}>
                     {searchBarComponent}
                     <p
+                        className={styles.closeSearchbar}
                         onClick={() => {
                             setIsEverythingHidden(false);
                             setIsSearchbarOpen(false);
