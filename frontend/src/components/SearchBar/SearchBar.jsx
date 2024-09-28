@@ -10,8 +10,8 @@ import styles from "../../styles/components/SearchBar/SearchBar.module.scss";
 const SERVER_URL = "http://127.0.0.1:8000";
 
 const SearchBar = ({
-    isNavbarOpen,
-    setIsNavbarOpen,
+    isSearchbarOpen,
+    setIsSearchbarOpen,
     setIsEverythingHidden,
 }) => {
     const [query, setQuery] = useState("");
@@ -55,14 +55,14 @@ const SearchBar = ({
     };
 
     const handleGlassClick = () => {
-        setIsNavbarOpen(true);
+        setIsSearchbarOpen(true);
         setIsEverythingHidden(true);
     };
 
     return (
         <div className={styles.container}>
             <div className={styles.inputField}>
-                {isNavbarOpen ? (
+                {isSearchbarOpen ? (
                     <input
                         className={`${styles.input} ${
                             dropdownActive ? styles.inputActive : ""

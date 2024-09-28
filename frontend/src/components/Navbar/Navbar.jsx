@@ -15,7 +15,7 @@ import Button from "../BasicComponents/Button/Button";
 const Navbar = () => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { loggedUsername } = useContext(LoggedUsernameContext);
-    const [isNavbarOpen, setIsNavbarOpen] = useState(true);
+    const [isSearchbarOpen, setIsSearchbarOpen] = useState(true);
     const [isEverythingHidden, setIsEverythingHidden] = useState(false);
 
     useUsername();
@@ -32,20 +32,20 @@ const Navbar = () => {
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth < 768) {
-                setIsNavbarOpen(false);
+                setIsSearchbarOpen(false);
             } else {
-                setIsNavbarOpen(true);
+                setIsSearchbarOpen(true);
             }
+            console.log(isEverythingHidden);
         };
 
         handleResize();
 
         window.addEventListener("resize", handleResize);
 
-        // return () => {
-        //     window.removeEventListener("resize", handleResize);
-        // };
-        // commenting this is probably not the best idea ever
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
     const handleModeChange = () => {
@@ -62,8 +62,8 @@ const Navbar = () => {
     const searchBarComponent = (
         <SearchBar
             className={styles.searchBar}
-            isNavbarOpen={isNavbarOpen}
-            setIsNavbarOpen={setIsNavbarOpen}
+            isSearchbarOpen={isSearchbarOpen}
+            setIsSearchbarOpen={setIsSearchbarOpen}
             setIsEverythingHidden={setIsEverythingHidden}
         />
     );
@@ -119,7 +119,7 @@ const Navbar = () => {
                     <p
                         onClick={() => {
                             setIsEverythingHidden(false);
-                            handleResize();
+                            setIsSearchbarOpen(false);
                         }}
                     >
                         x

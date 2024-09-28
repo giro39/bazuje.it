@@ -8,7 +8,6 @@
 
 .input {
     height: 2.2em;
-    width: 50vw;
     padding: 1em;
     background-color: $space-color;
     color: $text-color;
@@ -38,13 +37,17 @@
 
 .dropdown {
     position: absolute;
-    width: 50vw;
     padding: 0.5em 0;
     background-color: $space-color;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     color: $text-color;
     border-radius: 0 0 10px 10px;
     overflow-y: auto;
+}
+
+.input,
+.dropdown {
+    width: 50vw;
 }
 
 .dropdownItem {
@@ -86,15 +89,13 @@
 }
 
 @media screen and (max-width: 991.98px) {
-    .input {
+    .input,
+    .dropdown {
         width: 42.5vw;
     }
 }
 
 @media screen and (max-width: 767.98px) {
-    // .input {
-    //     display: none;
-    // }
 }
 
 @media screen and (max-width: 575.98px) {
