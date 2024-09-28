@@ -1,10 +1,17 @@
 @use "../../vars" as *;
 
-.navbar {
+.container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // justify-content: space-between;
 }
 
 .logoContainer {
@@ -13,7 +20,7 @@
 }
 
 .logo {
-    width: 150pt;
+    height: 8em;
     cursor: pointer;
 }
 

@@ -17,6 +17,7 @@ const Navbar = () => {
     const { loggedUsername } = useContext(LoggedUsernameContext);
     const [isSearchbarOpen, setIsSearchbarOpen] = useState(true);
     const [isEverythingHidden, setIsEverythingHidden] = useState(false);
+    const [navbarLogo, setNavbarLogo] = useState("");
 
     useUsername();
 
@@ -48,6 +49,22 @@ const Navbar = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (theme === "dark") {
+            setNavbarLogo(
+                isEverythingHidden
+                    ? "/bazujepl_mini_logo_orange.png"
+                    : "/bazujepl_logo_orange.png"
+            );
+        } else {
+            setNavbarLogo(
+                isEverythingHidden
+                    ? "/bazujepl_mini_logo_blue.png"
+                    : "/bazujepl_logo_blue.png"
+            );
+        }
+    }, [isEverythingHidden]);
+
     const handleModeChange = () => {
         const newTheme = theme === "light" ? "dark" : "light";
 
@@ -69,22 +86,17 @@ const Navbar = () => {
     );
 
     return (
-        <div>
+        <div className={styles.container}>
+            <button className={styles.logoContainer}>
+                <img
+                    src={navbarLogo}
+                    alt="Bazuje.it"
+                    className={styles.logo}
+                    onClick={() => navigate("/home")}
+                />
+            </button>
             {!isEverythingHidden ? (
                 <div className={styles.navbar}>
-                    <button className={styles.logoContainer}>
-                        <img
-                            src={
-                                theme === "dark"
-                                    ? "/bazujepl_logo_orange.png"
-                                    : "/bazujepl_logo_blue.png"
-                            }
-                            alt="Bazuje.it"
-                            className={styles.logo}
-                            onClick={() => navigate("/home")}
-                        />
-                    </button>
-
                     <div className={styles.inputContainer}>
                         {searchBarComponent}
                         <img
