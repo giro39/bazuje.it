@@ -3,18 +3,17 @@
 .container {
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     align-items: center;
+    text-align: center;
     color: $text-color;
-    padding: 4vw 5vw;
 }
 
 .headerText {
-    font-size: 3.4rem;
+    font-size: 3.4em;
 }
 
 .smallerText {
-    font-size: 1.8rem;
+    font-size: 1.8em;
 }
 
 .textGradient {
@@ -30,9 +29,8 @@
 .categories {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 2rem;
-    grid-row-gap: 3.333rem;
+    grid-column-gap: 4rem;
+    grid-row-gap: 2.4rem;
     margin: 4rem 0;
 }
 
@@ -69,4 +67,59 @@
 .category {
     font-size: 1.2rem;
     background-color: inherit;
+}
+
+@media screen and (max-width: 1199.98px) {
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 991.98px) {
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+        grid-row-gap: 2rem;
+    }
+
+    .categoriesElement {
+        width: 15rem;
+        height: 4rem;
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .headerText {
+        font-size: 3em;
+    }
+
+    .smallerText {
+        font-size: 1.6em;
+    }
+
+    .categoriesElement {
+        width: 11rem;
+        height: 3.4rem;
+    }
+}
+
+@media screen and (max-width: 575.98px) {
+    .headerText {
+        font-size: 2.5em;
+    }
+
+    .smallerText {
+        padding-top: 0.4em;
+        font-size: 1.5em;
+    }
+
+    .categories {
+        grid-template-columns: repeat(1, 1fr);
+        grid-row-gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .categoriesElement {
+        width: 60vw;
+        height: 3rem;
+    }
 }

@@ -5,31 +5,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    margin-top: 10pt;
-    height: 300pt;
+    margin: 1em 0;
+    height: 42em;
     background-color: $space-color;
     border-radius: 10pt;
 }
 
-.buttonCheck {
-    background-image: linear-gradient(
-        90deg,
-        $darker-primary-color,
-        $primary-color
-    );
-    width: 120pt;
-    height: 50pt;
-    color: $text-color;
-    font-size: 14pt;
-    padding: 10pt;
-    margin-left: 10pt;
-    border: none;
-    border-radius: 6pt;
-    cursor: pointer;
-}
-
-.majorPreviewElement {
-    display: flex;
-    align-items: center;
-    padding-right: 16pt;
+@media screen and (max-width: 575.98px) {
+    .container {
+        height: 50em;
+    }
 }

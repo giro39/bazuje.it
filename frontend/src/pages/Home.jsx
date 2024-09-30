@@ -27,11 +27,9 @@ const Home = () => {
             <div className={styles.main}>
                 <div className={styles.textMain}>
                     <p className={styles.largeText}>
-                        Wyszukaj swoją <br />
-                        przyszłą uczelnię na <br />
-                        podstawie{" "}
+                        Wyszukaj swoją przyszłą uczelnię na podstawie{" "}
                         <span className={styles.textGradient1}> Twojej </span>
-                        wizji <br />
+                        wizji
                         <span className={styles.textGradient2}> siebie </span>
                     </p>
                 </div>

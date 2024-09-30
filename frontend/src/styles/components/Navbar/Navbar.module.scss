@@ -1,10 +1,16 @@
 @use "../../vars" as *;
 
-.navbar {
+.container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .logoContainer {
@@ -13,7 +19,7 @@
 }
 
 .logo {
-    width: 150pt;
+    height: 8em;
     cursor: pointer;
 }
 
@@ -33,15 +39,26 @@
     color: $text-color;
 }
 
+.closeSearchbar {
+    cursor: pointer;
+    padding: 0 1em 0.25em;
+}
+
 .themeIcon {
-    height: 22pt;
+    height: 1.8em;
     background-color: $space-color;
-    padding: 3pt;
-    border-radius: 15pt;
+    padding: 0.25em;
+    border-radius: 20px;
     margin: 0 2.3rem 0 1rem;
     cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 }
 
 .helloText {
     font-size: 1.2rem;
+    text-align: center;
 }

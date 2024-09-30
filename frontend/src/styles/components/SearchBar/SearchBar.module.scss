@@ -1,8 +1,13 @@
 @use "../../vars" as *;
 
+.inputField {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .input {
     height: 2.2em;
-    width: 50vw;
     padding: 1em;
     background-color: $space-color;
     color: $text-color;
@@ -20,15 +25,34 @@
     }
 }
 
+.magnifyingGlass {
+    height: 1.4em;
+    width: 1.4em;
+    background-color: $space-color;
+    color: $primary-color;
+    padding: 0.5em;
+    border-radius: 200px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
 .dropdown {
     position: absolute;
-    width: 50vw;
     padding: 0.5em 0;
     background-color: $space-color;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     color: $text-color;
     border-radius: 0 0 10px 10px;
     overflow-y: auto;
+}
+
+.input,
+.dropdown {
+    width: 50vw;
 }
 
 .dropdownItem {
@@ -63,5 +87,26 @@
 
     &:hover {
         text-shadow: 1px 1px 3px $primary-color;
+    }
+}
+
+@media screen and (max-width: 991.98px) {
+    .input,
+    .dropdown {
+        width: 40vw;
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .input,
+    .dropdown {
+        width: 60vw;
+    }
+}
+
+@media screen and (max-width: 575.98px) {
+    .input,
+    .dropdown {
+        width: 40vw;
     }
 }

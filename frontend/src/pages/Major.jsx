@@ -111,7 +111,7 @@ const Major = () => {
                         <div className={styles.subject} key={index}>
                             <p className={styles.subjectName}>{major.nazwa}</p>
                             <p className={styles.subjectGrade}>
-                                {major.sredniaOcen}
+                                {Math.round(major.sredniaOcen * 10) / 10}
                                 <span className={styles.oneHundred}>/100</span>
                             </p>
                         </div>
