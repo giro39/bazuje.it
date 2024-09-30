@@ -3,13 +3,32 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
-                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
-                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
-from .serializers import (AllMajorsSerializer, AllOpinionsSerializer,
-                          BestKierunkiSerializer, BestOpiniaSerializer,
-                          ChosenKierunekSerializer, OpiniaKierunekSerializer,
-                          UsernameSerializer, WynikQuizuSerializer)
+from .serializers import (
+    AllOpinionsSerializer,
+    BestKierunkiSerializer,
+    BestOpiniaSerializer,
+    ChosenKierunekSerializer,
+    AllMajorsSerializer,
+    AllUnisSerializer,
+    UsernameSerializer,
+    WynikQuizuSerializer,
+    OpiniaKierunekSerializer,
+)
+
+from .models import (
+    Rodzaj,
+    Miasto,
+    Uczelnia,
+    Wydzial,
+    Kierunek,
+    Przedmiot,
+    OpiniaPrzedmiot,
+    OpiniaUczelnia,
+    OpiniaKierunek,
+    Kategorie,
+    User,
+    OcenaOpiniiKierunku,
+)
 
 
 @api_view(["GET"])
@@ -187,43 +206,49 @@ def getAllOpinions(request):
         kierunek_id = request.data.get("kierunek")
         user_id = request.data.get("user")
 
+        # Pobieramy wszystkie opinie dla danego kierunku
         opinie = OpiniaKierunek.objects.filter(kierunek=kierunek_id)
         data = []
+
         for opinia in opinie:
             oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id)
+            # Sumowanie ocen, aby uzyskać ranking
             rating = sum(ocena.ocena for ocena in oceny)
 
             ocena = 0
-
-            ocena_obj = OcenaOpiniiKierunku.objects.filter(
-                opinia=opinia.id, user=user_id
-            )
-
+            # Sprawdzamy, czy istnieje ocena użytkownika
+            ocena_obj = OcenaOpiniiKierunku.objects.filter(opinia=opinia.id, user=user_id)
             if ocena_obj.exists():
                 ocena = ocena_obj.first().ocena
 
-            data.append(
-                {
-                    "opinia": opinia.id,
-                    "rating": rating,
-                    "user": opinia.user.username,
-                    "userId": opinia.user.id,
-                    "text": opinia.opis,
-                    "exists": True,
-                    "loggedUserRating": ocena,
-                }
-            )
-        sorted_data = sorted(data, key=lambda x: x["rating"], reverse=True)
-        for i in range(len(sorted_data)):
-            if sorted_data[i]["userId"] == user_id:
-                sorted_data[i], sorted_data[0] = sorted_data[0], sorted_data[i]
+            # Tworzymy strukturę danych
+            data.append({
+                "opinia": opinia.id,
+                "rating": rating,
+                "grade": opinia.ocena,
+                "user": opinia.user.username,
+                "userId": opinia.user.id,
+                "text": opinia.opis,
+                "exists": True,
+                "loggedUserRating": ocena,
+                "edited": opinia.edytowana
+            })
 
+        # Sortujemy dane według ratingu (malejąco)
+        sorted_data = sorted(data, key=lambda x: x["rating"], reverse=True)
+
+        # Znajdujemy opinię zalogowanego użytkownika i przenosimy ją na pierwsze miejsce
+        logged_user_opinia = next((opinia for opinia in sorted_data if opinia["userId"] == user_id), None)
+
+        if logged_user_opinia:
+            sorted_data.remove(logged_user_opinia)
+            sorted_data.insert(0, logged_user_opinia)
+
+        # Serializacja danych
         serializer = AllOpinionsSerializer(sorted_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    return Response(
-        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
-    )
+    return Response({"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 @api_view(["POST"])
@@ -304,10 +329,110 @@ def getAllMajors(request):
                     "location": kierunek.wydzial.uczelnia.Miasto.nazwa,
                 }
             )
-        
+
         serializer = AllMajorsSerializer(data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(
-            {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+            {"error": "Invalid request method"},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
         )
+
+
+@api_view(["GET"])
+def getAllUnis(request):
+    if request.method == "GET":
+        uczelnie = Uczelnia.objects.all()
+        data = []
+        for uczelnia in uczelnie:
+            data.append(
+                {
+                    "universityId": uczelnia.id,
+                    "universityName": uczelnia.nazwa,
+                    "location": uczelnia.Miasto.nazwa,
+                    "type": uczelnia.Rodzaj.nazwa,
+                    "description": uczelnia.opis,
+                }
+            )
+
+        serializer = AllUnisSerializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(
+            {"error": "Invalid request method"},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED,
+        )
+
+
+@api_view(["PUT", "PATCH"])
+@permission_classes([AllowAny])
+def editOpiniaKierunek(
+    request, id
+):
+    try:
+        opinia = OpiniaKierunek.objects.get(id=id)
+    except OpiniaKierunek.DoesNotExist:
+        return Response(
+            {"error": "Opinion not found or you are not the owner"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    if request.method in ["PUT", "PATCH"]:
+        data = {
+            "ocena": request.data.get("ocena"),
+            "opis": request.data.get("opis"),
+            "edytowana": True,
+        }
+
+        serializer = OpiniaKierunekSerializer(opinia, data=data, partial=True)
+        if serializer.is_valid():
+            
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+
+
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+def deleteOpiniaKierunek(request, id):
+    try:
+        opinia = OpiniaKierunek.objects.get(id=id)
+    except OpiniaKierunek.DoesNotExist:
+        return Response(
+            {"error": "Opinion not found or you are not the owner"},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    opinia.delete()
+    return Response(
+        {"message": "Opinion deleted successfully"}, status=status.HTTP_204_NO_CONTENT
+    )
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def hasOpinion(request):
+    if request.method == "POST":
+        user_id = request.data.get("userId")
+        kierunek_id = request.data.get("majorId")
+        opinia = OpiniaKierunek.objects.filter(kierunek=kierunek_id, user=user_id)
+
+        if opinia.exists():
+            return Response(
+                {"exists": True, "message": "You have already added an opinion"},
+                status=status.HTTP_200_OK,
+            )
+        else:
+            return Response(
+                {"exists": False, "message": "You have not added an opinion yet"},
+                status=status.HTTP_200_OK,
+            )
+
+    return Response(
+        {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )

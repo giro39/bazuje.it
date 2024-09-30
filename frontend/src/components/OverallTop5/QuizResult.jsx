@@ -1,27 +1,34 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/components/OverallTop5/OverallTop5.module.scss";
 import MajorPreview from "../MajorPreview/MajorPreview";
 
-import { ResultContext } from "../../contexts/ResultContext";
-
-const SERVER_URL = "http://127.0.0.1:8000";
-
 const QuizResult = () => {
-    const { result, setResult } = useContext(ResultContext);
+    const [result, setResult] = useState([]);
+
+    useEffect(() => {
+        const storedResult = localStorage.getItem("quizResult");
+
+        if (storedResult) {
+            setResult(JSON.parse(storedResult));
+        }
+    }, []);
 
     return (
         <div className={styles.container}>
-            {result.map((kierunek, index) => (
-                <div key={index} className={styles.majorPreviewElement}>
-                    <MajorPreview
-                        majorTitle={kierunek.kierunek}
-                        universityTitle={kierunek.uczelnia}
-                        // rating={Math.round(kierunek.wynikQuizu)}
-                        rating={-1}
-                        majorId={kierunek.kierunek_id}
-                    />
-                </div>
-            ))}
+            {result.length > 0 ? (
+                result.map((kierunek, index) => (
+                    <div key={index} className={styles.majorPreviewElement}>
+                        <MajorPreview
+                            majorTitle={kierunek.kierunek}
+                            universityTitle={kierunek.uczelnia}
+                            rating={-1}
+                            majorId={kierunek.kierunek_id}
+                        />
+                    </div>
+                ))
+            ) : (
+                <p>Brak wyników do wyświetlenia.</p>
+            )}
         </div>
     );
 };

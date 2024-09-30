@@ -1,10 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/BasicComponents/Button/Button";
 import styles from "../styles/pages/Quiz.module.scss";
-
-import { ResultContext } from "../contexts/ResultContext";
 
 const SERVER_URL = "http://127.0.0.1:8000/api/submit_categories/";
 
@@ -20,7 +18,6 @@ const categories = [
 ];
 
 const Quiz = () => {
-    const { setResult } = useContext(ResultContext);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const location = useLocation();
     const navigate = useNavigate();
@@ -68,8 +65,11 @@ const Quiz = () => {
                 })
             )
             .then((response) => {
-                setResult(response.data);
-                console.log(response.data);
+                localStorage.removeItem("quizResult");
+                localStorage.setItem(
+                    "quizResult",
+                    JSON.stringify(response.data)
+                );
                 setCurrentFold("results");
             })
             .catch((error) => {

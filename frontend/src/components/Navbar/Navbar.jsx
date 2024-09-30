@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../../styles/components/Navbar/Navbar.module.scss";
 
 import { LoggedUsernameContext } from "../../contexts/LoggedUsernameContext";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { initialThemeContext, ThemeContext } from "../../contexts/ThemeContext";
 
 import useUsername from "../../hooks/useUsername";
 
@@ -24,7 +24,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation().pathname;
 
-    const intialState = localStorage.getItem("theme") || "light";
+    const intialState = localStorage.getItem("theme") || initialThemeContext;
 
     useEffect(() => {
         setTheme(intialState);
