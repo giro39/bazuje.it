@@ -63,7 +63,7 @@ const Navbar = () => {
                     : "/bazujepl_logo_blue.png"
             );
         }
-    }, [isSearchbarOpen]);
+    }, [isSearchbarOpen, theme]);
 
     const handleModeChange = () => {
         const newTheme = theme === "light" ? "dark" : "light";
