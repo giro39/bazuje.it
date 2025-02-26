@@ -49,7 +49,7 @@ Before you begin, ensure you have the following software installed:
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/odzer/bazuje.pl.git
+    git clone https://github.com/giro39/bazuje.it.git
     cd bazuje.pl/backend
     ```
 
