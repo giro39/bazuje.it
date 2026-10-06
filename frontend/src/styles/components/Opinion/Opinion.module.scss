@@ -37,6 +37,12 @@
     align-items: center;
     width: 10rem;
     padding: 0 2rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+        opacity: 0.8;
+    }
 
     .userName {
         width: inherit;
