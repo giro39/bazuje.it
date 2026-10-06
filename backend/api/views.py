@@ -3,32 +3,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .serializers import (
-    AllOpinionsSerializer,
-    BestKierunkiSerializer,
-    BestOpiniaSerializer,
-    ChosenKierunekSerializer,
-    AllMajorsSerializer,
-    AllUnisSerializer,
-    UsernameSerializer,
-    WynikQuizuSerializer,
-    OpiniaKierunekSerializer,
-)
-
-from .models import (
-    Rodzaj,
-    Miasto,
-    Uczelnia,
-    Wydzial,
-    Kierunek,
-    Przedmiot,
-    OpiniaPrzedmiot,
-    OpiniaUczelnia,
-    OpiniaKierunek,
-    Kategorie,
-    User,
-    OcenaOpiniiKierunku,
-)
+from .models import (Kategorie, Kierunek, Miasto, OcenaOpiniiKierunku,
+                     OpiniaKierunek, OpiniaPrzedmiot, OpiniaUczelnia,
+                     Przedmiot, Rodzaj, Uczelnia, User, Wydzial)
+from .serializers import (AllMajorsSerializer, AllOpinionsSerializer,
+                          AllUnisSerializer, BestKierunkiSerializer,
+                          BestOpiniaSerializer, ChosenKierunekSerializer,
+                          OpiniaKierunekSerializer, UsernameSerializer,
+                          WynikQuizuSerializer)
 
 
 @api_view(["GET"])
@@ -436,3 +418,39 @@ def hasOpinion(request):
     return Response(
         {"error": "Invalid request method"}, status=status.HTTP_405_METHOD_NOT_ALLOWED
     )
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def getUserProfile(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return Response(
+            {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    opinie = OpiniaKierunek.objects.filter(user=user)
+    liczba_opinii = opinie.count()
+    
+    srednia_ocena = 0
+    if liczba_opinii > 0:
+        suma_ocen = sum(opinia.ocena for opinia in opinie)
+        srednia_ocena = suma_ocen / liczba_opinii
+
+    glosy_ogalem = 0
+    for opinia in opinie:
+        oceny = OcenaOpiniiKierunku.objects.filter(opinia=opinia)
+        glosy_ogalem += sum(ocena.ocena for ocena in oceny)
+
+    data = {
+        "username": user.username,
+        "user_id": user.id,
+        "liczba_opinii": liczba_opinii,
+        "srednia_ocena": round(srednia_ocena, 2),
+        "glosy_ogalem": glosy_ogalem,
+    }
+
+    from .serializers import UserProfileSerializer
+    serializer = UserProfileSerializer(data)
+    return Response(serializer.data, status=status.HTTP_200_OK)

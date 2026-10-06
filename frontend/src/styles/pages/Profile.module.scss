@@ -1,0 +1,90 @@
+.profileContainer {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    min-height: 60vh;
+}
+
+.profileCard {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.username {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.statBox {
+    background: var(--stat-bg);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid var(--primary-color);
+}
+
+.statValue {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.statLabel {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profileDescription {
+    background: var(--bg-light);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+
+    p {
+        margin: 0;
+
+        strong {
+            color: var(--primary-color);
+        }
+    }
+}
+
+.loading,
+.error,
+.notFound {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 18px;
+    color: var(--text-secondary);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error {
+    color: var(--error-color);
+}

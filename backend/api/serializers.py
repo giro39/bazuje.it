@@ -70,3 +70,11 @@ class AllOpinionsSerializer(serializers.Serializer):
     exists = serializers.BooleanField()
     loggedUserRating = serializers.IntegerField()
     edited = serializers.BooleanField()
+
+
+class UserProfileSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    user_id = serializers.IntegerField()
+    liczba_opinii = serializers.IntegerField()
+    srednia_ocena = serializers.FloatField()
+    glosy_ogalem = serializers.IntegerField()
