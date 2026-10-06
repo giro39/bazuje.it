@@ -17,4 +17,8 @@ urlpatterns = [
     path("usun_opinie/<str:id>", views.deleteOpiniaKierunek),
     path("has_opinion/", views.hasOpinion),
     path("user/profile/<int:user_id>/", views.getUserProfile, name="userProfile"),
+    path("favorite/add/", views.addFavorite, name="addFavorite"),
+    path("favorite/remove/", views.removeFavorite, name="removeFavorite"),
+    path("favorite/check/", views.isFavorite, name="isFavorite"),
+    path("favorites/<int:user_id>/", views.getUserFavorites, name="getUserFavorites"),
 ]

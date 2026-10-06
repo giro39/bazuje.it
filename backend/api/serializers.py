@@ -78,3 +78,11 @@ class UserProfileSerializer(serializers.Serializer):
     liczba_opinii = serializers.IntegerField()
     srednia_ocena = serializers.FloatField()
     glosy_ogalem = serializers.IntegerField()
+
+
+class UlubionyKierunekSerializer(serializers.Serializer):
+    kierunek_id = serializers.IntegerField()
+    kierunek_nazwa = serializers.CharField()
+    uczelnia_nazwa = serializers.CharField()
+    miasto = serializers.CharField()
+    dodane = serializers.DateTimeField()

@@ -454,3 +454,115 @@ def getUserProfile(request, user_id):
     from .serializers import UserProfileSerializer
     serializer = UserProfileSerializer(data)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def addFavorite(request):
+    if request.method == "POST":
+        user_id = request.data.get("userId")
+        kierunek_id = request.data.get("kierunkId")
+
+        try:
+            user = User.objects.get(id=user_id)
+            kierunek = Kierunek.objects.get(id=kierunek_id)
+        except (User.DoesNotExist, Kierunek.DoesNotExist):
+            return Response(
+                {"error": "User or major not found"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        from .models import UlubionyKierunek
+        ulubiony, created = UlubionyKierunek.objects.get_or_create(
+            user=user, kierunek=kierunek
+        )
+
+        if created:
+            return Response(
+                {"message": "Added to favorites"},
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(
+                {"message": "Already in favorites"},
+                status=status.HTTP_200_OK,
+            )
+
+
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+def removeFavorite(request):
+    if request.method == "DELETE":
+        user_id = request.data.get("userId")
+        kierunek_id = request.data.get("kierunkId")
+
+        from .models import UlubionyKierunek
+        try:
+            ulubiony = UlubionyKierunek.objects.get(
+                user_id=user_id, kierunek_id=kierunek_id
+            )
+            ulubiony.delete()
+            return Response(
+                {"message": "Removed from favorites"},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        except UlubionyKierunek.DoesNotExist:
+            return Response(
+                {"error": "Not in favorites"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def getUserFavorites(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return Response(
+            {"error": "User not found"}, status=status.HTTP_404_NOT_FOUND
+        )
+
+    from .models import UlubionyKierunek
+    ulubione = UlubionyKierunek.objects.filter(user=user).select_related(
+        "kierunek", "kierunek__wydzial__uczelnia", "kierunek__wydzial__uczelnia__Miasto"
+    )
+
+    data = []
+    for ulubiony in ulubione:
+        kierunek = ulubiony.kierunek
+        data.append({
+            "kierunek_id": kierunek.id,
+            "kierunek_nazwa": kierunek.nazwa,
+            "uczelnia_nazwa": kierunek.wydzial.uczelnia.nazwa,
+            "miasto": kierunek.wydzial.uczelnia.Miasto.nazwa,
+            "dodane": ulubiony.dodane,
+        })
+
+    from .serializers import UlubionyKierunekSerializer
+    serializer = UlubionyKierunekSerializer(data, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def isFavorite(request):
+    if request.method == "POST":
+        user_id = request.data.get("userId")
+        kierunek_id = request.data.get("kierunkId")
+
+        from .models import UlubionyKierunek
+        ulubiony = UlubionyKierunek.objects.filter(
+            user_id=user_id, kierunek_id=kierunek_id
+        )
+
+        if ulubiony.exists():
+            return Response(
+                {"isFavorite": True},
+                status=status.HTTP_200_OK,
+            )
+        else:
+            return Response(
+                {"isFavorite": False},
+                status=status.HTTP_200_OK,
+            )

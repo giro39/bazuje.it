@@ -90,3 +90,15 @@ class OcenaOpiniiKierunku(models.Model):
     opinia = models.ForeignKey(OpiniaKierunek, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ocena = models.IntegerField(null=False)
+
+
+class UlubionyKierunek(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    kierunek = models.ForeignKey(Kierunek, on_delete=models.CASCADE)
+    dodane = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "kierunek")
+
+    def __str__(self):
+        return f"{self.user.username} - {self.kierunek.nazwa}"
