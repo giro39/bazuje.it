@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Major from "./pages/Major";
 import MajorOpinions from "./pages/MajorOpinions";
+import Profile from "./pages/Profile";
 import Quiz from "./pages/Quiz";
 import Register from "./pages/Register";
 import Results from "./pages/Results";
@@ -36,7 +37,7 @@ const RegisterAndLogout = () => {
 const App = () => {
     const [theme, setTheme] = useState(initialThemeContext);
     const [loggedUsername, setLoggedUsername] = useState(
-        initialLoggedUsernameContext
+        initialLoggedUsernameContext,
     );
     const portalBox = useRef();
     const [token, setToken] = useState(localStorage.getItem("access"));
@@ -72,6 +73,10 @@ const App = () => {
                                 <Route
                                     path="/kierunki/:majorId/opinions"
                                     element={<MajorOpinions />}
+                                />
+                                <Route
+                                    path="/profile/:userId"
+                                    element={<Profile />}
                                 />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/logout" element={<Logout />} />

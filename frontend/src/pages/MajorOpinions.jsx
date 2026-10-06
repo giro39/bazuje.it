@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
+import AddOpinion from "../components/AddOpinion/AddOpinion";
 import MajorPageTopper from "../components/BasicComponents/MajorPageTopper/MajorPageTopper";
 import Opinion from "../components/Opinion/Opinion";
-import AddOpinion from "../components/AddOpinion/AddOpinion";
 import PortalBox from "../components/PortalBox";
 
 import axios from "axios";
@@ -36,7 +36,7 @@ const MajorOpinions = () => {
                         axios.post(`${SERVER_URL}/api/chosen_kierunek/`, {
                             inputData: majorId,
                         }),
-                    ]
+                    ],
                 );
 
                 setOpinions(opinionsResponse.data);
@@ -53,8 +53,8 @@ const MajorOpinions = () => {
     const handleDelete = (deletedOpinionId) => {
         setOpinions((prevOpinions) =>
             prevOpinions.filter(
-                (opinion) => opinion.opinia !== deletedOpinionId
-            )
+                (opinion) => opinion.opinia !== deletedOpinionId,
+            ),
         );
         window.location.reload(false);
     };
@@ -74,8 +74,8 @@ const MajorOpinions = () => {
             prevOpinions.map((opinion) =>
                 opinion.opinia === updatedOpinion.opinia
                     ? updatedOpinion
-                    : opinion
-            )
+                    : opinion,
+            ),
         );
     };
 
@@ -86,6 +86,7 @@ const MajorOpinions = () => {
             rating={opinion.rating}
             grade={opinion.grade}
             user={opinion.user}
+            userId={opinion.userId}
             opinionId={opinion.opinia}
             loggedUserRating={opinion.loggedUserRating}
             edited={opinion.edited}
