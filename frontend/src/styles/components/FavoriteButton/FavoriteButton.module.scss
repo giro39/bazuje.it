@@ -1,0 +1,31 @@
+.favoriteBtn {
+    background: none;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+
+    &:hover:not(:disabled) {
+        background: rgba(var(--primary-rgb), 0.1);
+        transform: scale(1.1);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    &.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+}

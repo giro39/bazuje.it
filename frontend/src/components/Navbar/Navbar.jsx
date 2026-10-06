@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const Navbar = () => {
     const { theme, setTheme } = useContext(ThemeContext);
     const { loggedUsername } = useContext(LoggedUsernameContext);
     const [isSearchbarOpen, setIsSearchbarOpen] = useState(true);
+    const [userId, setUserId] = useState(null);
     const [isEverythingHidden, setIsEverythingHidden] = useState(false);
     const [navbarLogo, setNavbarLogo] = useState("");
 
@@ -29,6 +31,15 @@ const Navbar = () => {
     useEffect(() => {
         setTheme(intialState);
     }, [setTheme, intialState]);
+
+    useEffect(() => {
+        const token = localStorage.getItem("access");
+        if (token) {
+            setUserId(jwtDecode(token).user_id);
+        } else {
+            setUserId(null);
+        }
+    }, [loggedUsername]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -54,13 +65,13 @@ const Navbar = () => {
             setNavbarLogo(
                 !isSearchbarOpen || isEverythingHidden
                     ? "/bazujepl_mini_logo_orange.png"
-                    : "/bazujepl_logo_orange.png"
+                    : "/bazujepl_logo_orange.png",
             );
         } else {
             setNavbarLogo(
                 !isSearchbarOpen || isEverythingHidden
                     ? "/bazujepl_mini_logo_blue.png"
-                    : "/bazujepl_logo_blue.png"
+                    : "/bazujepl_logo_blue.png",
             );
         }
     }, [isSearchbarOpen, theme]);
@@ -119,7 +130,11 @@ const Navbar = () => {
                                 Zaloguj się
                             </Button>
                         ) : (
-                            <p className={styles.helloText}>
+                            <p
+                                className={styles.helloText}
+                                onClick={() => navigate(`/favorites/${userId}`)}
+                                style={{ cursor: "pointer" }}
+                            >
                                 Hej {loggedUsername}!
                             </p>
                         )}
