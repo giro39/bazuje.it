@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import AddOpinion from "../components/AddOpinion/AddOpinion";
 import Button from "../components/BasicComponents/Button/Button";
 import BestComment from "../components/BestComment/BestComment";
+import FavoriteButton from "../components/FavoriteButton/FavoriteButton";
 
 import PortalBox from "../components/PortalBox";
 
@@ -20,6 +21,7 @@ const Major = () => {
     const [chosenKierunek, setChosenKierunek] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userHasOpinion, setUserHasOpinion] = useState(false);
+    const [userId, setUserId] = useState(null);
 
     const { loggedUsername } = useContext(LoggedUsernameContext);
 
@@ -47,10 +49,12 @@ const Major = () => {
 
         const token = localStorage.getItem("access");
         if (token) {
+            const decoded = jwtDecode(token);
+            setUserId(decoded.user_id);
             axios
                 .post(`${SERVER_URL}/api/has_opinion/`, {
                     majorId: majorId,
-                    userId: jwtDecode(token).user_id,
+                    userId: decoded.user_id,
                 })
                 .then((response) => {
                     setUserHasOpinion(response.data.exists);
@@ -83,25 +87,39 @@ const Major = () => {
                     <p className={styles.mostAccurateOpinion}>
                         Najtrafniejsza opinia
                     </p>
-                    {!loggedUsername ? (
-                        <Button
-                            buttonType="white"
-                            buttonSize="medium"
-                            onClick={() => navigate("/login")}
-                        >
-                            Zaloguj się, aby dodać opinię
-                        </Button>
-                    ) : !userHasOpinion ? (
-                        <Button
-                            buttonType="white"
-                            buttonSize="medium"
-                            onClick={toggleModal}
-                        >
-                            Dodaj opinię
-                        </Button>
-                    ) : (
-                        <></>
-                    )}
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "12px",
+                            alignItems: "center",
+                        }}
+                    >
+                        {!loggedUsername ? (
+                            <Button
+                                buttonType="white"
+                                buttonSize="medium"
+                                onClick={() => navigate("/login")}
+                            >
+                                Zaloguj się, aby dodać opinię
+                            </Button>
+                        ) : !userHasOpinion ? (
+                            <Button
+                                buttonType="white"
+                                buttonSize="medium"
+                                onClick={toggleModal}
+                            >
+                                Dodaj opinię
+                            </Button>
+                        ) : (
+                            <></>
+                        )}
+                        {loggedUsername && userId && (
+                            <FavoriteButton
+                                userId={userId}
+                                kierunkId={majorId}
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
             <BestComment majorId={majorId} />

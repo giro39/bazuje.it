@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
+import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Major from "./pages/Major";
@@ -77,6 +78,10 @@ const App = () => {
                                 <Route
                                     path="/profile/:userId"
                                     element={<Profile />}
+                                />
+                                <Route
+                                    path="/favorites/:userId"
+                                    element={<Favorites />}
                                 />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/logout" element={<Logout />} />
